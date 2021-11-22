@@ -8,3 +8,4 @@ Links:
 + [First sprint planning](https://docs.google.com/spreadsheets/d/18hNtlU9wa_MnfH9v6yOKPqGHLL3XpmcKpdyDMSwGbTY)
 + [Software Architecture](https://docs.google.com/document/d/1JG7bsn5zQqxlGyGcuJduTEkOIrNe7QEFoSv9pv2tssI)
 + [Definitions (DoD and DoF)](https://docs.google.com/document/d/1eAb5pADcYXQWzfbOE9y2qUr5z8HuJ4FVCwgIMkA8cqY)
++ [Pre-game presentation](https://docs.google.com/presentation/d/1vnU4Z_3b_uH50vDYvXI3b8XzxRlV7XhenMoz3sAuZ1E)
