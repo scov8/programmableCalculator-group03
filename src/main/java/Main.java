@@ -1,13 +1,29 @@
 /**
  * @file Main.java
- * @author Marco Plaitano
+ * @author Luigi Scovotto
  * @date 22 Nov 2021
  */
 
 package src.main.java;
 
-public class Main {
-    public static void main(String args[]) {
-        System.out.println("Hello World");
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+
+public class Main extends Application {
+    public static void main(String[] args) throws Exception {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("view/FXMLDocumentController.fxml"));
+        stage.setScene(new Scene(root));
+        stage.setTitle("Programmable Calculator");
+        stage.show();
     }
 }
