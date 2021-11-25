@@ -1,7 +1,9 @@
 package src.main.java.resources;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 
 /**
@@ -17,6 +19,7 @@ import java.text.NumberFormat;
  *        part.
  */
 public class ComplexNumber {
+
     private double a;
     private double b;
 
@@ -130,7 +133,9 @@ public class ComplexNumber {
      */
     @Override
     public String toString() {
-        NumberFormat nf = new DecimalFormat("##.###");
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+
+        NumberFormat nf = new DecimalFormat("##.###",symbols);
 
         if (isZero(a))
             return nf.format(b) + "i";
