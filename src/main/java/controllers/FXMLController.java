@@ -45,14 +45,10 @@ public class FXMLController {
     private TextField textInput; // Value injected by FXMLLoader
 
     private ObservableList<ComplexNumber> stackValue;
-    private MyStack<ComplexNumber> xxx;
+    private MyStack<ComplexNumber> numberStack;
 
     @FXML
     void submitEnter(ActionEvent event) {
-        xxx.push(InputParser.parseNumber(textInput.getText()));
-
-        stackValue.add(InputParser.parseNumber(textInput.getText()));
-        textInput.clear();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -64,8 +60,9 @@ public class FXMLController {
         assert textInput != null : "fx:id=\"textInput\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
 
         stackValue = FXCollections.observableArrayList();
-        xxx = (MyStack<ComplexNumber>) FXCollections.observableArrayList();
+        numberStack = (MyStack<ComplexNumber>) FXCollections.observableArrayList();
 
-        stack.setItems(stackValue);
+        stack.setItems((ObservableList<ComplexNumber>) numberStack);
     }
+
 }
