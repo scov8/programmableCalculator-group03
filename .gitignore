@@ -1,8 +1,6 @@
 **/*.class
-bin/
-build/
-.vscode/
-libs/
+**/bin/
+**/build/
+**/.vscode/
+**/libs/
 **/.DS_Store
-jr.sh
-.vscode/*.json
