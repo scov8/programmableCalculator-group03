@@ -2,7 +2,7 @@
 # Use this script to compile and run the application.
 
 # Path to JavaFX libraries.
-fx_libs="/Library/Java/JavaVirtualMachines/javafx-sdk-17.0.1/lib/"
+fx_libs="libs/javafx_lib/"
 
 
 # Compile every Java file in the project.

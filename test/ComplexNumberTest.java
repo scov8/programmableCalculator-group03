@@ -167,6 +167,9 @@ public class ComplexNumberTest {
         n1.setValues(0.01, -1);
         assertEquals("0.01 - 1i", n1.toString());
 
+        n1.setValues(0, 0);
+        assertEquals("0", n1.toString());
+
         // a small number is written in exponential form.
         n1.setValues(0.000001, 32.1);
         assertEquals("1.0E-6 + 32.1i", n1.toString());
