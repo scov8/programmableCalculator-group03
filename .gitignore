@@ -1,4 +1,5 @@
 **/*.class
 bin/
 build/
-.vscode/settings.json
+libs/
+**/.DS_Store
