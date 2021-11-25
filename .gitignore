@@ -1,6 +1,5 @@
 **/*.class
 **/bin/
 **/build/
-**/.vscode/
 **/libs/
 **/.DS_Store
