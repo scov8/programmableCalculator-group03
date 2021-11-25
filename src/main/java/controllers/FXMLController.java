@@ -5,9 +5,14 @@
  */
 package src.main.java.controllers;
 
+import src.main.java.resources.*;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,14 +39,19 @@ public class FXMLController {
     private Label resultLabel; // Value injected by FXMLLoader
 
     @FXML // fx:id="stack"
-    private ListView<?> stack; // Value injected by FXMLLoader
+    private ListView<Double> stack; // Value injected by FXMLLoader
 
     @FXML // fx:id="textInput"
     private TextField textInput; // Value injected by FXMLLoader
 
+    private ObservableList<Double> stackValue;
+    private Stack<Double> xxx;
+
     @FXML
     void submitEnter(ActionEvent event) {
-
+        xxx.push(Double.parseDouble(textInput.getText()));
+        stackValue.add(Double.parseDouble(textInput.getText()));
+        textInput.clear();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -52,6 +62,10 @@ public class FXMLController {
         assert stack != null : "fx:id=\"stack\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
         assert textInput != null : "fx:id=\"textInput\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
 
+        stackValue = FXCollections.observableArrayList();
+        xxx = (Stack<Double>) FXCollections.observableArrayList();
+
+        stack.setItems((ObservableList<Double>) xxx);
     }
 
 }
