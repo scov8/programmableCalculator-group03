@@ -16,7 +16,7 @@ import java.text.NumberFormat;
  *        Real numbers are a special case of Complex Numbers with null imaginary
  *        part.
  */
-public class Number {
+public class ComplexNumber {
     private double a;
     private double b;
 
@@ -25,7 +25,7 @@ public class Number {
      * @param a Real part of the number.
      * @param b Imaginary part of the number.
      */
-    public Number(double a, double b) {
+    public ComplexNumber(double a, double b) {
         this.a = a;
         this.b = b;
     }
@@ -34,7 +34,7 @@ public class Number {
      * @brief Real number constructor.
      * @param a Real part of the number.
      */
-    public Number(double a) {
+    public ComplexNumber(double a) {
         this.a = a;
         this.b = 0;
     }
@@ -112,11 +112,11 @@ public class Number {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Number)) {
+        if (!(obj instanceof ComplexNumber)) {
             return false;
         }
 
-        Number other = (Number) obj;
+        ComplexNumber other = (ComplexNumber) obj;
 
         if ((isZero(a) && isZero(other.a)) || (approximate(a) == approximate(other.a)))
             if ((isZero(b) && isZero(other.b)) || (approximate(b) == approximate(other.b)))

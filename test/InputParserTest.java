@@ -10,12 +10,12 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 import src.main.java.resources.InputParser;
-import src.main.java.resources.Number;
+import src.main.java.resources.ComplexNumber;
 
 public class InputParserTest {
     @Test
     public void testParseNumber() {
-        Number n = new Number(2, 5);
+        ComplexNumber n = new ComplexNumber(2, 5);
         assertEquals(n, InputParser.parseNumber("2 + 5i"));
         n.setValues(-10, 5);
         assertEquals(n, InputParser.parseNumber("-10 + 5j"));

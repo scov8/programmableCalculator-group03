@@ -10,17 +10,17 @@ import org.junit.*;
 
 import static org.junit.Assert.*;
 
-import src.main.java.resources.Number;
+import src.main.java.resources.ComplexNumber;
 
 
-public class NumberTest {
-    private static Number n1;
-    private static Number n2;
+public class ComplexNumberTest {
+    private static ComplexNumber n1;
+    private static ComplexNumber n2;
 
     @BeforeClass
     public static void setUp() {
-        n1 = new Number(1, 1);
-        n2 = new Number(1, 1);
+        n1 = new ComplexNumber(1, 1);
+        n2 = new ComplexNumber(1, 1);
     }
 
     @Test

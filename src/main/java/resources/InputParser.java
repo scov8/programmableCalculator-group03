@@ -18,7 +18,7 @@ public class InputParser {
      * @param text The string to parse.
      * @return A `Number` instance or `null` if the string is incorrect.
      */
-    public static Number parseNumber(String text) {
+    public static ComplexNumber parseNumber(String text) {
         // Remove all spaces from the string.
         text = text.strip();
         text = text.replace(" ", "");
@@ -59,7 +59,7 @@ public class InputParser {
             b = text.substring(signPos, text.length() - 1);
         }
 
-        return new Number(Double.parseDouble(a), Double.parseDouble(b));
+        return new ComplexNumber(Double.parseDouble(a), Double.parseDouble(b));
     }
 
     /**
