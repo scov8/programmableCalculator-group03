@@ -19,7 +19,6 @@ import java.util.Locale;
  *        part.
  */
 public class ComplexNumber {
-
     private double a;
     private double b;
 
@@ -133,17 +132,24 @@ public class ComplexNumber {
      */
     @Override
     public String toString() {
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
-
-        NumberFormat nf = new DecimalFormat("##.###",symbols);
+        NumberFormat nf = new DecimalFormat("##.###", new DecimalFormatSymbols(Locale.US));
 
         if (isZero(a))
             return nf.format(b) + "i";
         if (isZero(b))
             return nf.format(a);
 
-        String as = nf.format(a);
-        String bs = nf.format(Math.abs(b));
+        String as, bs;
+        // If the number is too small it can not be rounded up to its first 3
+        // decimal digits or it would be dis
+        if (approximate(Math.abs(a)) >= 0.001)
+            as = nf.format(a);
+        else
+            as = String.valueOf(a);
+        if (approximate(Math.abs(b)) >= 0.001)
+            bs = nf.format(Math.abs(b));
+        else
+            bs = String.valueOf(Math.abs(b));
 
         if (this.b < 0)
             return as + " - " + bs + "i";

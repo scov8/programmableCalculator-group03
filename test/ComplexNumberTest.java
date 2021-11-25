@@ -149,14 +149,14 @@ public class ComplexNumberTest {
 
     @Test
     public void testToString() {
-        n1.setValues(12, 32);
-        assertEquals("12 + 32i", n1.toString());
+        n1.setValues(12.4, 32);
+        assertEquals("12.4 + 32i", n1.toString());
 
-        n1.setValues(12, -32);
-        assertEquals("12 - 32i", n1.toString());
+        n1.setValues(12, -32.092);
+        assertEquals("12 - 32.092i", n1.toString());
 
-        n1.setValues(-12, -32);
-        assertEquals("-12 - 32i", n1.toString());
+        n1.setValues(-0.12, -3.088);
+        assertEquals("-0.12 - 3.088i", n1.toString());
 
         n1.setValues(-12, 32);
         assertEquals("-12 + 32i", n1.toString());
@@ -167,9 +167,14 @@ public class ComplexNumberTest {
         n1.setValues(0.01, -1);
         assertEquals("0.01 - 1i", n1.toString());
 
+        // a small number is written in exponential form.
         n1.setValues(0.000001, 32.1);
-        assertEquals("0 + 32.1i", n1.toString());
+        assertEquals("1.0E-6 + 32.1i", n1.toString());
 
+        // when one of the parts (either real or imaginary) is ~0 it is not
+        // written out.
+
+        // a way to small number is approximated to 0.
         n1.setValues(0.00000000001, 32.1);
         assertEquals("32.1i", n1.toString());
 
