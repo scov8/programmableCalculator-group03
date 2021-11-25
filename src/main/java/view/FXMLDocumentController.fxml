@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
@@ -30,6 +29,6 @@
          <opaqueInsets>
             <Insets />
          </opaqueInsets></Label>
-      <ListView fx:id="stack" layoutX="200.0" layoutY="164.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" />
+      <ListView fx:id="stack" layoutX="200.0" layoutY="164.0" prefHeight="200.0" prefWidth="200.0" style="-fx-font-family: Arial;" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" />
    </children>
 </AnchorPane>
