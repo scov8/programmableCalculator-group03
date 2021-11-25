@@ -19,7 +19,7 @@ public class Main extends Application {
     public static void main(String[] args) throws Exception {
         launch(args);
         // create an object of Stack class
-        Stack<String> animals= new Stack<>();
+        MyStack<String> animals= new MyStack<>();
 
         // push elements to top of stack
         animals.push("Dog");
