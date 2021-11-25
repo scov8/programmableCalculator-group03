@@ -22,7 +22,7 @@ public class Operations {
     }
 
     /**
-     * @brief Perform the sum between two complex numbers.
+     * @brief Performs the sum between two complex numbers.
      * @param leftOperand first operand of the sum operation.
      * @param rightOperand second operand of the sum operation.
      * @return complex number given by the sum of the two operands.
@@ -32,7 +32,7 @@ public class Operations {
     }
 
     /**
-     * @brief Perform the subtraction between two complex numbers.
+     * @brief Performs the subtraction between two complex numbers.
      * @param leftOperand first operand of the difference operation.
      * @param rightOperand second operand of the difference operation.
      * @return complex number given by the difference between the two operands.
@@ -42,7 +42,7 @@ public class Operations {
     }
 
     /**
-     * @brief Perform the multiplication between two complex numbers.
+     * @brief Performs the multiplication between two complex numbers.
      * @param leftOperand first operand of the multiplication operation.
      * @param rightOperand second operand of the multiplication operation.
      * @return complex number given by the multiplication between the two operands.
@@ -52,20 +52,31 @@ public class Operations {
     }
 
     /**
-     * @brief Perform the division between two complex numbers.
+     * @brief Performs the division between two complex numbers.
      * @param leftOperand first operand of the difference operation.
      * @param rightOperand second operand of the difference operation.
      * @return complex number given by the division between the two operands.
      */
-    public static ComplexNumber division(ComplexNumber leftOperand, ComplexNumber rightOperand){
+    public static ComplexNumber division(ComplexNumber leftOperand, ComplexNumber rightOperand) throws IndeterminateFormException{
         double denominator = Math.pow(rightOperand.getReal(), 2) + Math.pow(rightOperand.getImaginary(), 2);
         double numeratorA = leftOperand.getReal() * rightOperand.getReal() + leftOperand.getImaginary() * rightOperand.getImaginary();
         double numeratorB = leftOperand.getImaginary() * rightOperand.getReal() - leftOperand.getReal() * rightOperand.getImaginary();
-        return denominator==0 ? new ComplexNumber(Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY): new ComplexNumber(numeratorA/denominator, numeratorB/denominator);
+
+        if(denominator==0)
+            if(leftOperand.getReal()==0 && leftOperand.getImaginary()==0)
+                throw new IndeterminateFormException();
+            else if(leftOperand.getImaginary()==0)
+                return new ComplexNumber(Double.POSITIVE_INFINITY,0);
+            else if(leftOperand.getReal()==0)
+                return new ComplexNumber(0,Double.POSITIVE_INFINITY);
+            else
+                return new ComplexNumber(Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY);
+
+       return new ComplexNumber(numeratorA/denominator, numeratorB/denominator);
     }
 
     /**
-     * @brief Perform the modoulus of a complex numbers.
+     * @brief Performs the modoulus of a complex numbers.
      * @param operand complex number for which you want to perform the modoulus operation.
      * @return complex number which represent the modoulus of operand number.
      */
@@ -74,7 +85,7 @@ public class Operations {
     }
 
     /**
-     * @brief Perform the square root of a complex numbers.
+     * @brief Performs the square root of a complex numbers.
      * @param operand complex number for which you want to perform the square root.
      * @return complex number which represent the square root of operand number.
      */
