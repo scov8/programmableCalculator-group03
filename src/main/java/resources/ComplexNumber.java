@@ -134,9 +134,11 @@ public class ComplexNumber {
     public String toString() {
         NumberFormat nf = new DecimalFormat("##.###", new DecimalFormatSymbols(Locale.US));
 
-        if (isZero(a))
+        if (isZero(a) && isZero(b))
+            return "0";
+        else if (isZero(a))
             return nf.format(b) + "i";
-        if (isZero(b))
+        else if (isZero(b))
             return nf.format(a);
 
         String as, bs;
