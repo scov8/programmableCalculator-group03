@@ -1,11 +1,13 @@
 #!/bin/bash
+# Use this script to compile and run the application.
 
 # Path to JavaFX libraries.
-fx_libs="/Library/Java/JavaVirtualMachines/javafx-sdk-11.0.2/lib/"
+fx_libs="libs/javafx_lib/"
 
 
 # Compile every Java file in the project.
 for file in $(find $(pwd) -maxdepth 6 -type f -name '*.java'); do
+    [[ "$file" == *Test* ]] && continue
     echo "Compiling $(basename $file)"
     javac --module-path $fx_libs --add-modules javafx.controls \
     --add-modules javafx.fxml --add-modules javafx.swing \
