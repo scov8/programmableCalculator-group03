@@ -118,8 +118,8 @@ public class MyStackTest {
         stack.push(number1);
         stack.push(number0);
         stack.swap();
-        assertEquals(number0, stack.pop());
         assertEquals(number1, stack.pop());
+        assertEquals(number0, stack.pop());
     }
 
     @Test
