@@ -113,10 +113,10 @@ public class MyStackTest {
 
     @Test
     public void testSwap() {
-        stack.push(number4);
+        stack.push(number3);
         stack.push(number2);
-        stack.push(number0);
         stack.push(number1);
+        stack.push(number0);
         stack.swap();
         assertEquals(number0, stack.pop());
         assertEquals(number1, stack.pop());

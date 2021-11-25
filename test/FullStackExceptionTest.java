@@ -11,20 +11,20 @@ import src.main.java.resources.MyStack;
 public class FullStackExceptionTest {
     private static final int MAXIMUM_SIZE = 256;
     private static MyStack<ComplexNumber> data;
-    private static ComplexNumber number0; //number with real part negative and imaginary part positive
+    private static ComplexNumber number; //number with real part negative and imaginary part positive
 
     @BeforeClass
     public static void setUp() {
         data = new MyStack<>();
-        number0 = new ComplexNumber(-2,1);
+        number = new ComplexNumber(-2,1);
         for (int i = 0; i < MAXIMUM_SIZE; i++)
-            data.push(number0);
+            data.push(number);
     }
 
     @Test(expected = FullStackException.class)
     public void testFullStackExceptionOnPush() {
         Assert.assertTrue(data.isFull());
-        data.push(number0);
+        data.push(number);
     }
 
     @Test(expected = FullStackException.class)
