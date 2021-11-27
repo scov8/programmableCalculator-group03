@@ -63,13 +63,7 @@ public class FXMLController {
         alert.showAndWait();
     }
 
-    /**
-     * @brief When ENTER button is pressed, read user input, parse it and execute
-     *        associated functions based on the input type.
-     * @param event The pressing of the button.
-     */
-    @FXML
-    void submitEnter(ActionEvent event) {
+    private void getUserInput(){
         String input = textInput.getText();
         textInput.clear();
         if (InputParser.isOperation(input)) {
@@ -84,6 +78,21 @@ public class FXMLController {
                 stackValue.add(number);
             }
         }
+    }
+
+    @FXML
+    void onEnterKeyClick(ActionEvent event) {
+        getUserInput();
+    }
+
+    /**
+     * @brief When ENTER button is pressed, read user input, parse it and execute
+     *        associated functions based on the input type.
+     * @param event The pressing of the button.
+     */
+    @FXML
+    void onEnterButtonClick(ActionEvent event) {
+        getUserInput();
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
