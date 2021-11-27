@@ -10,21 +10,21 @@ import src.main.java.operations.Operations;
  * @author Gerardo Rosa
  * @date 25 Nov 2021
  */
+
 /**
  * @brief This class handles the operation and the operands in the stack.
- *
  */
 public class Calculator {
 
     public Calculator() {
 
     }
+
     /**
-    * @brief Run the given operation on the elements of the stack.
-    * @param stack The stack of complex numbers.
-    * @param op Operation to execute.
-    *
-    */
+     * @brief Run the given operation on the elements of the stack.
+     * @param stack The stack of complex numbers.
+     * @param op    String representing the operation to execute.
+     */
     public void runOperation(Stack<ComplexNumber> stack, String op) throws Exception {
         ComplexNumber result = null;
         ComplexNumber a, b;
@@ -59,10 +59,14 @@ public class Calculator {
                 result = Operations.division(a, b);
                 break;
             case "+-":
+                if (stack.size() < 1)
+                    throw new NotEnoughOperandsException();
                 a = stack.pop();
                 result = Operations.signInvertion(a);
                 break;
             case "sqrt":
+                if (stack.size() < 1)
+                    throw new NotEnoughOperandsException();
                 a = stack.pop();
                 result = Operations.squareRoot(a);
                 break;
