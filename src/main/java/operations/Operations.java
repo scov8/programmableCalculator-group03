@@ -20,7 +20,7 @@ public class Operations {
      * @param operand complex number for which you want to invert the sign.
      * @return complex number with inverted sign.
      */
-    public static ComplexNumber signInvertion(ComplexNumber operand){
+    public static ComplexNumber signInvertion(ComplexNumber operand) {
         return new ComplexNumber(-operand.getReal(),-operand.getImaginary());
     }
 
@@ -30,7 +30,7 @@ public class Operations {
      * @param rightOperand second operand of the sum operation.
      * @return complex number given by the sum of the two operands.
      */
-    public static ComplexNumber sum(ComplexNumber leftOperand, ComplexNumber rightOperand){
+    public static ComplexNumber sum(ComplexNumber leftOperand, ComplexNumber rightOperand) {
         return new ComplexNumber(leftOperand.getReal()+rightOperand.getReal(),leftOperand.getImaginary()+rightOperand.getImaginary());
     }
 
@@ -40,7 +40,7 @@ public class Operations {
      * @param rightOperand second operand of the difference operation.
      * @return complex number given by the difference between the two operands.
      */
-    public static ComplexNumber difference(ComplexNumber leftOperand, ComplexNumber rightOperand){
+    public static ComplexNumber difference(ComplexNumber leftOperand, ComplexNumber rightOperand) {
         return sum(leftOperand, signInvertion(rightOperand));
     }
 
@@ -50,7 +50,7 @@ public class Operations {
      * @param rightOperand second operand of the multiplication operation.
      * @return complex number given by the multiplication between the two operands.
      */
-    public static ComplexNumber multiplication(ComplexNumber leftOperand, ComplexNumber rightOperand){
+    public static ComplexNumber multiplication(ComplexNumber leftOperand, ComplexNumber rightOperand) {
         return new ComplexNumber(leftOperand.getReal()*rightOperand.getReal()-leftOperand.getImaginary()*rightOperand.getImaginary(), leftOperand.getImaginary()*rightOperand.getReal()+leftOperand.getReal()*rightOperand.getImaginary());
     }
 
@@ -60,7 +60,7 @@ public class Operations {
      * @param rightOperand second operand of the difference operation.
      * @return complex number given by the division between the two operands.
      */
-    public static ComplexNumber division(ComplexNumber leftOperand, ComplexNumber rightOperand) throws IndeterminateFormException{
+    public static ComplexNumber division(ComplexNumber leftOperand, ComplexNumber rightOperand) throws IndeterminateFormException {
         double denominator = Math.pow(rightOperand.getReal(), 2) + Math.pow(rightOperand.getImaginary(), 2);
         double numeratorA = leftOperand.getReal() * rightOperand.getReal() + leftOperand.getImaginary() * rightOperand.getImaginary();
         double numeratorB = leftOperand.getImaginary() * rightOperand.getReal() - leftOperand.getReal() * rightOperand.getImaginary();
@@ -83,7 +83,7 @@ public class Operations {
      * @param operand complex number for which you want to perform the modoulus operation.
      * @return complex number which represent the modoulus of operand number.
      */
-    private static ComplexNumber absolute(ComplexNumber operand){
+    private static ComplexNumber absolute(ComplexNumber operand) {
         return new ComplexNumber(Math.sqrt(Math.pow(operand.getReal(), 2) + Math.pow(operand.getImaginary(), 2)),0);
     }
 
@@ -92,7 +92,7 @@ public class Operations {
      * @param operand complex number for which you want to perform the square root.
      * @return complex number which represent the square root of operand number.
      */
-    public static ComplexNumber squareRoot(ComplexNumber operand){
+    public static ComplexNumber squareRoot(ComplexNumber operand) {
         ComplexNumber abs = absolute(operand);
         if (abs.getReal()==0) return new ComplexNumber(0,0);
         ComplexNumber squareRootAbs= new ComplexNumber(Math.sqrt(abs.getReal()),0);

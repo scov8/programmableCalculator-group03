@@ -591,7 +591,7 @@ public class OperationsTest {
     }
 
     @Test(expected = IndeterminateFormException.class)
-    public void testDivisionIndeterminateForm(){
+    public void testDivisionIndeterminateForm() {
         Operations.division(number0,number0);
     }
 
