@@ -20,17 +20,16 @@ public class InputParser {
      */
     public static ComplexNumber parseNumber(String text) {
         // Remove all spaces from the string.
-        text = text.strip();
+        text = text.strip().toLowerCase();
         text = text.replace(" ", "");
         text = text.replace("j", "i");
 
-        // Check that the syntax is correct and follows the form: 'a+bj'.
-        // In particular:
-        // - a and/or b can be negative.
-        // - i can be replaced with j.
+        // real: 'a', '+a' or '-a'
         if (!text.matches("^[+-]?[0-9]\\d*(\\.\\d+)?$"))
+            // complex: 'a+bi', 'a-bi', '-a+bi', '-a-bi', '+a+bi', '+a-bi'
             if (!text.matches("^[+-]?[0-9]\\d*(\\.\\d+)?([+-][0-9]\\d*(\\.\\d+)?i)?$"))
-                if (!text.matches("^[+-]?[0-9]\\d*(\\.\\d+)?i$"))
+                // complex: 'bi', '-bi', '+bi', 'i'
+                if (!text.matches("^([+-]?[0-9]\\d*(\\.\\d+)?)?i$"))
                     return null;
 
         String a, b;
@@ -42,12 +41,18 @@ public class InputParser {
         // If no sign to divide real and imaginary part is found it means only
         // one of them is present in the string.
         if (signPos < 0) {
-            // If 'i' is in the string the number is imaginary, otherwise it is
-            // real.
-            if (text.indexOf("i") > 0) {
+            // If the entire string is simply "i".
+            if (text.compareTo("i") == 0) {
+                a = "0";
+                b = "1";
+            }
+            // If 'i' is in the string the number is imaginary.
+            else if (text.indexOf("i") > 0) {
                 a = "0";
                 b = text.substring(0, text.length() - 1);
-            } else {
+            }
+            // Real number.
+            else {
                 a = text;
                 b = "0";
             }
