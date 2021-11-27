@@ -5,11 +5,13 @@
  */
 package src.main.java.controllers;
 
+import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.resources.*;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.ResourceBundle;
-
+import java.util.Stack;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,7 +50,43 @@ public class FXMLController {
     private TextField textInput; // Value injected by FXMLLoader
 
     private ObservableList<ComplexNumber> stackValue;
-    private MyStack<ComplexNumber> numberStack;
+
+    /**
+     * Main stack containing the numbers given in input by the user and the
+     * results of the operations.
+     */
+    private Stack<ComplexNumber> numberStack;
+
+    /**
+     * Main instance of Calculator class that handles operations on the
+     * numberStack.
+     */
+    private Calculator calculator;
+
+    /**
+     * Number of items from the numberStack to show in the GUI at any time.
+     */
+    private final int K = 15;
+
+    /**
+     * @brief Update the ListView items list.
+     * @param newNumber number to push to the stack. It can be `null` to avoid
+     *                  adding a new item.
+     */
+    private void updateStackView(ComplexNumber newNumber) {
+        if (newNumber != null)
+            numberStack.push(newNumber);
+
+        // Only show the top K elements of the stack.
+        int max = numberStack.size();
+        int min = max > K ? K : max;
+        if (min < 0)
+            min = 0;
+
+        stackValue.clear();
+        stackValue.setAll(numberStack.subList(max - min, max));
+        Collections.reverse(stackValue);
+    }
 
     /**
      * @brief Show error alert dialog box.
@@ -63,21 +101,40 @@ public class FXMLController {
         alert.showAndWait();
     }
 
-    private void getUserInput(){
-        String input = textInput.getText();
+    /**
+     * @brief Read user input, parse it and execute
+     *        associated functions based on the input type.
+     */
+    private void getUserInput() {
+        String input = textInput.getText().strip();
         textInput.clear();
+        if (input.length() == 0)
+            return;
+
+        ComplexNumber number = null;
+
+        // input is an operation
         if (InputParser.isOperation(input)) {
-            // TODO: execute operation.
-        } else {
-            ComplexNumber number = InputParser.parseNumber(input);
+            try {
+                calculator.runOperation(numberStack, input);
+                updateStackView(null);
+            } catch (NotEnoughOperandsException e) {
+                showError("Not enough elements.",
+                        "The stack does not contain enough values to execute the '" + input + "' operation.");
+            } catch (Exception e) {
+                showError("Invalid operation", "Something went wrong...");
+            }
+        }
+        // input is a number
+        else {
+            number = InputParser.parseNumber(input);
             if (number == null) {
                 showError("Invalid Input",
                         "Please provide a valid operation or a number.\nNumbers must be in the form 'a + bi' or 'a' or 'bi'");
-            } else {
-                numberStack.push(number);
-                stackValue.add(number);
+                return;
             }
         }
+        updateStackView(number);
     }
 
     @FXML
@@ -98,14 +155,17 @@ public class FXMLController {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert enter != null : "fx:id=\"enter\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
-        assert paneRoot != null : "fx:id=\"paneRoot\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
-        assert resultLabel != null : "fx:id=\"resultLabel\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
+        assert paneRoot != null
+                : "fx:id=\"paneRoot\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
+        assert resultLabel != null
+                : "fx:id=\"resultLabel\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
         assert stack != null : "fx:id=\"stack\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
-        assert textInput != null : "fx:id=\"textInput\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
+        assert textInput != null
+                : "fx:id=\"textInput\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
 
         stackValue = FXCollections.observableArrayList();
-        numberStack = new MyStack<>();
+        numberStack = new Stack<>();
         stack.setItems(stackValue);
+        calculator = new Calculator();
     }
-
 }
