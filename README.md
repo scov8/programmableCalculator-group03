@@ -16,7 +16,7 @@
 
 + [Sprint 1 Planning](https://docs.google.com/spreadsheets/d/18hNtlU9wa_MnfH9v6yOKPqGHLL3XpmcKpdyDMSwGbTY)
 + [Sprint 1 Report](https://docs.google.com/document/d/1NeOGMaTnVgOYUcX2Rh_Ip3HwU9sl3qco)
-+ [Sprint 1 Presentation](https://docs.google.com/presentation/d/1nN_CVQYe5FtAq4bjaaYYzFLucSIHOhE5)
++ [Sprint 1 Presentation](https://unisalerno-my.sharepoint.com/:p:/g/personal/f_tortora21_studenti_unisa_it/ETF5RFBh9nVMr7vO9iIEX_YB9wqAuucfLbu2wb0gHqg5sw?e=V5n78o)
 
 <!-- ### Second sprint Artifacts
 
