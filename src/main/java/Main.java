@@ -5,7 +5,6 @@
  */
 
 package src.main.java;
-import src.main.java.resources.*;
 
 
 import javafx.application.Application;
@@ -16,15 +15,15 @@ import javafx.stage.Stage;
 
 
 public class Main extends Application {
-    public static void main(String[] args) throws Exception {
-        launch(args);
-    }
-
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("../resources/view/view.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Programmable Calculator");
         stage.show();
+    }
+
+    public static void main(String[] args) throws Exception {
+        launch(args);
     }
 }

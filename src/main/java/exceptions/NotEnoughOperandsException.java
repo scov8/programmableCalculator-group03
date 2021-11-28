@@ -7,8 +7,8 @@ package src.main.java.exceptions;
  */
 
 /**
- * @brief Indicates that not enough operands are in the stack for an operation.
- *
+ * @brief This exception is launched when not enough operands can be taken from
+ *        the stack for an operation.
  */
 public class NotEnoughOperandsException extends RuntimeException {
     public NotEnoughOperandsException() {

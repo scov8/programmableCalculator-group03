@@ -16,6 +16,7 @@ import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.operations.Operations;
 import src.main.java.resources.Calculator;
 import src.main.java.resources.ComplexNumber;
+
 public class CalculatorTest {
     private static Calculator c;
     private static Stack<ComplexNumber> stack;
@@ -109,12 +110,14 @@ public class CalculatorTest {
         assertEquals(Operations.division(top2, top), stack.peek());
         assertEquals(size - 1, stack.size());
     }
+
     @Test
     public void testNotEnoughOperandsExceptionOnRunOperation() throws Exception {
         // only 1 item in the stack.
         stack.clear();
         stack.push(new ComplexNumber(-2.8, 11));
         assertEquals(1, stack.size());
+
         assertThrows(NotEnoughOperandsException.class, () -> c.runOperation(stack, "+"));
         assertThrows(NotEnoughOperandsException.class, () -> c.runOperation(stack, "-"));
         assertThrows(NotEnoughOperandsException.class, () -> c.runOperation(stack, "*"));

@@ -102,11 +102,11 @@ public class FXMLController {
     }
 
     /**
-     * @brief Read user input, parse it and execute
-     *        associated functions based on the input type.
+     * @brief Read user input, parse it and execute associated functions based
+     *        on the input type.
      */
     private void getUserInput() {
-        String input = textInput.getText().strip();
+        String input = textInput.getText().strip().toLowerCase();
         textInput.clear();
         if (input.length() == 0)
             return;
@@ -137,13 +137,18 @@ public class FXMLController {
         updateStackView(number);
     }
 
+    /**
+     * @brief When ENTER key is pressed, read user input, parse it and execute
+     *        associated functions based on the input type.
+     * @param event The pressing of the button.
+     */
     @FXML
     void onEnterKeyClick(ActionEvent event) {
         getUserInput();
     }
 
     /**
-     * @brief When ENTER button is pressed, read user input, parse it and execute
+     * @brief When ENTER button is clicked, read user input, parse it and execute
      *        associated functions based on the input type.
      * @param event The pressing of the button.
      */
