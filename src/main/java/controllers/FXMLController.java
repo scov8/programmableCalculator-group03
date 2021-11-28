@@ -86,6 +86,11 @@ public class FXMLController {
         stackValue.clear();
         stackValue.setAll(numberStack.subList(max - min, max));
         Collections.reverse(stackValue);
+
+        if (stackValue.size() > 0)
+            resultLabel.setText(stackValue.get(0).toString());
+        else
+            resultLabel.setText("Result here.");
     }
 
     /**
@@ -172,5 +177,6 @@ public class FXMLController {
         numberStack = new Stack<>();
         stack.setItems(stackValue);
         calculator = new Calculator();
+        resultLabel.setText("Result here.");
     }
 }
