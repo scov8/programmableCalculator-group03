@@ -29,6 +29,10 @@ public class InputParserTest {
         assertEquals(n, InputParser.parseNumber("12.3 - 7.3j"));
         n.setValues(-12.3, -7.3);
         assertEquals(n, InputParser.parseNumber("-12.3 - 7.3i"));
+        n.setValues(2, 1);
+        assertEquals(n, InputParser.parseNumber("2 + i"));
+        n.setValues(2, -1);
+        assertEquals(n, InputParser.parseNumber("2 - i"));
 
         // at least one of the two parts is null.
         n.setValues(0, 0);
