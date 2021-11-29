@@ -4,6 +4,15 @@
 # Path to JavaFX libraries.
 fx_libs="libs/javafx_lib/"
 
+# Path to main source file.
+main="src/main/java/Main"
+
+
+# Check that main file exists.
+if [[ ! -f "$main".java ]]; then
+    echo "File '$main.java' does not exist."
+    exit 1
+fi
 
 # Compile every Java file in the project.
 for file in $(find $(pwd) -maxdepth 6 -type f -name '*.java'); do
@@ -16,25 +25,7 @@ for file in $(find $(pwd) -maxdepth 6 -type f -name '*.java'); do
     [[ $? != 0 ]] && exit 1
 done
 
-
-# Exit script if no argument has been given.
-# The first (and only) argument should be the path to the main class file of the
-# project.
-if [[ -z $1 ]]; then
-    echo "ALL COMPILED"
-    echo "You didn't provide the Main Class File path to run."
-    exit 1
-fi
-
-
-main="$1"
-main=${main%.*}
-
-# Check that given file exists.
-if [[ ! -f "$main".java ]]; then
-    echo "File '$1' does not exist."
-    exit 1
-fi
+echo "All compiled. Running..."
 
 main=${main//\//.}
 
