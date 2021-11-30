@@ -10,28 +10,30 @@
 
 <AnchorPane fx:id="paneRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.main.java.controllers.FXMLController">
    <children>
-      <Label layoutX="154.0" layoutY="46.0" prefHeight="28.0" prefWidth="46.0" text="Input">
+      <Label layoutX="153.0" layoutY="38.0" prefHeight="28.0" prefWidth="46.0" text="Input">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="textInput" layoutX="220.0" layoutY="47.0" onAction="#onEnterKeyClick" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.5" AnchorPane.topAnchor="47.0">
+      <TextField fx:id="textInput" layoutX="219.0" layoutY="39.0" onAction="#onEnterKeyClick" AnchorPane.leftAnchor="219.0" AnchorPane.rightAnchor="221.5" AnchorPane.topAnchor="39.0">
          <font>
             <Font name="Arial" size="13.0" />
          </font>
       </TextField>
-      <Button fx:id="enter" layoutX="400.0" layoutY="47.0" mnemonicParsing="false" onAction="#onEnterButtonClick" text="Enter" AnchorPane.leftAnchor="400.0">
+      <Button fx:id="enter" layoutX="399.0" layoutY="38.0" mnemonicParsing="false" onAction="#onEnterButtonClick" text="Enter" AnchorPane.leftAnchor="399.0">
          <font>
             <Font name="Arial" size="13.0" />
          </font>
       </Button>
-      <Label fx:id="resultLabel" alignment="CENTER" layoutX="220.0" layoutY="89.0" prefHeight="26.0" prefWidth="160.0" text="Result here" textAlignment="CENTER" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="220.0" AnchorPane.topAnchor="89.0">
+      <Label fx:id="resultLabel" alignment="CENTER" layoutX="219.0" layoutY="81.0" prefHeight="26.0" prefWidth="160.0" text="Result here" textAlignment="CENTER" AnchorPane.leftAnchor="219.0" AnchorPane.rightAnchor="221.0" AnchorPane.topAnchor="81.0">
          <font>
             <Font name="Arial" size="13.0" />
          </font>
          <opaqueInsets>
             <Insets />
          </opaqueInsets></Label>
-      <ListView fx:id="stack" layoutX="200.0" layoutY="164.0" prefHeight="200.0" prefWidth="200.0" style="-fx-font-family: Arial;" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" />
+      <ListView fx:id="stack" layoutX="60.0" layoutY="147.0" prefHeight="200.0" prefWidth="200.0" style="-fx-font-family: Arial;" AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="340.0" />
+      <Label layoutX="163.0" layoutY="85.0" style="-fx-font-family: Arial;" text="ANS" />
+      <ListView fx:id="variableList" layoutX="348.0" layoutY="147.0" prefHeight="200.0" prefWidth="200.0" style="-fx-font-family: Arial;" AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="60.0" />
    </children>
 </AnchorPane>
