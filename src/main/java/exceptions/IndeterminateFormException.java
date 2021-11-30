@@ -1,6 +1,6 @@
 package src.main.java.exceptions;
 /**
- * @file MyStack.java
+ * @file IndeterminateFormException.java
  * @author Francesco Tortora
  * @date 25 Nov 2021
  */
