@@ -15,7 +15,7 @@ import src.main.java.resources.ComplexNumber;
  * @brief This class presents a method to execute the Multiplication of two
  *        complex numbers contained in a stack.
  */
-public class MultiplicationOperation extends MathOperation {
+public class MultiplicationOperation extends Operation {
     public MultiplicationOperation() {
         super(2);
     }

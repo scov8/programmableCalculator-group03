@@ -15,7 +15,7 @@ import src.main.java.resources.ComplexNumber;
  * @brief This class presents a method to execute the Square Root of a complex
  *        number contained in a stack.
  */
-public class SquareRootOperation extends MathOperation {
+public class SquareRootOperation extends Operation {
     public SquareRootOperation() {
         super(1);
     }
@@ -39,7 +39,7 @@ public class SquareRootOperation extends MathOperation {
      * @param op Operation to perform.
      * @return result of operation.
      */
-    private ComplexNumber operate(ComplexNumber a, ComplexNumber b, MathOperation op) {
+    private ComplexNumber operate(ComplexNumber a, ComplexNumber b, Operation op) {
         Stack<ComplexNumber> stack = new Stack<>();
         stack.push(a);
         stack.push(b);
