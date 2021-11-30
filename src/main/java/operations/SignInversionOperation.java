@@ -11,11 +11,21 @@ import src.main.java.resources.ComplexNumber;
  * @date 30 Nov 2021
  */
 
+/**
+ * @brief This class presents a method to execute the Sign Inversion of a
+ *        complex number contained in a stack.
+ */
 public class SignInversionOperation extends MathOperation {
     public SignInversionOperation() {
         super(1);
     }
 
+    /**
+     * @brief Execute the sign inversion operation on the given stack.
+     * @param stack The stack on which to execute the operation.
+     * @throws NotEnoughOperandsException if the stack does not contain enough
+     *                                    elements.
+     */
     @Override
     public void execute(Stack<ComplexNumber> stack) throws NotEnoughOperandsException {
         if (!super.enoughOperandsInStack(stack.size()))
