@@ -49,7 +49,7 @@ public class DropOperationTest {
         drop.execute(stack);
         assertEquals(number0, stack.peek());
         drop.execute(stack);
-        assertTrue(stack.isEmpty());
+        assertTrue(stack.empty());
 
         stack.push(number3);
         stack.push(number4);

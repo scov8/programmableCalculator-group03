@@ -1,6 +1,5 @@
 package src.main.java.operations;
 
-import java.util.EmptyStackException;
 import java.util.Stack;
 
 import src.main.java.exceptions.NotEnoughOperandsException;
@@ -11,7 +10,9 @@ import src.main.java.resources.ComplexNumber;
  * @author Gerardo Rosa
  * @date 30 Nov 2021
  */
-
+/**
+ * @brief This class presents a method to remove the last element.
+ */
 public class DropOperation extends Operation {
 
     public DropOperation() {
@@ -20,7 +21,8 @@ public class DropOperation extends Operation {
 
     /**
      * @brief Removes the last element.
-     * @throws EmptyStackException if stack is empty.
+     * @param stack The stack on which to execute the operation.
+     * @throws NotEnoughOperandsException if stack is empty.
      */
     @Override
     public void execute(Stack<ComplexNumber> stack) throws NotEnoughOperandsException{
