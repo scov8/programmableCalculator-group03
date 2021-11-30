@@ -2,6 +2,7 @@ package src.main.java.operations;
 
 import java.util.Stack;
 
+import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.resources.ComplexNumber;
 
 /**
@@ -43,7 +44,10 @@ public class SquareRootOperation extends MathOperation {
     }
 
     @Override
-    public void execute(Stack<ComplexNumber> stack) {
+    public void execute(Stack<ComplexNumber> stack) throws NotEnoughOperandsException {
+        if (!super.enoughOperandsInStack(stack.size()))
+            throw new NotEnoughOperandsException();
+
         ComplexNumber num = stack.pop();
         ComplexNumber abs = absolute(num);
         ComplexNumber result;

@@ -28,6 +28,10 @@ public abstract class MathOperation implements Operation {
         return numOperands;
     }
 
+    protected boolean enoughOperandsInStack(int size) {
+        return size >= numOperands;
+    }
+
     @Override
     public abstract void execute(Stack<ComplexNumber> stack);
 
