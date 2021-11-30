@@ -5,13 +5,13 @@ import java.util.Stack;
 import src.main.java.resources.ComplexNumber;
 
 /**
- * @file SumOperation.java
+ * @file DifferenceOperation.java
  * @author Marco Plaitano
  * @date 30 Nov 2021
  */
 
-public class SumOperation extends MathOperation {
-    public SumOperation() {
+public class DifferenceOperation extends MathOperation {
+    public DifferenceOperation() {
         super(2);
     }
 
@@ -20,9 +20,10 @@ public class SumOperation extends MathOperation {
         ComplexNumber right = stack.pop();
         ComplexNumber left = stack.pop();
         ComplexNumber result = new ComplexNumber(
-            left.getReal() + right.getReal(),
-            left.getImaginary() + right.getImaginary()
+            left.getReal() - right.getReal(),
+            left.getImaginary() - right.getImaginary()
         );
         stack.push(result);
     }
+
 }
