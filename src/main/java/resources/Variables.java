@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import src.main.java.exceptions.InvalidVariableName;
+import src.main.java.exceptions.InvalidVariableNameException;
 
 /**
  * @file Variables.java
@@ -36,11 +36,11 @@ public class Variables {
      * @param number Complex number to insert into stack.
      * @throws EmptyStackException if stack is empty.
      */
-    public void push(char variable, ComplexNumber number) throws InvalidVariableName{
+    public void push(char variable, ComplexNumber number) throws InvalidVariableNameException{
         if(variable>='a' && variable<='z')
             this.variables.get(variable).push(number);
         else
-            throw new InvalidVariableName();
+            throw new InvalidVariableNameException();
     }
 
     /**
@@ -48,14 +48,29 @@ public class Variables {
      * @param variable Name of the variable's stack.
      * @return the top element of the variable's stack.
      * @throws EmptyStackException if stack is empty.
-     * @throws InvalidVariableName if variable name is invalid.
+     * @throws InvalidVariableNameException if variable name is invalid.
      */
-    public ComplexNumber pop(char variable) throws EmptyStackException,InvalidVariableName{
+    public ComplexNumber pop(char variable) throws EmptyStackException,InvalidVariableNameException{
         if(variable<'a' || variable>'z')
-            throw new InvalidVariableName();
+            throw new InvalidVariableNameException();
         if(this.variables.get(variable).isEmpty())
             throw new EmptyStackException();
         return this.variables.get(variable).pop();
+    }
+
+    /**
+     * @brief Top a complex number from a variable's stack.
+     * @param variable Name of the variable's stack.
+     * @return the top element of the variable's stack.
+     * @throws EmptyStackException if stack is empty.
+     * @throws InvalidVariableNameException if variable name is invalid.
+     */
+    public ComplexNumber peek(char variable) throws EmptyStackException,InvalidVariableNameException{
+        if(variable<'a' || variable>'z')
+            throw new InvalidVariableNameException();
+        if(this.variables.get(variable).isEmpty())
+            throw new EmptyStackException();
+        return this.variables.get(variable).peek();
     }
 
 }
