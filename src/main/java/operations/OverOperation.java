@@ -10,6 +10,10 @@ import src.main.java.resources.ComplexNumber;
  * @author Luigi Scovotto
  * @date 30 Nov 2021
  */
+
+ /**
+ * @brief This class presents a method to push a copy of the second last element.
+ */
 public class OverOperation extends Operation{
 
     public OverOperation() {
@@ -17,6 +21,8 @@ public class OverOperation extends Operation{
     }
      /**
      * @brief Pushes a copy of the second last element.
+     * @param stack The stack on which to execute the operation.
+     * @throws NotEnoughOperandsException if stack is empty.
      */
     @Override
     public void execute(Stack <ComplexNumber> stack) throws NotEnoughOperandsException{
