@@ -41,7 +41,7 @@ public class CalculatorTest {
 
     @Test (expected = UnrecognizedOperationException.class)
     public void testRunOperationOnNoOperation() throws Exception {
-        c.runOperation(stack, "hello");
+        c.runStackOperation(stack, "hello");
     }
 
     @Test
@@ -51,7 +51,7 @@ public class CalculatorTest {
         Stack<ComplexNumber> stack2 = new Stack<>();
         stack2.addAll(stack);
         // sign invertion. Top inverts its sign, size does not change.
-        c.runOperation(stack, "+-");
+        c.runStackOperation(stack, "+-");
         operation.execute(stack2);
         assertEquals(stack2.peek(), stack.peek());
         assertEquals(size, stack.size());
@@ -64,7 +64,7 @@ public class CalculatorTest {
         Stack<ComplexNumber> stack2 = new Stack<>();
         stack2.addAll(stack);
         // square root. Top gets square rooted, size does not change.
-        c.runOperation(stack, "sqrt");
+        c.runStackOperation(stack, "sqrt");
         operation.execute(stack2);
         assertEquals(stack2.peek(), stack.peek());
         assertEquals(size, stack.size());
@@ -77,7 +77,7 @@ public class CalculatorTest {
         Stack<ComplexNumber> stack2 = new Stack<>();
         stack2.addAll(stack);
         // Sum. Top 2 elements are removed and result pushed to the stack.
-        c.runOperation(stack, "+");
+        c.runStackOperation(stack, "+");
         operation.execute(stack2);
         assertEquals(stack2.peek(), stack.peek());
         assertEquals(size - 1, stack.size());
@@ -90,7 +90,7 @@ public class CalculatorTest {
         Stack<ComplexNumber> stack2 = new Stack<>();
         stack2.addAll(stack);
         // Difference. Top 2 elements are removed and result pushed to the stack.
-        c.runOperation(stack, "-");
+        c.runStackOperation(stack, "-");
         operation.execute(stack2);
         assertEquals(stack2.peek(), stack.peek());
         assertEquals(size - 1, stack.size());
@@ -103,7 +103,7 @@ public class CalculatorTest {
         Stack<ComplexNumber> stack2 = new Stack<>();
         stack2.addAll(stack);
         // Multiplication. Top 2 elements are removed and result pushed to the stack.
-        c.runOperation(stack, "*");
+        c.runStackOperation(stack, "*");
         operation.execute(stack2);
         assertEquals(stack2.peek(), stack.peek());
         assertEquals(size - 1, stack.size());
@@ -116,7 +116,7 @@ public class CalculatorTest {
         Stack<ComplexNumber> stack2 = new Stack<>();
         stack2.addAll(stack);
         // Division. Top 2 elements are removed and result pushed to the stack.
-        c.runOperation(stack, "/");
+        c.runStackOperation(stack, "/");
         operation.execute(stack2);
         assertEquals(stack2.peek(), stack.peek());
         assertEquals(size - 1, stack.size());
@@ -129,20 +129,20 @@ public class CalculatorTest {
         stack.push(new ComplexNumber(-2.8, 11));
         assertEquals(1, stack.size());
 
-        assertThrows(NotEnoughOperandsException.class, () -> c.runOperation(stack, "+"));
-        assertThrows(NotEnoughOperandsException.class, () -> c.runOperation(stack, "-"));
-        assertThrows(NotEnoughOperandsException.class, () -> c.runOperation(stack, "*"));
-        assertThrows(NotEnoughOperandsException.class, () -> c.runOperation(stack, "/"));
+        assertThrows(NotEnoughOperandsException.class, () -> c.runStackOperation(stack, "+"));
+        assertThrows(NotEnoughOperandsException.class, () -> c.runStackOperation(stack, "-"));
+        assertThrows(NotEnoughOperandsException.class, () -> c.runStackOperation(stack, "*"));
+        assertThrows(NotEnoughOperandsException.class, () -> c.runStackOperation(stack, "/"));
 
         // no items in the stack.
         stack.clear();
         assertEquals(0, stack.size());
 
-        assertThrows(NotEnoughOperandsException.class, () -> c.runOperation(stack, "+"));
-        assertThrows(NotEnoughOperandsException.class, () -> c.runOperation(stack, "-"));
-        assertThrows(NotEnoughOperandsException.class, () -> c.runOperation(stack, "*"));
-        assertThrows(NotEnoughOperandsException.class, () -> c.runOperation(stack, "/"));
-        assertThrows(NotEnoughOperandsException.class, () -> c.runOperation(stack, "+-"));
-        assertThrows(NotEnoughOperandsException.class, () -> c.runOperation(stack, "sqrt"));
+        assertThrows(NotEnoughOperandsException.class, () -> c.runStackOperation(stack, "+"));
+        assertThrows(NotEnoughOperandsException.class, () -> c.runStackOperation(stack, "-"));
+        assertThrows(NotEnoughOperandsException.class, () -> c.runStackOperation(stack, "*"));
+        assertThrows(NotEnoughOperandsException.class, () -> c.runStackOperation(stack, "/"));
+        assertThrows(NotEnoughOperandsException.class, () -> c.runStackOperation(stack, "+-"));
+        assertThrows(NotEnoughOperandsException.class, () -> c.runStackOperation(stack, "sqrt"));
     }
 }
