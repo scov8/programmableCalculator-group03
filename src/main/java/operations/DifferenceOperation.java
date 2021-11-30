@@ -11,11 +11,21 @@ import src.main.java.resources.ComplexNumber;
  * @date 30 Nov 2021
  */
 
+/**
+ * @brief This class presents a method to execute the Difference between two
+ *        complex numbers contained in a stack.
+ */
 public class DifferenceOperation extends MathOperation {
     public DifferenceOperation() {
         super(2);
     }
 
+    /**
+     * @brief Execute the difference operation on the given stack.
+     * @param stack The stack on which to execute the operation.
+     * @throws NotEnoughOperandsException if the stack does not contain enough
+     *                                    elements.
+     */
     @Override
     public void execute(Stack<ComplexNumber> stack) throws NotEnoughOperandsException {
         if (!super.enoughOperandsInStack(stack.size()))
@@ -24,9 +34,8 @@ public class DifferenceOperation extends MathOperation {
         ComplexNumber right = stack.pop();
         ComplexNumber left = stack.pop();
         ComplexNumber result = new ComplexNumber(
-            left.getReal() - right.getReal(),
-            left.getImaginary() - right.getImaginary()
-        );
+                left.getReal() - right.getReal(),
+                left.getImaginary() - right.getImaginary());
         stack.push(result);
     }
 

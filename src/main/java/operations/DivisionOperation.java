@@ -12,11 +12,24 @@ import src.main.java.resources.ComplexNumber;
  * @date 30 Nov 2021
  */
 
+/**
+ * @brief This class presents a method to execute the Division of two complex
+ *        numbers contained in a stack.
+ */
 public class DivisionOperation extends MathOperation {
     public DivisionOperation() {
         super(2);
     }
 
+    /**
+     * @brief Execute the division operation on the given stack.
+     * @param stack The stack on which to execute the operation.
+     * @throws NotEnoughOperandsException if the stack does not contain enough
+     *                                    elements.
+     * @throws IndeterminateFormException if the division results in an
+     *                                    indeterminate
+     *                                    form.
+     */
     @Override
     public void execute(Stack<ComplexNumber> stack) throws NotEnoughOperandsException, IndeterminateFormException {
         if (!super.enoughOperandsInStack(stack.size()))
@@ -28,9 +41,9 @@ public class DivisionOperation extends MathOperation {
 
         double denominator = Math.pow(right.getReal(), 2) + Math.pow(right.getImaginary(), 2);
         double numeratorA = left.getReal() * right.getReal() +
-                            left.getImaginary() * right.getImaginary();
+                left.getImaginary() * right.getImaginary();
         double numeratorB = left.getImaginary() * right.getReal() -
-                            left.getReal() * right.getImaginary();
+                left.getReal() * right.getImaginary();
 
         if (denominator == 0) {
             if (left.getReal() == 0 && left.getImaginary() == 0)

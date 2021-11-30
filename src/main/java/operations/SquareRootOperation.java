@@ -11,6 +11,10 @@ import src.main.java.resources.ComplexNumber;
  * @date 30 Nov 2021
  */
 
+/**
+ * @brief This class presents a method to execute the Square Root of a complex
+ *        number contained in a stack.
+ */
 public class SquareRootOperation extends MathOperation {
     public SquareRootOperation() {
         super(1);
@@ -43,6 +47,12 @@ public class SquareRootOperation extends MathOperation {
         return stack.peek();
     }
 
+    /**
+     * @brief Execute the square root operation on the given stack.
+     * @param stack The stack on which to execute the operation.
+     * @throws NotEnoughOperandsException if the stack does not contain enough
+     *                                    elements.
+     */
     @Override
     public void execute(Stack<ComplexNumber> stack) throws NotEnoughOperandsException {
         if (!super.enoughOperandsInStack(stack.size()))
@@ -57,7 +67,8 @@ public class SquareRootOperation extends MathOperation {
             ComplexNumber squareRootAbs = new ComplexNumber(Math.sqrt(abs.getReal()), 0);
             ComplexNumber sumAbsOperand = operate(num, abs, new SumOperation());
             ComplexNumber AbsSumAbsOperand = absolute(sumAbsOperand);
-            result = operate(squareRootAbs, operate(sumAbsOperand, AbsSumAbsOperand, new DivisionOperation()),new MultiplicationOperation());
+            result = operate(squareRootAbs, operate(sumAbsOperand, AbsSumAbsOperand, new DivisionOperation()),
+                    new MultiplicationOperation());
         }
         stack.push(result);
     }
