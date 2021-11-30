@@ -24,8 +24,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 public class FXMLController {
 
@@ -52,6 +52,15 @@ public class FXMLController {
 
     @FXML // fx:id="variableList"
     private ListView<?> variableList; // Value injected by FXMLLoader
+
+    @FXML // fx:id="valueClm"
+    private TableColumn<?, ?> valueClm; // Value injected by FXMLLoader
+
+    @FXML // fx:id="tableView"
+    private TableView<?> tableView; // Value injected by FXMLLoader
+
+    @FXML // fx:id="nameClm"
+    private TableColumn<?, ?> nameClm; // Value injected by FXMLLoader
 
     private ObservableList<ComplexNumber> stackValue;
 
@@ -127,7 +136,7 @@ public class FXMLController {
         // input is an operation
         if (InputParser.isOperation(input)) {
             try {
-                calculator.runOperation(numberStack, input);
+                calculator.runStackOperation(numberStack, input);
                 updateStackView(null);
             } catch (NotEnoughOperandsException e) {
                 showError("Not enough elements.",
@@ -171,11 +180,14 @@ public class FXMLController {
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert enter != null : "fx:id=\"enter\" was not injected: check your FXML file 'view.fxml'.";
+        assert nameClm != null : "fx:id=\"nameClm\" was not injected: check your FXML file 'view.fxml'.";
         assert paneRoot != null : "fx:id=\"paneRoot\" was not injected: check your FXML file 'view.fxml'.";
         assert resultLabel != null : "fx:id=\"resultLabel\" was not injected: check your FXML file 'view.fxml'.";
         assert stack != null : "fx:id=\"stack\" was not injected: check your FXML file 'view.fxml'.";
+        assert tableView != null : "fx:id=\"tableView\" was not injected: check your FXML file 'view.fxml'.";
         assert textInput != null : "fx:id=\"textInput\" was not injected: check your FXML file 'view.fxml'.";
-        assert variableList != null : "fx:id=\"variableList\" was not injected: check your FXML file 'view.fxml'.";
+        assert valueClm != null : "fx:id=\"valueClm\" was not injected: check your FXML file 'view.fxml'.";
+
 
 
 
