@@ -34,7 +34,7 @@
          <opaqueInsets>
             <Insets />
          </opaqueInsets></Label>
-      <ListView fx:id="stackView" layoutX="60.0" layoutY="147.0" prefHeight="200.0" prefWidth="200.0" style="-fx-font-family: Arial;" AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="340.0" />
+      <ListView fx:id="stack" layoutX="60.0" layoutY="147.0" prefHeight="200.0" prefWidth="200.0" style="-fx-font-family: Arial;" AnchorPane.bottomAnchor="53.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="340.0" />
       <Label layoutX="163.0" layoutY="85.0" style="-fx-font-family: Arial;" text="ANS" />
       <TableView fx:id="tableView" layoutX="348.0" layoutY="147.0" prefHeight="200.0" prefWidth="200.0" style="-fx-font-family: Arial;">
         <columns>
