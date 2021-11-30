@@ -76,8 +76,6 @@ public class CalculatorTest {
         SumOperation operation = new SumOperation();
         Stack<ComplexNumber> stack2 = new Stack<>();
         stack2.addAll(stack);
-        // second to top element of the stack.
-        ComplexNumber top2 = stack.elementAt(size - 2);
         // Sum. Top 2 elements are removed and result pushed to the stack.
         c.runOperation(stack, "+");
         operation.execute(stack2);
@@ -91,8 +89,6 @@ public class CalculatorTest {
         DifferenceOperation operation = new DifferenceOperation();
         Stack<ComplexNumber> stack2 = new Stack<>();
         stack2.addAll(stack);
-        // second to top element of the stack.
-        ComplexNumber top2 = stack.elementAt(size - 2);
         // Difference. Top 2 elements are removed and result pushed to the stack.
         c.runOperation(stack, "-");
         operation.execute(stack2);
@@ -106,8 +102,6 @@ public class CalculatorTest {
         MultiplicationOperation operation = new MultiplicationOperation();
         Stack<ComplexNumber> stack2 = new Stack<>();
         stack2.addAll(stack);
-        // second to top element of the stack.
-        ComplexNumber top2 = stack.elementAt(size - 2);
         // Multiplication. Top 2 elements are removed and result pushed to the stack.
         c.runOperation(stack, "*");
         operation.execute(stack2);
@@ -121,8 +115,6 @@ public class CalculatorTest {
         DivisionOperation operation = new DivisionOperation();
         Stack<ComplexNumber> stack2 = new Stack<>();
         stack2.addAll(stack);
-        // second to top element of the stack.
-        ComplexNumber top2 = stack.elementAt(size - 2);
         // Division. Top 2 elements are removed and result pushed to the stack.
         c.runOperation(stack, "/");
         operation.execute(stack2);

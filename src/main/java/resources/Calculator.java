@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import src.main.java.exceptions.IndeterminateFormException;
-import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.exceptions.UnrecognizedOperationException;
 import src.main.java.operations.DifferenceOperation;
 import src.main.java.operations.DivisionOperation;
