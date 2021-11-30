@@ -12,7 +12,7 @@ import src.main.java.resources.ComplexNumber;
 /**
  * @file SwapOperationTest.java
  * @author Gerardo Rosa
- * @date 30 Nov 2021 *
+ * @date 30 Nov 2021
  */
 public class SwapOperationTest {
     private static SwapOperation swap;
