@@ -46,11 +46,11 @@ public class ClearOperationTest {
         stack.push(number1);
         stack.push(number2);
         clear.execute(stack);
-        assertTrue(stack.isEmpty());
+        assertTrue(stack.empty());
 
         stack.push(number3);
         stack.push(number4);
         clear.execute(stack);
-        assertTrue(stack.isEmpty());
+        assertTrue(stack.empty());
     }
 }
