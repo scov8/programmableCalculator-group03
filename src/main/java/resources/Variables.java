@@ -34,6 +34,7 @@ public class Variables {
      * @brief Push a complex number into desidered stack.
      * @param variable Name of the variable's stack.
      * @param number Complex number to insert into stack.
+     * @throws EmptyStackException if stack is empty.
      */
     public void push(char variable, ComplexNumber number) throws InvalidVariableName{
         if(variable>='a' && variable<='z')
@@ -46,6 +47,8 @@ public class Variables {
      * @brief Pop a complex number from a variable's stack.
      * @param variable Name of the variable's stack.
      * @return the top element of the variable's stack.
+     * @throws EmptyStackException if stack is empty.
+     * @throws InvalidVariableName if variable name is invalid.
      */
     public ComplexNumber pop(char variable) throws EmptyStackException,InvalidVariableName{
         if(variable<'a' || variable>'z')
