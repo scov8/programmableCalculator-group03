@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import java.util.Stack;
 
+import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.operations.DifferenceOperation;
 import src.main.java.resources.ComplexNumber;
 
@@ -142,6 +143,12 @@ public class DifferenceOperationTest {
         result65 = new ComplexNumber(-8, -4);
     }
 
+    @Test (expected = NotEnoughOperandsException.class)
+    public void testNotEnoughOperandsExceptionOnExecute() {
+        stack.clear();
+        stack.push(number0);
+        difference.execute(stack);
+    }
 
     @Test
     public void testExecute() {

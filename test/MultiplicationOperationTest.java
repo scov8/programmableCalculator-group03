@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import java.util.Stack;
 
+import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.operations.MultiplicationOperation;
 import src.main.java.resources.ComplexNumber;
 
@@ -98,6 +99,13 @@ public class MultiplicationOperationTest {
         result55 = new ComplexNumber(64, 0);
         result56 = new ComplexNumber(0, -32);
         result66 = new ComplexNumber(-16, 0);
+    }
+
+    @Test (expected = NotEnoughOperandsException.class)
+    public void testNotEnoughOperandsExceptionOnExecute() {
+        stack.clear();
+        stack.push(number0);
+        multiplication.execute(stack);
     }
 
     @Test

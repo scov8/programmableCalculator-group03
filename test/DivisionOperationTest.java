@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import java.util.Stack;
 
+import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.operations.DivisionOperation;
 import src.main.java.resources.ComplexNumber;
 
@@ -138,6 +139,13 @@ public class DivisionOperationTest {
         result54 = new ComplexNumber(-0.361990950226244, -0.398190045248869);
         result64 = new ComplexNumber(-0.199095022624434, 0.180995475113122);
         result65 = new ComplexNumber(0, -0.5);
+    }
+
+    @Test (expected = NotEnoughOperandsException.class)
+    public void testNotEnoughOperandsExceptionOnExecute() {
+        stack.clear();
+        stack.push(number0);
+        division.execute(stack);
     }
 
     @Test

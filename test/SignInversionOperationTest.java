@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import java.util.Stack;
 
+import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.operations.SignInversionOperation;
 import src.main.java.resources.ComplexNumber;
 
@@ -56,6 +57,12 @@ public class SignInversionOperationTest {
         result4 = new ComplexNumber(10,-11);
         result5 = new ComplexNumber(-8,0);
         result6 = new ComplexNumber(0,4);
+    }
+
+    @Test (expected = NotEnoughOperandsException.class)
+    public void testNotEnoughOperandsExceptionOnExecute() {
+        stack.clear();
+        signInversion.execute(stack);
     }
 
     @Test

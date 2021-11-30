@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import java.util.Stack;
 
+import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.operations.SquareRootOperation;
 import src.main.java.resources.ComplexNumber;
 
@@ -56,6 +57,12 @@ public class SquareRootOperationTest {
         result4 = new ComplexNumber(1.559818698970894, 3.526050818360288);
         result5 = new ComplexNumber(2.828427124746190, 0);
         result6 = new ComplexNumber(1.414213562373095, -1.414213562373095);
+    }
+
+    @Test (expected = NotEnoughOperandsException.class)
+    public void testNotEnoughOperandsExceptionOnExecute() {
+        stack.clear();
+        squareRoot.execute(stack);
     }
 
     @Test
