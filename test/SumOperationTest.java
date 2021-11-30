@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import java.util.Stack;
 
+import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.operations.SumOperation;
 import src.main.java.resources.ComplexNumber;
 
@@ -98,6 +99,13 @@ public class SumOperationTest {
         result55 = new ComplexNumber(16, 0);
         result56 = new ComplexNumber(8, -4);
         result66 = new ComplexNumber(0, -8);
+    }
+
+    @Test (expected = NotEnoughOperandsException.class)
+    public void testNotEnoughOperandsExceptionOnExecute() {
+        stack.clear();
+        stack.push(number0);
+        sum.execute(stack);
     }
 
     @Test
