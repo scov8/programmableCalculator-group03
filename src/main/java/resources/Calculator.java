@@ -4,11 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.exceptions.UnrecognizedOperationException;
+import src.main.java.operations.ClearOperation;
 import src.main.java.operations.DifferenceOperation;
 import src.main.java.operations.DivisionOperation;
+import src.main.java.operations.DupOperation;
 import src.main.java.operations.MultiplicationOperation;
 import src.main.java.operations.Operation;
+import src.main.java.operations.OverOperation;
 import src.main.java.operations.SignInversionOperation;
 import src.main.java.operations.SquareRootOperation;
 import src.main.java.operations.SumOperation;
@@ -33,6 +37,9 @@ public class Calculator {
         operations.put("/", new DivisionOperation());
         operations.put("+-", new SignInversionOperation());
         operations.put("sqrt", new SquareRootOperation());
+        operations.put("clear", new ClearOperation());
+        operations.put("dup", new DupOperation());
+        operations.put("over", new OverOperation());
     }
 
     /**
@@ -40,10 +47,16 @@ public class Calculator {
      * @param stack The stack of complex numbers.
      * @param op    String representing the operation to execute.
      */
-    public void runOperation(Stack<ComplexNumber> stack, String opString) throws Exception {
+    public void runStackOperation(Stack<ComplexNumber> stack, String opString)
+        throws NotEnoughOperandsException, UnrecognizedOperationException {
         Operation op = operations.get(opString);
         if (op == null)
             throw new UnrecognizedOperationException();
         op.execute(stack);
+    }
+
+    public void runVariablesOperation(Variables variables, Stack<ComplexNumber> stack, String opString) {
+        System.out.println("running VARIABLES operation: " + opString);
+
     }
 }
