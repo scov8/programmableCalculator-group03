@@ -13,7 +13,13 @@ import static org.junit.Assert.*;
 import java.util.Stack;
 
 import src.main.java.exceptions.NotEnoughOperandsException;
-import src.main.java.operations.Operations;
+import src.main.java.exceptions.UnrecognizedOperationException;
+import src.main.java.operations.DifferenceOperation;
+import src.main.java.operations.DivisionOperation;
+import src.main.java.operations.MultiplicationOperation;
+import src.main.java.operations.SignInversionOperation;
+import src.main.java.operations.SquareRootOperation;
+import src.main.java.operations.SumOperation;
 import src.main.java.resources.Calculator;
 import src.main.java.resources.ComplexNumber;
 
@@ -33,81 +39,86 @@ public class CalculatorTest {
         stack.push(new ComplexNumber(2.4, -8.024));
     }
 
-    @Test
+    @Test (expected = UnrecognizedOperationException.class)
     public void testRunOperationOnNoOperation() throws Exception {
-        int size = stack.size();
-        ComplexNumber top = stack.peek();
-        // operation not recognized means no operation gets executed.
         c.runOperation(stack, "hello");
-        assertEquals(top, stack.peek());
-        assertEquals(size, stack.size());
     }
 
     @Test
     public void testRunOperationOnSignInversion() throws Exception {
         int size = stack.size();
-        ComplexNumber top = stack.peek();
+        SignInversionOperation operation = new SignInversionOperation();
+        Stack<ComplexNumber> stack2 = new Stack<>();
+        stack2.addAll(stack);
         // sign invertion. Top inverts its sign, size does not change.
         c.runOperation(stack, "+-");
-        assertEquals(Operations.signInvertion(top), stack.peek());
+        operation.execute(stack2);
+        assertEquals(stack2.peek(), stack.peek());
         assertEquals(size, stack.size());
     }
 
     @Test
     public void testRunOperationOnSquareRoot() throws Exception {
         int size = stack.size();
-        ComplexNumber top = stack.peek();
+        SquareRootOperation operation = new SquareRootOperation();
+        Stack<ComplexNumber> stack2 = new Stack<>();
+        stack2.addAll(stack);
         // square root. Top gets square rooted, size does not change.
         c.runOperation(stack, "sqrt");
-        assertEquals(Operations.squareRoot(top), stack.peek());
+        operation.execute(stack2);
+        assertEquals(stack2.peek(), stack.peek());
         assertEquals(size, stack.size());
     }
 
     @Test
     public void testRunOperationOnSum() throws Exception {
         int size = stack.size();
-        ComplexNumber top = stack.peek();
-        // second to top element of the stack.
-        ComplexNumber top2 = stack.elementAt(size - 2);
+        SumOperation operation = new SumOperation();
+        Stack<ComplexNumber> stack2 = new Stack<>();
+        stack2.addAll(stack);
         // Sum. Top 2 elements are removed and result pushed to the stack.
         c.runOperation(stack, "+");
-        assertEquals(Operations.sum(top2, top), stack.peek());
+        operation.execute(stack2);
+        assertEquals(stack2.peek(), stack.peek());
         assertEquals(size - 1, stack.size());
     }
 
     @Test
     public void testRunOperationOnDifference() throws Exception {
         int size = stack.size();
-        ComplexNumber top = stack.peek();
-        // second to top element of the stack.
-        ComplexNumber top2 = stack.elementAt(size - 2);
+        DifferenceOperation operation = new DifferenceOperation();
+        Stack<ComplexNumber> stack2 = new Stack<>();
+        stack2.addAll(stack);
         // Difference. Top 2 elements are removed and result pushed to the stack.
         c.runOperation(stack, "-");
-        assertEquals(Operations.difference(top2, top), stack.peek());
+        operation.execute(stack2);
+        assertEquals(stack2.peek(), stack.peek());
         assertEquals(size - 1, stack.size());
     }
 
     @Test
     public void testRunOperationOnMultiplication() throws Exception {
         int size = stack.size();
-        ComplexNumber top = stack.peek();
-        // second to top element of the stack.
-        ComplexNumber top2 = stack.elementAt(size - 2);
+        MultiplicationOperation operation = new MultiplicationOperation();
+        Stack<ComplexNumber> stack2 = new Stack<>();
+        stack2.addAll(stack);
         // Multiplication. Top 2 elements are removed and result pushed to the stack.
         c.runOperation(stack, "*");
-        assertEquals(Operations.multiplication(top2, top), stack.peek());
+        operation.execute(stack2);
+        assertEquals(stack2.peek(), stack.peek());
         assertEquals(size - 1, stack.size());
     }
 
     @Test
-    public void testRunOperationOnDivsion() throws Exception {
+    public void testRunOperationOnDivision() throws Exception {
         int size = stack.size();
-        ComplexNumber top = stack.peek();
-        // second to top element of the stack.
-        ComplexNumber top2 = stack.elementAt(size - 2);
+        DivisionOperation operation = new DivisionOperation();
+        Stack<ComplexNumber> stack2 = new Stack<>();
+        stack2.addAll(stack);
         // Division. Top 2 elements are removed and result pushed to the stack.
         c.runOperation(stack, "/");
-        assertEquals(Operations.division(top2, top), stack.peek());
+        operation.execute(stack2);
+        assertEquals(stack2.peek(), stack.peek());
         assertEquals(size - 1, stack.size());
     }
 

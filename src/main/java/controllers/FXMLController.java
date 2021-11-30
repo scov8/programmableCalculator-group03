@@ -24,8 +24,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-
+import javafx.scene.control.TableView;
 public class FXMLController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -49,13 +50,18 @@ public class FXMLController {
     @FXML // fx:id="textInput"
     private TextField textInput; // Value injected by FXMLLoader
 
+    @FXML // fx:id="variableList"
+    private ListView<?> variableList; // Value injected by FXMLLoader
+
     private ObservableList<ComplexNumber> stackValue;
+
 
     /**
      * Main stack containing the numbers given in input by the user and the
      * results of the operations.
      */
     private Stack<ComplexNumber> numberStack;
+
 
     /**
      * Main instance of Calculator class that handles operations on the
@@ -164,17 +170,17 @@ public class FXMLController {
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert enter != null : "fx:id=\"enter\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
-        assert paneRoot != null
-                : "fx:id=\"paneRoot\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
-        assert resultLabel != null
-                : "fx:id=\"resultLabel\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
-        assert stack != null : "fx:id=\"stack\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
-        assert textInput != null
-                : "fx:id=\"textInput\" was not injected: check your FXML file 'FXMLDocumentController.fxml'.";
+        assert enter != null : "fx:id=\"enter\" was not injected: check your FXML file 'view.fxml'.";
+        assert paneRoot != null : "fx:id=\"paneRoot\" was not injected: check your FXML file 'view.fxml'.";
+        assert resultLabel != null : "fx:id=\"resultLabel\" was not injected: check your FXML file 'view.fxml'.";
+        assert stack != null : "fx:id=\"stack\" was not injected: check your FXML file 'view.fxml'.";
+        assert textInput != null : "fx:id=\"textInput\" was not injected: check your FXML file 'view.fxml'.";
+        assert variableList != null : "fx:id=\"variableList\" was not injected: check your FXML file 'view.fxml'.";
 
-        stackValue = FXCollections.observableArrayList();
-        numberStack = new Stack<>();
+
+
+        stackValue = FXCollections.observableArrayList();   //for the observable List
+        numberStack = new Stack<>();                        //for the number of the stak
         stack.setItems(stackValue);
         calculator = new Calculator();
         resultLabel.setText("Result here.");

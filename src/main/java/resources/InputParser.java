@@ -24,12 +24,12 @@ public class InputParser {
         text = text.replace(" ", "");
         text = text.replace("j", "i");
 
-        // real: 'a', '+a' or '-a'
-        if (!text.matches("^[+-]?[0-9]\\d*(\\.\\d+)?$"))
-            // complex: 'a+bi', 'a-bi', '-a+bi', '-a-bi', '+a+bi', '+a-bi'
-            if (!text.matches("^[+-]?[0-9]\\d*(\\.\\d+)?([+-][0-9]\\d*(\\.\\d+)?i)?$"))
-                // complex: 'bi', '-bi', '+bi', 'i'
-                if (!text.matches("^([+-]?[0-9]\\d*(\\.\\d+)?)?i$"))
+        // real: 'a'
+        if (!text.matches("^[+-]?[0-9]+[.]?[0-9]*$"))
+            // complex: 'a+bi', 'a+i'
+            if (!text.matches("^[+-]?[0-9]+[.]?[0-9]*[+-]([0-9]+[.]?[0-9]*)?i$"))
+                // complex: 'bi', 'i'
+                if (!text.matches("^[+-]?([0-9]+[.]?[0-9]*)?i$"))
                     return null;
 
         String a, b;
@@ -62,6 +62,8 @@ public class InputParser {
             // Get substring representing imaginary part of the number, sign
             // included, i/j excluded.
             b = text.substring(signPos, text.length() - 1);
+            if (b.length() == 1)
+                b += "1";
         }
 
         return new ComplexNumber(Double.parseDouble(a), Double.parseDouble(b));
