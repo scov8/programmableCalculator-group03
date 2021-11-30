@@ -1,6 +1,5 @@
 package src.main.java.operations;
 
-import java.util.EmptyStackException;
 import java.util.Stack;
 
 import src.main.java.resources.ComplexNumber;
@@ -12,7 +11,7 @@ import src.main.java.resources.ComplexNumber;
  */
 
 /**
- * @brief This class presents a method to clear the stack (delete all elements from the stack).
+ * @brief This class presents a method to clear the stack (deletes all elements from the stack).
  */
 public class ClearOperation extends Operation {
 
@@ -20,8 +19,8 @@ public class ClearOperation extends Operation {
     }
     /**
      * @brief Removes all the elements from the stack.
-     * @throws EmptyStackException if stack is empty.
-     */
+     * @param stack The stack on which to execute the operation.
+    */
     @Override
     public void execute(Stack <ComplexNumber> stack){
         stack.clear();
