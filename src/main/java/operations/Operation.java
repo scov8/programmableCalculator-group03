@@ -11,13 +11,42 @@ import src.main.java.resources.ComplexNumber;
  */
 
 /**
- * @brief This interface declares a single method to execute a generic
- *        operation.
+ * @brief This class represents an operation to execute on the elements
+ *        contained in a stack data structure.
  */
-public interface Operation {
+public abstract class Operation implements OperationInterface {
+    /** Number of operands needed for the operation. */
+    private int numOperands;
+
     /**
-     * @brief Execute an operation on the given stack.
-     * @param stack The stack on which to execute the operation.
+     * @brief Constructor.
+     *
+     *        Default number of operands is 2.
      */
-    public void execute(Stack<ComplexNumber> stack);
+    public Operation() {
+        this.numOperands = 2;
+    }
+
+    /**
+     * @brief Constructor.
+     * @param numOperands Number of operands needed to execute the operation.
+     */
+    public Operation(int numOperands) {
+        this.numOperands = numOperands;
+    }
+
+    /**
+     * @brief Check that the stack contains enough elements for the operation to
+     *        be executed.
+     * @param size Number of elements in the stack.
+     * @return `true` if size is at least as big as the number of operands;
+     *         `false` otherwise.
+     */
+    protected boolean enoughOperandsInStack(int size) {
+        return size >= numOperands;
+    }
+
+    @Override
+    public abstract void execute(Stack<ComplexNumber> stack);
+
 }

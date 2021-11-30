@@ -15,7 +15,7 @@ import src.main.java.resources.ComplexNumber;
  * @brief This class presents a method to execute the Sign Inversion of a
  *        complex number contained in a stack.
  */
-public class SignInversionOperation extends MathOperation {
+public class SignInversionOperation extends Operation {
     public SignInversionOperation() {
         super(1);
     }

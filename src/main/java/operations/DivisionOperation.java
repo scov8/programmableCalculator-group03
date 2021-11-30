@@ -16,7 +16,7 @@ import src.main.java.resources.ComplexNumber;
  * @brief This class presents a method to execute the Division of two complex
  *        numbers contained in a stack.
  */
-public class DivisionOperation extends MathOperation {
+public class DivisionOperation extends Operation {
     public DivisionOperation() {
         super(2);
     }

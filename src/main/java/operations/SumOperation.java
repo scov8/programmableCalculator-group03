@@ -15,7 +15,7 @@ import src.main.java.resources.ComplexNumber;
  * @brief This class presents a method to execute the Sum of two complex numbers
  *        contained in a stack.
  */
-public class SumOperation extends MathOperation {
+public class SumOperation extends Operation {
     public SumOperation() {
         super(2);
     }
