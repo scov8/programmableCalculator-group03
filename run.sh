@@ -14,10 +14,16 @@ if [[ ! -f "$main".java ]]; then
     exit 1
 fi
 
+# Delete previously compiled classes.
+echo "Cleaning previous builds..."
+for dir in $(find ./src/ -maxdepth 6 -type d); do
+    rm -f $dir/*.class
+done
+
 # Compile every Java file in the project.
 for file in $(find $(pwd) -maxdepth 6 -type f -name '*.java'); do
     [[ "$file" == *Test* ]] && continue
-    echo "Compiling $(basename $file)"
+    echo "Compiling $(basename $file)..."
     javac --module-path $fx_libs --add-modules javafx.controls \
     --add-modules javafx.fxml --add-modules javafx.swing \
     "$file"
@@ -25,7 +31,7 @@ for file in $(find $(pwd) -maxdepth 6 -type f -name '*.java'); do
     [[ $? != 0 ]] && exit 1
 done
 
-echo "All compiled. Running..."
+echo "ALL COMPILED. Running..."
 
 main=${main//\//.}
 
