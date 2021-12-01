@@ -1,76 +1,57 @@
 package src.main.java.resources;
 
-import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
-
-import src.main.java.exceptions.InvalidVariableNameException;
 
 /**
  * @file Variables.java
  * @author Francesco Tortora
- * @date 30 Nov 2021
+ * @date 01 Dic 2021
  */
 
 /**
- * @brief This class represents variables.
+ * @brief This class contains all the calculator Variables.
+ *
+ *        A Variable has a name (letter of the alphabet) and a value copied
+ *        from/to the main numbers stack.
+ *        The calculator has a total of 26 Variables, one for each letter of the
+ *        alphabet.
  */
 public class Variables {
-    Map <Character, Stack<ComplexNumber>> variables;
+    /**
+     * The variables are stored in a map. Their name is the key and the number
+     * is the value.
+     */
+    Map<Character, ComplexNumber> map;
 
     /**
-     * @brief Variables constructor.
+     * @brief Constructor.
      */
     public Variables() {
-        this.variables = new HashMap<Character, Stack<ComplexNumber>>();
+        map = new HashMap<Character, ComplexNumber>();
 
-        for (char alphabet = 'a'; alphabet <='z'; alphabet++ ){
-            this.variables.put(alphabet,new Stack<ComplexNumber>());
+        // Each variable starts with a null value.
+        for (char letter = 'a'; letter <= 'z'; letter++) {
+            map.put(Character.valueOf(letter), null);
         }
     }
 
     /**
-     * @brief Push a complex number into desidered stack.
-     * @param variable Name of the variable's stack.
-     * @param number Complex number to insert into stack.
-     * @throws EmptyStackException if stack is empty.
+     * @brief Get value from variable named `name`.
+     * @param name Name of the variable.
+     * @return Value of the variable.
      */
-    public void push(char variable, ComplexNumber number) throws InvalidVariableNameException{
-        if(variable>='a' && variable<='z')
-            this.variables.get(variable).push(number);
-        else
-            throw new InvalidVariableNameException();
+    public ComplexNumber get(char name) {
+        return map.get(Character.valueOf(name));
     }
 
     /**
-     * @brief Pop a complex number from a variable's stack.
-     * @param variable Name of the variable's stack.
-     * @return the top element of the variable's stack.
-     * @throws EmptyStackException if stack is empty.
-     * @throws InvalidVariableNameException if variable name is invalid.
+     * @brief Set a new value for the variable named `name`.
+     * @param name  Name of the variable.
+     * @param value Value to set.
      */
-    public ComplexNumber pop(char variable) throws EmptyStackException,InvalidVariableNameException{
-        if(variable<'a' || variable>'z')
-            throw new InvalidVariableNameException();
-        if(this.variables.get(variable).isEmpty())
-            throw new EmptyStackException();
-        return this.variables.get(variable).pop();
-    }
-
-    /**
-     * @brief Top a complex number from a variable's stack.
-     * @param variable Name of the variable's stack.
-     * @return the top element of the variable's stack.
-     * @throws EmptyStackException if stack is empty.
-     * @throws InvalidVariableNameException if variable name is invalid.
-     */
-    public ComplexNumber peek(char variable) throws EmptyStackException,InvalidVariableNameException{
-        if(variable<'a' || variable>'z')
-            throw new InvalidVariableNameException();
-        if(this.variables.get(variable).isEmpty())
-            throw new EmptyStackException();
-        return this.variables.get(variable).peek();
+    public void set(char name, ComplexNumber value) {
+        map.put(Character.valueOf(name), value);
     }
 
 }
