@@ -175,15 +175,20 @@ public class FXMLController {
                         "The stack does not contain enough values to execute the '" + input + "' operation.");
             } catch (IndeterminateFormException e) {
                 showError("Invalid operation.", "The '" + input + "' operation resulted in an indeterminate form.");
-            } catch (VariableWithoutValueException e) {
-                showError("Variable without value.", "The variable has no value yet.");
             }
         }
         // If input is an operation to execute on the Variables.
         else if (textRecognizer.isVariableOperation(input)) {
-            calculator.runVariablesOperation(variables, numbersStack, input);
-            updateStackView();
-            updateVariablesView();
+            try {
+                calculator.runVariablesOperation(variables, numbersStack, input);
+                updateStackView();
+                updateVariablesView();
+            } catch (NotEnoughOperandsException e) {
+                showError("Not enough elements.",
+                        "The stack does not contain enough values to execute the '" + input + "' operation.");
+            } catch (VariableWithoutValueException e) {
+                showError("Variable without value.", "The variable has no value yet.");
+            }
         }
         // If input is an operation to execute on the stack storing multiple
         // values of Variables.
