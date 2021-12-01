@@ -10,11 +10,12 @@ package src.main.java.resources;
  * @brief This class contains static methods to parse the user input.
  */
 public class TextRecognizer {
-    /**
-     * All recognized operations on the numbers stack.
-     */
+    /** All recognized operations on the numbers stack. */
     private final String[] stackOperations = { "+", "-", "*", "/", "+-", "sqrt",
             "clear", "dup", "swap", "over", "drop" };
+
+    /** All recognized operations on the variables stack. */
+    private final String[] variableStorageOperations = { "save", "restore" };
 
     /**
      * @brief Constructor.
@@ -22,29 +23,33 @@ public class TextRecognizer {
     public TextRecognizer() {
     }
 
+    /**
+     * @brief Format given text by removing spaces and turning all letters to
+     *        lowercase.
+     * @param text The text to format.
+     * @return The formatted version of text.
+     */
     public String formatText(String text) {
         return text.strip().replace(" ", "").toLowerCase();
     }
 
     /**
-     * @brief Parse the given text to return the corresponding complex number.
-     *
-     *        The string has to be in the form 'a+bi' to be correctly parsed.
+     * @brief Scan the given text to return the corresponding complex number.
      * @param text The string to parse.
-     * @return A `Number` instance or `null` if the string is incorrect.
+     * @return A `ComplexNumber` instance or `null` if the string is incorrect.
      */
     public ComplexNumber extractNumber(String text) {
         text = formatText(text);
 
-        // real: 'a'
+        // Real: 'a'
         if (!text.matches("^[+-]?[0-9]+[.]?[0-9]*$"))
-            // complex: 'a+bi', 'a+i', 'a+bj', 'a+j'
+            // Complex: 'a+bi', 'a+i', 'a+bj', 'a+j'
             if (!text.matches("^[+-]?[0-9]+[.]?[0-9]*[+-]([0-9]+[.]?[0-9]*)?[ij]$"))
-                // complex: 'bi', 'i', 'bj', 'j'
+                // Imaginary: 'bi', 'i', 'bj', 'j'
                 if (!text.matches("^[+-]?([0-9]+[.]?[0-9]*)?[ij]$"))
                     return null;
 
-        // uniform every string with i instead of j.
+        // Uniform every string with 'i' instead of 'j'.
         text = text.replaceAll("j", "i");
 
         String a, b;
@@ -93,22 +98,35 @@ public class TextRecognizer {
      */
     public boolean isStackOperation(String text) {
         text = formatText(text);
-
         for (String op : stackOperations)
             if (text.compareTo(op) == 0)
                 return true;
-
         return false;
     }
 
     /**
      * @brief Check whether the given string is a valid operation that can be
-     *        executed on the variables stack.
+     *        executed on one of the variables.
      * @param text The string to validate.
      * @return `true` if the string matches the pattern; `false` otherwise.
      */
     public boolean isVariableOperation(String text) {
         text = formatText(text);
         return text.matches("^[+\\-><][a-z]$");
+    }
+
+    /**
+     * @brief Check whether the given string is a valid operation that can be
+     *        executed on the stack of variables' values.
+     * @param text The string to validate.
+     * @return `true` if the string matches one of the operations; `false`
+     *         otherwise.
+     */
+    public boolean isVariableStorageOperation(String text) {
+        text = formatText(text);
+        for (String op : variableStorageOperations)
+            if (text.compareTo(op) == 0)
+                return true;
+        return false;
     }
 }

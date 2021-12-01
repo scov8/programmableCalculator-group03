@@ -5,17 +5,9 @@ import java.util.Map;
 import java.util.Stack;
 
 import src.main.java.exceptions.NotEnoughOperandsException;
-import src.main.java.exceptions.UnrecognizedOperationException;
-import src.main.java.operations.ClearOperation;
-import src.main.java.operations.DifferenceOperation;
-import src.main.java.operations.DivisionOperation;
-import src.main.java.operations.DupOperation;
-import src.main.java.operations.MultiplicationOperation;
-import src.main.java.operations.Operation;
-import src.main.java.operations.OverOperation;
-import src.main.java.operations.SignInversionOperation;
-import src.main.java.operations.SquareRootOperation;
-import src.main.java.operations.SumOperation;
+import src.main.java.exceptions.VariableWithoutValueException;
+import src.main.java.operations.*;
+import src.main.java.variables.*;
 
 /**
  * @file Calculator.java
@@ -28,8 +20,17 @@ import src.main.java.operations.SumOperation;
  */
 public class Calculator {
     private Map<String, Operation> operations;
+    private Map<Character, VariableOperation> variableOperations;
+    private Map<String, VariableStorage> variableStorageOperations;
 
+    /**
+     * @brief Constructor.
+     */
     public Calculator() {
+        // Instantiate all the maps.
+        // Each map associates a string representing an operation to a class
+        // that implements that operation via an execute method.
+
         operations = new HashMap<>();
         operations.put("+", new SumOperation());
         operations.put("-", new DifferenceOperation());
@@ -38,25 +39,57 @@ public class Calculator {
         operations.put("+-", new SignInversionOperation());
         operations.put("sqrt", new SquareRootOperation());
         operations.put("clear", new ClearOperation());
+        operations.put("drop", new DropOperation());
         operations.put("dup", new DupOperation());
         operations.put("over", new OverOperation());
+        operations.put("swap", new SwapOperation());
+
+        variableOperations = new HashMap<>();
+        variableOperations.put('>', new SaveIntoVariable());
+        variableOperations.put('<', new SaveIntoStack());
+        variableOperations.put('+', new PlusVariable());
+        variableOperations.put('-', new MinusVariable());
+
+        variableStorageOperations = new HashMap<>();
+        variableStorageOperations.put("save", new SaveOperation());
+        variableStorageOperations.put("restore", new RestoreOperation());
     }
 
     /**
      * @brief Run the given operation on the elements of the stack.
-     * @param stack The stack of complex numbers.
-     * @param op    String representing the operation to execute.
+     * @param stack    The stack of complex numbers.
+     * @param opString String representing the operation to execute.
      */
-    public void runStackOperation(Stack<ComplexNumber> stack, String opString)
-        throws NotEnoughOperandsException, UnrecognizedOperationException {
+    public void runStackOperation(Stack<ComplexNumber> stack, String opString) throws NotEnoughOperandsException {
         Operation op = operations.get(opString);
-        if (op == null)
-            throw new UnrecognizedOperationException();
         op.execute(stack);
     }
 
-    public void runVariablesOperation(Variables variables, Stack<ComplexNumber> stack, String opString) {
-        System.out.println("running VARIABLES operation: " + opString);
+    /**
+     * @brief Run the given operation on one of the variables.
+     * @param variables Map containing all the calculator's variables.
+     * @param stack     The stack of complex numbers.
+     * @param opString  String representing the operation to execute.
+     */
+    public void runVariablesOperation(Variables variables, Stack<ComplexNumber> stack, String opString)
+            throws VariableWithoutValueException {
+        // The opString is in the form 'ov' where 'o' is the operation to execute
+        // and 'v' is the variable on which to execute 'o'.
+        char opChar = opString.charAt(0);
+        char variable = opString.charAt(1);
 
+        VariableOperation op = variableOperations.get(opChar);
+        op.execute(variables, stack, variable);
+    }
+
+    /**
+     * @brief Run the given operation on the stack of variables.
+     * @param variables Map containing all the calculator's variables.
+     * @param varStack  Stack storing multiple values for each variable.
+     * @param opString  String representing the operation to execute.
+     */
+    public void runVariableStorageOperation(Variables variable, VariablesStack varStack, String opString) {
+        VariableStorage op = variableStorageOperations.get(opString);
+        op.execute(variable, varStack);
     }
 }

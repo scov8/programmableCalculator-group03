@@ -13,7 +13,6 @@ import static org.junit.Assert.*;
 import java.util.Stack;
 
 import src.main.java.exceptions.NotEnoughOperandsException;
-import src.main.java.exceptions.UnrecognizedOperationException;
 import src.main.java.operations.DifferenceOperation;
 import src.main.java.operations.DivisionOperation;
 import src.main.java.operations.MultiplicationOperation;
@@ -37,11 +36,6 @@ public class CalculatorTest {
     public void initStack() {
         stack.push(new ComplexNumber(1, 3.5));
         stack.push(new ComplexNumber(2.4, -8.024));
-    }
-
-    @Test (expected = UnrecognizedOperationException.class)
-    public void testRunOperationOnNoOperation() throws Exception {
-        c.runStackOperation(stack, "hello");
     }
 
     @Test
