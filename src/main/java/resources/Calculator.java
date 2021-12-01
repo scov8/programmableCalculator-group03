@@ -72,7 +72,7 @@ public class Calculator {
      * @param opString  String representing the operation to execute.
      */
     public void runVariablesOperation(Variables variables, Stack<ComplexNumber> stack, String opString)
-            throws VariableWithoutValueException {
+            throws VariableWithoutValueException, NotEnoughOperandsException {
         // The opString is in the form 'ov' where 'o' is the operation to execute
         // and 'v' is the variable on which to execute 'o'.
         char opChar = opString.charAt(0);
