@@ -1,5 +1,5 @@
 /**
- * @file InputParserTest.java
+ * @file TextRecognizerTest.java
  * @author Marco Plaitano
  * @date 24 Nov 2021
  */
@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 import src.main.java.resources.TextRecognizer;
 import src.main.java.resources.ComplexNumber;
 
-public class InputParserTest {
+public class TextRecognizerTest {
     private static TextRecognizer textRecognizer;
 
     @BeforeClass
