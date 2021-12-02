@@ -12,7 +12,7 @@ import src.main.java.resources.Variables;
 /**
  * @file PlusVariable.java
  * @author Luigi Scovotto
- * @date 01 Dic 2021
+ * @date 02 Dic 2021
  */
 
 /**
