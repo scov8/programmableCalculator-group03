@@ -5,7 +5,6 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-
 /**
  * @file Number.java
  * @author Marco Plaitano

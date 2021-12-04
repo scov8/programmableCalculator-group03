@@ -10,8 +10,10 @@ import src.main.java.resources.ComplexNumber;
  * @author Gerardo Rosa
  * @date 30 Nov 2021
  */
+
 /**
- * @brief This class presents a method to remove the last element.
+ * @brief This class presents a method to remove the last element from the
+ *        stack.
  */
 public class DropOperation extends Operation {
 
@@ -25,7 +27,7 @@ public class DropOperation extends Operation {
      * @throws NotEnoughOperandsException if stack is empty.
      */
     @Override
-    public void execute(Stack<ComplexNumber> stack) throws NotEnoughOperandsException{
+    public void execute(Stack<ComplexNumber> stack) throws NotEnoughOperandsException {
         if (!super.enoughOperandsInStack(stack.size()))
             throw new NotEnoughOperandsException();
         stack.pop();
