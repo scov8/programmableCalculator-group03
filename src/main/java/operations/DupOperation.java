@@ -7,7 +7,7 @@ import src.main.java.resources.ComplexNumber;
 
 /**
  * @file DupOperation.java
- * @author Marco Plaitano
+ * @author Gerardo Rosa
  * @date 30 Nov 2021
  */
 

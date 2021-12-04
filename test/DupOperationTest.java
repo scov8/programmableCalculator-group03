@@ -11,7 +11,7 @@ import src.main.java.resources.ComplexNumber;
 
 /**
  * @file DupOperationTest.java
- * @author Marco Plaitano
+ * @author Gerardo Rosa
  * @date 30 Nov 2021
  */
 public class DupOperationTest {
