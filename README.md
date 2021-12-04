@@ -4,7 +4,7 @@
 
 + [Github repository](https://github.com/scov8/programmableCalculator-group03)
 + [Trello Board](https://trello.com/b/f7cQ1FJC/programmablecalculator-group03)
-+ [Drive] (https://drive.google.com/drive/folders/0AEyBDDBEprxOUk9PVA)
++ [Drive](https://drive.google.com/drive/folders/0AEyBDDBEprxOUk9PVA)
 
 ### Pre-gaming Artifacts
 
