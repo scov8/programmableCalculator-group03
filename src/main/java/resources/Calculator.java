@@ -1,6 +1,7 @@
 package src.main.java.resources;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Stack;
 
 import src.main.java.exceptions.IndeterminateFormException;
@@ -21,24 +22,52 @@ import src.main.java.operations.Operation;
  * @brief This class handles the operation and the operands in the stack.
  */
 public class Calculator implements Serializable {
+    /** Maps containing all the operations supported by this application. */
     private OperationsMap operationsMap;
+    /**
+     * Main stack containing the numbers given in input by the user and the
+     * results of the operations.
+     */
     private Stack<ComplexNumber> numbersStack;
+    /**
+     * Map of 26 ComplexNumber variables, one for each letter of the alphabet.
+     */
     private Variables variables;
+    /**
+     * Map associating a stack to each variable to save multiple instances of
+     * their values.
+     */
     private VariablesStack varStack;
 
     /**
      * @brief Constructor.
      * @param operationsMap All the supported operations.
-     * @param numbersStack  The stack of complex numbers.
-     * @param variables     The calculator variables.
-     * @param varStack      Map associating a stack to each variable.
      */
-    public Calculator(OperationsMap operationsMap, Stack<ComplexNumber> numbersStack,
-            Variables variables, VariablesStack varStack) {
+    public Calculator(OperationsMap operationsMap) {
         this.operationsMap = operationsMap;
-        this.numbersStack = numbersStack;
-        this.variables = variables;
-        this.varStack = varStack;
+        this.numbersStack = new Stack<>();
+        this.variables = new Variables();
+        this.varStack = new VariablesStack();
+    }
+
+    /**
+     * @brief Retrieve the top K elements from the stack.
+     * @param k Number of elements to retrieve.
+     * @return List containing the elements.
+     */
+    public List<ComplexNumber> getTopKNumbers(int k) {
+        int max = numbersStack.size();
+        int min = max > k ? max - k : 0;
+        return numbersStack.subList(min, max);
+    }
+
+    /**
+     * @brief Retrieve the value of the variable named `name`.
+     * @param name Name of the variable.
+     * @return ComplexNumber value associated to the variable.
+     */
+    public ComplexNumber getVariable(char name) {
+        return variables.get(name);
     }
 
     /**

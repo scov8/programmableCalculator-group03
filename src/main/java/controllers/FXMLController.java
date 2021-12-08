@@ -10,6 +10,7 @@ import src.main.java.userOperations.UserOperation;
 
 import java.net.URL;
 import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Stack;
 
@@ -114,7 +115,7 @@ public class FXMLController {
     private Button newOpCancelButton; // Value injected by FXMLLoader
 
     /**
-     * `true` if the stackListView is currently showing the numbersStack;
+     * `true` if the stackListView is currently showing the stack of numbers;
      * `false` if it is showing the variables.
      */
     private boolean stackShowsNumbers;
@@ -135,25 +136,14 @@ public class FXMLController {
     private TextRecognizer textRecognizer;
 
     /**
-     * Main stack containing the numbers given in input by the user and the
-     * results of the operations.
-     */
-    private Stack<ComplexNumber> numbersStack;
-
-    /**
-     * Main instance of Calculator class that handles operations on the
-     * numbersStack.
+     * Main instance of Calculator class that handles all the operations.
      */
     private Calculator calculator;
-
-    private Variables variables;
-
-    private VariablesStack varStack;
 
     private OperationsMap operationsMap;
 
     /**
-     * Number of items from the numbersStack to show in the GUI at any time.
+     * Number of items from the stack of numbers to show in the GUI at any time.
      */
     private final int K = 15;
 
@@ -161,12 +151,10 @@ public class FXMLController {
      * @brief Update the ListView containing the stack of complex numbers.
      */
     private void updateNumbersStackView() {
-        // Only show the top K elements of the stack.
-        int max = numbersStack.size();
-        int min = max > K ? max - K : 0;
+        List<ComplexNumber> topKnumbers = calculator.getTopKNumbers(K);
 
         stackList.clear();
-        for (ComplexNumber n : numbersStack.subList(min, max))
+        for (ComplexNumber n : topKnumbers)
             stackList.add(n.toString());
         Collections.reverse(stackList);
 
@@ -185,7 +173,7 @@ public class FXMLController {
         // for every letter of the alphabet, get its name and its value. Only
         // variables having a non-null value will be displayed.
         for (char letter = 'a'; letter <= 'z'; letter++) {
-            ComplexNumber value = variables.get(letter);
+            ComplexNumber value = calculator.getVariable(letter);
             if (value != null) {
                 String s = letter + ":\t" + value.toString();
                 stackList.add(s);
@@ -483,11 +471,8 @@ public class FXMLController {
 
         // Instantiate all the needed core objects.
         operationsMap = new OperationsMap();
-        numbersStack = new Stack<>();
         textRecognizer = new TextRecognizer(operationsMap);
-        variables = new Variables();
-        varStack = new VariablesStack();
-        calculator = new Calculator(operationsMap, numbersStack, variables, varStack);
+        calculator = new Calculator(operationsMap);
 
         resultLabel.setText("Result here.");
 
