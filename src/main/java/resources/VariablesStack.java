@@ -25,8 +25,8 @@ public class VariablesStack {
     public VariablesStack() {
         map = new HashMap<Character, Stack<ComplexNumber>>();
 
-        for (char alphabet = 'a'; alphabet <= 'z'; alphabet++) {
-            map.put(alphabet, new Stack<ComplexNumber>());
+        for (char letter = 'a'; letter <= 'z'; letter++) {
+            map.put(letter, new Stack<ComplexNumber>());
         }
     }
 

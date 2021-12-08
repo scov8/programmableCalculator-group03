@@ -21,8 +21,8 @@ public class RestoreOperation extends VariableStorage {
      */
     @Override
     public void execute(Variables variables, VariablesStack varStack) {
-        for (char alphabet = 'a'; alphabet <= 'z'; alphabet++)
-            if (!varStack.isEmpty(alphabet))
-                variables.set(alphabet, varStack.pop(alphabet));
+        for (char letter = 'a'; letter <= 'z'; letter++)
+            if (!varStack.isEmpty(letter))
+                variables.set(letter, varStack.pop(letter));
     }
 }

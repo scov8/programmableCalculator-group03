@@ -14,18 +14,12 @@ import src.main.java.operations.OperationsMap;
  * @brief This class contains static methods to parse the user input.
  */
 public class TextRecognizer implements Serializable {
-    // TODO: use map for every operation
-    /** All recognized operations on the numbers stack. */
-    private final String[] stackOperations = { "+", "-", "*", "/", "+-", "sqrt",
-            "clear", "dup", "swap", "over", "drop" };
 
-    /** All recognized operations on the variables stack. */
-    private final String[] variableStorageOperations = { "save", "restore" };
-
-    OperationsMap operationsMap;
+    private OperationsMap operationsMap;
 
     /**
      * @brief Constructor.
+     * @param operationsMap All the supported operations.
      */
     public TextRecognizer(OperationsMap operationsMap) {
         this.operationsMap = operationsMap;
@@ -38,7 +32,9 @@ public class TextRecognizer implements Serializable {
      * @return The formatted version of text.
      */
     public String formatText(String text) {
-        return text.strip().toLowerCase();
+        text = text.trim().replaceAll("\\s{2,}", " ");
+        text = text.toLowerCase();
+        return text;
     }
 
     /**
@@ -47,8 +43,6 @@ public class TextRecognizer implements Serializable {
      * @return A `ComplexNumber` instance or `null` if the string is incorrect.
      */
     public ComplexNumber extractNumber(String text) {
-        text = formatText(text);
-
         // Real: 'a'
         if (!text.matches("^[+-]?[0-9]+[.]?[0-9]*$"))
             // Complex: 'a+bi', 'a+i', 'a+bj', 'a+j'
@@ -105,11 +99,7 @@ public class TextRecognizer implements Serializable {
      *         otherwise.
      */
     public boolean isStackOperation(String text) {
-        text = formatText(text);
-        for (String op : stackOperations)
-            if (text.compareTo(op) == 0)
-                return true;
-        return false;
+        return operationsMap.getStackOperation(text) != null;
     }
 
     /**
@@ -119,7 +109,6 @@ public class TextRecognizer implements Serializable {
      * @return `true` if the string matches the pattern; `false` otherwise.
      */
     public boolean isVariableOperation(String text) {
-        text = formatText(text);
         return text.matches("^[+\\-><][a-z]$");
     }
 
@@ -131,26 +120,33 @@ public class TextRecognizer implements Serializable {
      *         otherwise.
      */
     public boolean isVariableStorageOperation(String text) {
-        text = formatText(text);
-        for (String op : variableStorageOperations)
-            if (text.compareTo(op) == 0)
-                return true;
-        return false;
+        return operationsMap.getVariableStorageOperation(text) != null;
     }
 
-    public boolean existsUserDefinedOperation(String name) {
-        name = formatText(name);
-        return operationsMap.getUserDefinedOperation(name) != null;
+    /**
+     * @brief Check whether given text is a valid name for a user-defined
+     *        operation.
+     * @param name Name of the operation.
+     * @return boolean.
+     */
+    public boolean isValidUserDefinedOperationName(String name) {
+        return name.matches("^[a-zA-z]+$");
     }
 
-    public boolean isUserDefinedOperation(String sequence) {
+    /**
+     * @brief Check whether given text is a valid sequence for a user-defined
+     *        operation.
+     * @param sequence Sequence of the operation.
+     * @return boolean.
+     */
+    public boolean isValidUserDefinedOperationSequence(String sequence) {
         String[] values = sequence.split(" ");
 
         for (String value : values) {
             if (!isStackOperation(value))
                 if (!isVariableOperation(value))
                     if (!isVariableStorageOperation(value))
-                        if (!existsUserDefinedOperation(value))
+                        if (operationsMap.getUserDefinedOperation(value) == null)
                             if (extractNumber(value) == null)
                                 return false;
         }

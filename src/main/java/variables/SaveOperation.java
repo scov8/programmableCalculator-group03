@@ -25,10 +25,10 @@ public class SaveOperation extends VariableStorage {
      */
     @Override
     public void execute(Variables variables, VariablesStack varStack) {
-        for (char alphabet = 'a'; alphabet <= 'z'; alphabet++) {
-            ComplexNumber numbertToSave = variables.get(alphabet);
+        for (char letter = 'a'; letter <= 'z'; letter++) {
+            ComplexNumber numbertToSave = variables.get(letter);
             if (numbertToSave != null)
-                varStack.push(alphabet, numbertToSave);
+                varStack.push(letter, numbertToSave);
         }
     }
 }

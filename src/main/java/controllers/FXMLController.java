@@ -2,19 +2,12 @@ package src.main.java.controllers;
 
 import src.main.java.exceptions.IndeterminateFormException;
 import src.main.java.exceptions.NotEnoughOperandsException;
+import src.main.java.exceptions.UnrecognizedInputException;
 import src.main.java.exceptions.VariableWithoutValueException;
 import src.main.java.operations.OperationsMap;
 import src.main.java.resources.*;
 import src.main.java.userOperations.UserOperation;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.Collections;
 import java.util.ResourceBundle;
@@ -120,9 +113,19 @@ public class FXMLController {
     @FXML // fx:id="newOpCancelButton"
     private Button newOpCancelButton; // Value injected by FXMLLoader
 
+    /**
+     * `true` if the stackListView is currently showing the numbersStack;
+     * `false` if it is showing the variables.
+     */
     private boolean stackShowsNumbers;
 
+    /**
+     * ObservableList linked to the ListView for the numbers and the variables.
+     */
     private ObservableList<String> stackList;
+    /**
+     * ObservableList linked to the TableView for the user-defined operations.
+     */
     private ObservableList<UserOperation> operationsList;
 
     /**
@@ -143,9 +146,6 @@ public class FXMLController {
      */
     private Calculator calculator;
 
-    /**
-     * Instance of variables list.
-     */
     private Variables variables;
 
     private VariablesStack varStack;
@@ -193,6 +193,9 @@ public class FXMLController {
         }
     }
 
+    /**
+     * @brief Update the list of elements displayed in the stack ListView.
+     */
     private void updateStackView() {
         if (stackShowsNumbers)
             updateNumbersStackView();
@@ -214,87 +217,71 @@ public class FXMLController {
     }
 
     /**
-     * @brief Read user input, parse it and execute associated functions based
-     *        on the input type.
+     * @brief Read user input and format it.
      */
-    private void getUserInput() {
-        String input = textInput.getText();
+    private String getUserInput() {
+        String input = textRecognizer.formatText(textInput.getText());
         textInput.clear();
+        return input;
+    }
 
-        input = textRecognizer.formatText(input);
-        if (input.length() == 0)
-            return;
-
-        // If input is an operation to execute on the Numbers stack.
-        if (textRecognizer.isStackOperation(input)) {
-            try {
-                calculator.runStackOperation(numbersStack, input);
-                selectedNumbersStack(null);
-            } catch (NotEnoughOperandsException e) {
-                showError("Not enough elements.",
-                        "The stack does not contain enough values to execute the '" + input + "' operation.");
-            } catch (IndeterminateFormException e) {
-                showError("Invalid operation.", "The '" + input + "' operation resulted in an indeterminate form.");
-            }
-        }
-        // If input is an operation to execute on the Variables.
-        else if (textRecognizer.isVariableOperation(input)) {
-            try {
-                calculator.runVariablesOperation(variables, numbersStack, input);
-                selectedVariablesStack(null);
-            } catch (NotEnoughOperandsException e) {
-                showError("Not enough elements.",
-                        "The stack does not contain enough values to execute the '" + input + "' operation.");
-            } catch (VariableWithoutValueException e) {
-                showError("Variable without value.", "The variable has no value yet.");
-            }
-        }
-        // If input is an operation to execute on the stack storing multiple
-        // values of Variables.
-        else if (textRecognizer.isVariableStorageOperation(input)) {
-            try {
-                calculator.runVariableStorageOperation(variables, varStack, input);
-                selectedVariablesStack(null);
-            } catch (NotEnoughOperandsException e) {
-                showError("Not enough elements.",
-                        "The stack does not contain enough values to execute the '" + input + "' operation.");
-            } catch (VariableWithoutValueException e) {
-                showError("Variable without value.", "The variable has no value yet.");
-            }
-        }
-        // If input is a number.
-        else {
-            ComplexNumber number = textRecognizer.extractNumber(input);
-            if (number == null) {
-                showError("Invalid Input",
-                        "Please provide a valid operation or a number.\nNumbers must be in the form 'a + bi' or 'a' or 'bi'");
-                return;
-            }
-            numbersStack.push(number);
-            selectedNumbersStack(null);
+    /**
+     * @brief Execute calculator function associated to the given input.
+     * @param input The input string.
+     */
+    private void runUserInput(String input) {
+        try {
+            calculator.run(input, textRecognizer);
+        } catch (UnrecognizedInputException e) {
+            showError("Invalid Input",
+                    "Please provide a valid OPERATION or a NUMBER.\n" +
+                            "Numbers must be in the form 'a+bi', 'a' or 'bi'");
+        } catch (NotEnoughOperandsException e) {
+            showError("Not enough elements.",
+                    "The stack does not contain enough values to execute the '" +
+                            input + "' operation.");
+        } catch (IndeterminateFormException e) {
+            showError("Invalid operation.", "The '" + input + "' operation " +
+                    "resulted in an indeterminate form.");
+        } catch (VariableWithoutValueException e) {
+            showError("Variable without value.", "The variable has no value yet.");
+        } finally {
+            updateStackView();
         }
     }
 
     /**
-     * @brief When ENTER key is pressed, read user input, parse it and execute
-     *        associated functions based on the input type.
-     * @param event The pressing of the button.
+     * @brief This function gets called when new text input is given by the user.
+     */
+    private void newUserInput() {
+        String input = getUserInput();
+        if (input.length() == 0)
+            return;
+        runUserInput(input);
+    }
+
+    /**
+     * @brief Read user input, parse it and execute associated functions.
+     * @param event The pressing of the ENTER key.
      */
     @FXML
     private void onEnterKeyClick(ActionEvent event) {
-        getUserInput();
+        newUserInput();
     }
 
     /**
-     * @brief When ENTER button is clicked, read user input, parse it and execute
-     *        associated functions based on the input type.
-     * @param event The pressing of the button.
+     * @brief Read user input, parse it and execute associated functions.
+     * @param event The pressing of the "Enter" button.
      */
     @FXML
     private void onEnterButtonClick(ActionEvent event) {
-        getUserInput();
+        newUserInput();
     }
 
+    /**
+     * @brief Switch the ListView back to the stack of numbers.
+     * @param event The pressing of the "Numbers" selector button.
+     */
     @FXML
     private void selectedNumbersStack(ActionEvent event) {
         if (!stackShowsNumbers) {
@@ -306,6 +293,10 @@ public class FXMLController {
         updateStackView();
     }
 
+    /**
+     * @brief Switch the ListView back to the list of variables.
+     * @param event The pressing of the "Variables" selector button.
+     */
     @FXML
     private void selectedVariablesStack(ActionEvent event) {
         if (stackShowsNumbers) {
@@ -317,68 +308,112 @@ public class FXMLController {
         updateStackView();
     }
 
+    /**
+     * @brief Close the application.
+     * @param event The pressing of the "File.Close" button.
+     */
     @FXML
     private void menuCloseApplication(ActionEvent event) {
         Platform.exit();
     }
 
+    /**
+     * @brief Save all the user-defined operations on a file.
+     * @param event The pressing of the "File.Save Operations" button.
+     */
     @FXML
-    private void menuCreateOperation(ActionEvent event) {
-        mainPane.setVisible(false);
-        newOperationPane.setVisible(true);
+    private void menuSaveOperations(ActionEvent event) {
+        // TODO: save operations.
     }
 
+    /**
+     * @brief Restore all the user-defined operations from a file.
+     * @param event The pressing of the "File.Restore Operations" button.
+     */
     @FXML
-    private void menuEditOperation(ActionEvent event) {
-        System.out.println("trying to edit user defined via menubar");
-        // TODO: edit sequence
+    private void menuRestoreOperations(ActionEvent event) {
+        // TODO: restore operations.
     }
 
-    @FXML
-    private void menuDeleteOperation(ActionEvent event) {
-        UserOperation op = operationsTable.getSelectionModel().getSelectedItem();
-        operationsList.remove(op);
-    }
-
+    /**
+     * @brief Abort the creation of a new User-defined operation.
+     * @param event Click on the "Cancel" button.
+     */
     @FXML
     private void cancelNewOp(ActionEvent event) {
+        newOpNameField.clear();
+        newOpSeqField.clear();
         newOperationPane.setVisible(false);
         mainPane.setVisible(true);
     }
 
+    /**
+     * @brief Confirm the creation of a new User-defined operation.
+     * @param event Click on the "Confirm" button.
+     */
     @FXML
     private void confirmNewOp(ActionEvent event) {
-        String name = newOpNameField.getText();
-        String seq = newOpSeqField.getText();
+        // get name and sequence.
+        String name = textRecognizer.formatText(newOpNameField.getText());
+        String seq = textRecognizer.formatText(newOpSeqField.getText());
         newOpNameField.clear();
         newOpSeqField.clear();
 
-        if (textRecognizer.existsUserDefinedOperation(name)) {
-            showError("Invalid User Defined Operation", "User Defined Operation Already Exists");
+        // check both values are valid.
+        if (operationsMap.getUserDefinedOperation(name) != null) {
+            showError("Invalid User-Defined Operation",
+                    "User-Defined operation with this name already exists");
             return;
         }
-        if (!textRecognizer.isUserDefinedOperation(seq)) {
-            showError("Invalid User Defined Operation", "Non è una stringa corretta: '" + seq + "'");
+        if (!textRecognizer.isValidUserDefinedOperationName(name)) {
+            showError("Invalid Name",
+                    "'" + name + "' is not a valid name.\nYou can only use letters.");
+            return;
+        }
+        if (!textRecognizer.isValidUserDefinedOperationSequence(seq)) {
+            showError("Invalid Sequence",
+                    "'" + seq + "' is not recognized as a valid sequence of operations.");
             return;
         }
 
+        // create new operation and add it to the collections.
         UserOperation op = new UserOperation(name, seq, operationsMap);
         operationsMap.addUserDefinedOperation(op);
         operationsList.add(op);
 
+        // switch back to the main pane.
         newOperationPane.setVisible(false);
         mainPane.setVisible(true);
     }
 
+    /**
+     * @brief Open pane to create a new User-defined operation.
+     * @param event The pressing of the "New" button in the table's context menu.
+     */
+    @FXML
+    private void newUserOperation(ActionEvent event) {
+        mainPane.setVisible(false);
+        newOperationPane.setVisible(true);
+    }
+
+    /**
+     * @brief Modify a User-Defined Operation's name.
+     * @param event Double click on the Name column of the operations table.
+     */
     @FXML
     private void editUserOperationName(TableColumn.CellEditEvent<UserOperation, String> event) {
-        String newName = event.getNewValue().strip();
+        String newName = textRecognizer.formatText(event.getNewValue());
         String oldName = event.getOldValue();
         UserOperation op = operationsTable.getSelectionModel().getSelectedItem();
 
-        if (textRecognizer.existsUserDefinedOperation(newName)) {
+        if (operationsMap.getUserDefinedOperation(newName) != null) {
             op.setName(oldName);
-            showError("Invalid User Defined Operation", "User Defined Operation Already Exists");
+            showError("Invalid Name",
+                    "A user-defined operation with this name already exists.");
+        } else if (!textRecognizer.isValidUserDefinedOperationName(newName)) {
+            op.setName(oldName);
+            showError("Invalid Name",
+                    "'" + newName + "' is not a valid name.\nYou can only use letters.");
         } else
             op.setName(newName);
 
@@ -386,15 +421,20 @@ public class FXMLController {
         operationsTable.setItems(operationsList);
     }
 
+    /**
+     * @brief Modify a User-Defined Operation's sequence.
+     * @param event Double click on the Sequence column of the operations table.
+     */
     @FXML
     private void editUserOperationSeq(TableColumn.CellEditEvent<UserOperation, String> event) {
-        String newSeq = event.getNewValue().strip();
+        String newSeq = textRecognizer.formatText(event.getNewValue());
         String oldSeq = event.getOldValue();
         UserOperation op = operationsTable.getSelectionModel().getSelectedItem();
 
-        if (newSeq.length() == 0 || !textRecognizer.isUserDefinedOperation(newSeq)) {
+        if (!textRecognizer.isValidUserDefinedOperationSequence(newSeq)) {
             op.setSequence(oldSeq);
-            showError("Invalid User Defined Operation", "Non è una stringa corretta: '" + newSeq + "'");
+            showError("Invalid Sequence",
+                    "'" + newSeq + "' is not recognized as a valid sequence of operations.");
         } else
             op.setSequence(newSeq);
 
@@ -402,12 +442,19 @@ public class FXMLController {
         operationsTable.setItems(operationsList);
     }
 
+    /**
+     * @brief Modify the selected User-Defined Operation.
+     * @param event The pressing of the "Edit" button in the table's context menu.
+     */
     @FXML
     private void editUserOperation2(ActionEvent event) {
-        System.out.println("trying to edit via context menu");
-        // TODO: edit sequence
+        // TODO: edit sequence via context menu.
     }
 
+    /**
+     * @brief Delete the selected User-Defined Operation.
+     * @param event The pressing of the "Delete" button in the table's context menu.
+     */
     @FXML
     private void deleteUserOperation(ActionEvent event) {
         UserOperation op = operationsTable.getSelectionModel().getSelectedItem();
@@ -415,36 +462,14 @@ public class FXMLController {
         operationsMap.deleteUserDefinedOperation(op);
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    /**
+     * @brief Inizialize the Controller.
+     */
+    @FXML
     private void initialize() {
-        assert paneRoot != null : "fx:id=\"paneRoot\" was not injected: check your FXML file 'view.fxml'.";
-        assert mainPane != null : "fx:id=\"mainPane\" was not injected: check your FXML file 'view.fxml'.";
-        assert textInput != null : "fx:id=\"textInput\" was not injected: check your FXML file 'view.fxml'.";
-        assert enter != null : "fx:id=\"enter\" was not injected: check your FXML file 'view.fxml'.";
-        assert resultLabel != null : "fx:id=\"resultLabel\" was not injected: check your FXML file 'view.fxml'.";
-        assert stackListLabel != null : "fx:id=\"stackListLabel\" was not injected: check your FXML file 'view.fxml'.";
-        assert numbersStackSelector != null
-                : "fx:id=\"numbersStackSelector\" was not injected: check your FXML file 'view.fxml'.";
-        assert variablesStackSelector != null
-                : "fx:id=\"variablesStackSelector\" was not injected: check your FXML file 'view.fxml'.";
-        assert stackListView != null : "fx:id=\"stackListView\" was not injected: check your FXML file 'view.fxml'.";
-        assert tableLabel != null : "fx:id=\"tableLabel\" was not injected: check your FXML file 'view.fxml'.";
-        assert operationsTable != null
-                : "fx:id=\"operationsTable\" was not injected: check your FXML file 'view.fxml'.";
-        assert opNameClmn != null : "fx:id=\"opNameClmn\" was not injected: check your FXML file 'view.fxml'.";
-        assert opSeqClmn != null : "fx:id=\"opSeqClmn\" was not injected: check your FXML file 'view.fxml'.";
-        assert newOperationPane != null
-                : "fx:id=\"newOperationPane\" was not injected: check your FXML file 'view.fxml'.";
-        assert newOpNameField != null : "fx:id=\"newOpNameField\" was not injected: check your FXML file 'view.fxml'.";
-        assert newOpSeqField != null : "fx:id=\"newOpSeqField\" was not injected: check your FXML file 'view.fxml'.";
-        assert newOpConfirmButton != null
-                : "fx:id=\"newOpConfirmButton\" was not injected: check your FXML file 'view.fxml'.";
-        assert newOpCancelButton != null
-                : "fx:id=\"newOpCancelButton\" was not injected: check your FXML file 'view.fxml'.";
-
         stackList = FXCollections.observableArrayList();
         operationsList = FXCollections.observableArrayList();
-        // can't perform some menu actions if the list is empty
+        // can't perform some menu actions if the list of operations is empty.
         SimpleListProperty<UserOperation> s = new SimpleListProperty<>(operationsList);
 
         stackListView.setItems(stackList);
@@ -452,31 +477,28 @@ public class FXMLController {
         operationsTable.setItems(operationsList);
         opNameClmn.setCellValueFactory(new PropertyValueFactory<UserOperation, String>("name"));
         opSeqClmn.setCellValueFactory(new PropertyValueFactory<UserOperation, String>("sequence"));
-        // to be able to edit these columns
+        // To be able to edit these columns.
         opNameClmn.setCellFactory(TextFieldTableCell.forTableColumn());
         opSeqClmn.setCellFactory(TextFieldTableCell.forTableColumn());
 
+        // Instantiate all the needed core objects.
         operationsMap = new OperationsMap();
         numbersStack = new Stack<>();
         textRecognizer = new TextRecognizer(operationsMap);
-        calculator = new Calculator(operationsMap);
         variables = new Variables();
         varStack = new VariablesStack();
+        calculator = new Calculator(operationsMap, numbersStack, variables, varStack);
 
         resultLabel.setText("Result here.");
 
-        // disable Confirm button for the creation of a new Operation if the
+        // Disable Confirm button for the creation of a new Operation if the
         // name has less than 2 characters or the sequence is empty.
         newOpConfirmButton.disableProperty().bind(Bindings.lessThan(newOpNameField.textProperty().length(), 2)
                 .or(newOpSeqField.textProperty().isEmpty()));
-        // disable context menu in table if no items are stored in it.
+        // Disable context menu in table if no items are stored in it.
         tableContextMenuDelete.disableProperty().bind(Bindings.isEmpty(operationsList));
         tableContextMenuEdit.disableProperty().bind(Bindings.isEmpty(operationsList));
 
-        menuDeleteOperationButton.disableProperty()
-                .bind(operationsTable.getSelectionModel().selectedItemProperty().isNull());
-        menuEditOperationButton.disableProperty()
-                .bind(operationsTable.getSelectionModel().selectedItemProperty().isNull());
         menuSaveOperationsButton.disableProperty().bind(s.emptyProperty());
 
         selectedNumbersStack(null);

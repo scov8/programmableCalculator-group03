@@ -13,25 +13,37 @@ import java.util.Map;
  * @date 7 Dic 2021
  */
 
+ /**
+  * This class contains different maps in which the keys are names of various
+  * operations and the values are actual instances of the operations.
+  * Each map contains a different type of operation.
+  */
 public class OperationsMap implements Serializable {
-    private Map<String, Operation> operations;
+    /** Operations to execute on the stack of numbers. */
+    private Map<String, Operation> stackOperations;
+    /** Operations to execute on the variables. */
     private Map<Character, VariableOperation> variableOperations;
+    /** Operations to run on the variables stack. */
     private Map<String, VariableStorage> variableStorageOperations;
+    /** User-defined operations. */
     private Map<String, UserOperation> userDefinedOperations;
 
+    /**
+     * @brief Constructor.
+     */
     public OperationsMap() {
-        operations = new HashMap<>();
-        operations.put("+", new SumOperation());
-        operations.put("-", new DifferenceOperation());
-        operations.put("*", new MultiplicationOperation());
-        operations.put("/", new DivisionOperation());
-        operations.put("+-", new SignInversionOperation());
-        operations.put("sqrt", new SquareRootOperation());
-        operations.put("clear", new ClearOperation());
-        operations.put("drop", new DropOperation());
-        operations.put("dup", new DupOperation());
-        operations.put("over", new OverOperation());
-        operations.put("swap", new SwapOperation());
+        stackOperations = new HashMap<>();
+        stackOperations.put("+", new SumOperation());
+        stackOperations.put("-", new DifferenceOperation());
+        stackOperations.put("*", new MultiplicationOperation());
+        stackOperations.put("/", new DivisionOperation());
+        stackOperations.put("+-", new SignInversionOperation());
+        stackOperations.put("sqrt", new SquareRootOperation());
+        stackOperations.put("clear", new ClearOperation());
+        stackOperations.put("drop", new DropOperation());
+        stackOperations.put("dup", new DupOperation());
+        stackOperations.put("over", new OverOperation());
+        stackOperations.put("swap", new SwapOperation());
 
         variableOperations = new HashMap<>();
         variableOperations.put('>', new SaveIntoVariable());
@@ -47,44 +59,54 @@ public class OperationsMap implements Serializable {
     }
 
     /**
-     * @return the operation
+     * @brief Get a stack operation given its name.
+     * @param name Operation's name.
+     * @return The operation.
      */
-    public Operation getOperation(String opString) {
-        return operations.get(opString);
+    public Operation getStackOperation(String name) {
+        return stackOperations.get(name);
     }
 
     /**
-     * @return the variable operation
+     * @brief Get a variable operation given its name.
+     * @param name Operation's name.
+     * @return The operation.
      */
-    public VariableOperation getVariableOperation(Character opChar) {
-        return variableOperations.get(opChar);
+    public VariableOperation getVariableOperation(Character name) {
+        return variableOperations.get(name);
     }
 
     /**
-     * @return the variable storage operation
+     * @brief Get a variable storage operation given its name.
+     * @param name Operation's name.
+     * @return The operation.
      */
-    public VariableStorage getVariableStorageOperation(String opString) {
-        return variableStorageOperations.get(opString);
+    public VariableStorage getVariableStorageOperation(String name) {
+        return variableStorageOperations.get(name);
     }
 
     /**
-     * @return the user defined operation
+     * @brief Get a user-defined operation given its name.
+     * @param name Operation's name.
+     * @return The operation.
      */
     public UserOperation getUserDefinedOperation(String name) {
         return userDefinedOperations.get(name);
     }
 
     /**
-     * @param op the user defined operation to add
+     * @brief Add a new user-defined operation to the map.
+     * @param op The user-defined operation to add.
      */
     public void addUserDefinedOperation(UserOperation op) {
         userDefinedOperations.put(op.getName(), op);
     }
 
     /**
-     * @param op the user defined operation to remove
+     * @brief Remove a user-defined operation from the map.
+     * @param op The user-defined operation to remove.
      */
     public void deleteUserDefinedOperation(UserOperation op) {
-        userDefinedOperations.remove(op);
+        userDefinedOperations.remove(op.getName());
     }
 }
