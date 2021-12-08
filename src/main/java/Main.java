@@ -18,6 +18,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("../resources/view/view.fxml"));
         stage.setScene(new Scene(root));
         stage.setTitle("Programmable Calculator");
+        stage.setResizable(false);
         stage.show();
     }
 

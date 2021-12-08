@@ -6,10 +6,15 @@
 
 package src.main.java.resources;
 
+import java.io.Serializable;
+
+import src.main.java.operations.OperationsMap;
+
 /**
  * @brief This class contains static methods to parse the user input.
  */
-public class TextRecognizer {
+public class TextRecognizer implements Serializable {
+    // TODO: use map for every operation
     /** All recognized operations on the numbers stack. */
     private final String[] stackOperations = { "+", "-", "*", "/", "+-", "sqrt",
             "clear", "dup", "swap", "over", "drop" };
@@ -17,10 +22,13 @@ public class TextRecognizer {
     /** All recognized operations on the variables stack. */
     private final String[] variableStorageOperations = { "save", "restore" };
 
+    OperationsMap operationsMap;
+
     /**
      * @brief Constructor.
      */
-    public TextRecognizer() {
+    public TextRecognizer(OperationsMap operationsMap) {
+        this.operationsMap = operationsMap;
     }
 
     /**
@@ -30,7 +38,7 @@ public class TextRecognizer {
      * @return The formatted version of text.
      */
     public String formatText(String text) {
-        return text.strip().replace(" ", "").toLowerCase();
+        return text.strip().toLowerCase();
     }
 
     /**
@@ -128,5 +136,24 @@ public class TextRecognizer {
             if (text.compareTo(op) == 0)
                 return true;
         return false;
+    }
+
+    public boolean existsUserDefinedOperation(String name) {
+        name = formatText(name);
+        return operationsMap.getUserDefinedOperation(name) != null;
+    }
+
+    public boolean isUserDefinedOperation(String sequence) {
+        String[] values = sequence.split(" ");
+
+        for (String value : values) {
+            if (!isStackOperation(value))
+                if (!isVariableOperation(value))
+                    if (!isVariableStorageOperation(value))
+                        if (!existsUserDefinedOperation(value))
+                            if (extractNumber(value) == null)
+                                return false;
+        }
+        return true;
     }
 }

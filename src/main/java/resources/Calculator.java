@@ -1,13 +1,13 @@
 package src.main.java.resources;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.Serializable;
 import java.util.Stack;
 
 import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.exceptions.VariableWithoutValueException;
 import src.main.java.operations.*;
 import src.main.java.variables.*;
+import src.main.java.operations.Operation;
 
 /**
  * @file Calculator.java
@@ -18,41 +18,15 @@ import src.main.java.variables.*;
 /**
  * @brief This class handles the operation and the operands in the stack.
  */
-public class Calculator {
-    private Map<String, Operation> operations;
-    private Map<Character, VariableOperation> variableOperations;
-    private Map<String, VariableStorage> variableStorageOperations;
+public class Calculator implements Serializable {
+    private OperationsMap operationsMap;
 
     /**
      * @brief Constructor.
      */
-    public Calculator() {
+    public Calculator(OperationsMap operationsMap) {
         // Instantiate all the maps.
-        // Each map associates a string representing an operation to a class
-        // that implements that operation via an execute method.
-
-        operations = new HashMap<>();
-        operations.put("+", new SumOperation());
-        operations.put("-", new DifferenceOperation());
-        operations.put("*", new MultiplicationOperation());
-        operations.put("/", new DivisionOperation());
-        operations.put("+-", new SignInversionOperation());
-        operations.put("sqrt", new SquareRootOperation());
-        operations.put("clear", new ClearOperation());
-        operations.put("drop", new DropOperation());
-        operations.put("dup", new DupOperation());
-        operations.put("over", new OverOperation());
-        operations.put("swap", new SwapOperation());
-
-        variableOperations = new HashMap<>();
-        variableOperations.put('>', new SaveIntoVariable());
-        variableOperations.put('<', new SaveIntoStack());
-        variableOperations.put('+', new PlusVariable());
-        variableOperations.put('-', new MinusVariable());
-
-        variableStorageOperations = new HashMap<>();
-        variableStorageOperations.put("save", new SaveOperation());
-        variableStorageOperations.put("restore", new RestoreOperation());
+        this.operationsMap = operationsMap;
     }
 
     /**
@@ -61,7 +35,7 @@ public class Calculator {
      * @param opString String representing the operation to execute.
      */
     public void runStackOperation(Stack<ComplexNumber> stack, String opString) throws NotEnoughOperandsException {
-        Operation op = operations.get(opString);
+        Operation op = operationsMap.getOperation(opString);
         op.execute(stack);
     }
 
@@ -78,7 +52,7 @@ public class Calculator {
         char opChar = opString.charAt(0);
         char variable = opString.charAt(1);
 
-        VariableOperation op = variableOperations.get(opChar);
+        VariableOperation op = operationsMap.getVariableOperation(opChar);
         op.execute(variables, stack, variable);
     }
 
@@ -89,7 +63,7 @@ public class Calculator {
      * @param opString  String representing the operation to execute.
      */
     public void runVariableStorageOperation(Variables variable, VariablesStack varStack, String opString) {
-        VariableStorage op = variableStorageOperations.get(opString);
+        VariableStorage op = operationsMap.getVariableStorageOperation(opString);
         op.execute(variable, varStack);
     }
 }
