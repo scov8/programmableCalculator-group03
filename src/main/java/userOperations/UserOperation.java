@@ -1,15 +1,8 @@
 package src.main.java.userOperations;
 
-import src.main.java.exceptions.NotEnoughOperandsException;
-import src.main.java.exceptions.VariableWithoutValueException;
 import src.main.java.operations.*;
-import src.main.java.resources.TextRecognizer;
-import src.main.java.resources.Variables;
-import src.main.java.resources.VariablesStack;
-import src.main.java.resources.ComplexNumber;
 
 import java.io.Serializable;
-import java.util.Stack;
 
 /**
  * @file UserOperation.java
@@ -40,13 +33,6 @@ public class UserOperation implements Serializable {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * @return the numberOfOperands
-     */
-    public int getNumOperands() {
-        return numberOfOperands;
     }
 
     /**
