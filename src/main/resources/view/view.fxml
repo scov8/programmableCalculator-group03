@@ -3,11 +3,14 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.Tooltip?>
@@ -100,6 +103,24 @@
                </children>
             </HBox>
             <ListView fx:id="stackListView" layoutX="70.0" layoutY="217.0" prefHeight="332.0" prefWidth="250.0" style="-fx-font-family: Arial;" />
+            <Label fx:id="tableLabel" alignment="CENTER" layoutX="380.0" layoutY="160.0" prefHeight="16.0" prefWidth="350.0" text="User Defined Operations">
+               <font>
+                  <Font name="Arial" size="13.0" />
+               </font></Label>
+            <TableView fx:id="operationsTable" editable="true" layoutX="380.0" layoutY="194.0" prefHeight="354.0" prefWidth="350.0" style="-fx-font-family: Arial;">
+              <columns>
+                <TableColumn fx:id="opNameClmn" editable="true" prefWidth="130.0" style="-fx-font-family: Arial;" text="Name" />
+                <TableColumn fx:id="opSeqClmn" editable="true" prefWidth="219.0" sortable="false" style="-fx-font-family: Arial;" text="Sequence" />
+              </columns>
+               <contextMenu>
+                  <ContextMenu>
+                    <items>
+                      <MenuItem fx:id="tableContextMenuEdit" mnemonicParsing="false" onAction="#editUserOperation2" text="Edit" />
+                        <MenuItem fx:id="tableContextMenuDelete" mnemonicParsing="false" onAction="#deleteUserOperation" text="Delete" />
+                    </items>
+                  </ContextMenu>
+               </contextMenu>
+            </TableView>
          </children>
       </Pane>
       <TitledPane fx:id="newOperationPane" animated="false" prefHeight="600.0" prefWidth="800.0" text="Create new Operation" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
