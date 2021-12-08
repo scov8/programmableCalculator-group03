@@ -87,6 +87,18 @@ public class FXMLController {
     @FXML // fx:id="stackListView"
     private ListView<String> stackListView; // Value injected by FXMLLoader
 
+    @FXML // fx:id="tableLabel"
+    private Label tableLabel; // Value injected by FXMLLoader
+
+    @FXML // fx:id="operationsTable"
+    private TableView<UserOperation> operationsTable; // Value injected by FXMLLoader
+
+    @FXML // fx:id="opNameClmn"
+    private TableColumn<UserOperation, String> opNameClmn; // Value injected by FXMLLoader
+
+    @FXML // fx:id="opSeqClmn"
+    private TableColumn<UserOperation, String> opSeqClmn; // Value injected by FXMLLoader
+
     @FXML // fx:id="newOperationPane"
     private TitledPane newOperationPane; // Value injected by FXMLLoader
 
@@ -347,6 +359,11 @@ public class FXMLController {
         assert variablesStackSelector != null
                 : "fx:id=\"variablesStackSelector\" was not injected: check your FXML file 'view.fxml'.";
         assert stackListView != null : "fx:id=\"stackListView\" was not injected: check your FXML file 'view.fxml'.";
+        assert tableLabel != null : "fx:id=\"tableLabel\" was not injected: check your FXML file 'view.fxml'.";
+        assert operationsTable != null
+                : "fx:id=\"operationsTable\" was not injected: check your FXML file 'view.fxml'.";
+        assert opNameClmn != null : "fx:id=\"opNameClmn\" was not injected: check your FXML file 'view.fxml'.";
+        assert opSeqClmn != null : "fx:id=\"opSeqClmn\" was not injected: check your FXML file 'view.fxml'.";
         assert newOperationPane != null
                 : "fx:id=\"newOperationPane\" was not injected: check your FXML file 'view.fxml'.";
         assert newOpNameField != null : "fx:id=\"newOpNameField\" was not injected: check your FXML file 'view.fxml'.";
@@ -362,6 +379,13 @@ public class FXMLController {
         SimpleListProperty<UserOperation> s = new SimpleListProperty<>(operationsList);
 
         stackListView.setItems(stackList);
+
+        operationsTable.setItems(operationsList);
+        opNameClmn.setCellValueFactory(new PropertyValueFactory<UserOperation, String>("name"));
+        opSeqClmn.setCellValueFactory(new PropertyValueFactory<UserOperation, String>("sequence"));
+        // to be able to edit these columns
+        opNameClmn.setCellFactory(TextFieldTableCell.forTableColumn());
+        opSeqClmn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         operationsMap = new OperationsMap();
         numbersStack = new Stack<>();
