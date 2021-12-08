@@ -57,6 +57,15 @@ public class FXMLController {
     @FXML // fx:id="mainPane"
     private Pane mainPane; // Value injected by FXMLLoader
 
+    @FXML // fx:id="menuEditOperationButton"
+    private MenuItem menuEditOperationButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="menuDeleteOperationButton"
+    private MenuItem menuDeleteOperationButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="menuSaveOperationsButton"
+    private MenuItem menuSaveOperationsButton; // Value injected by FXMLLoader
+
     @FXML // fx:id="textInput"
     private TextField textInput; // Value injected by FXMLLoader
 
@@ -77,6 +86,21 @@ public class FXMLController {
 
     @FXML // fx:id="stackListView"
     private ListView<String> stackListView; // Value injected by FXMLLoader
+
+    @FXML // fx:id="newOperationPane"
+    private TitledPane newOperationPane; // Value injected by FXMLLoader
+
+    @FXML // fx:id="newOpNameField"
+    private TextField newOpNameField; // Value injected by FXMLLoader
+
+    @FXML // fx:id="newOpSeqField"
+    private TextField newOpSeqField; // Value injected by FXMLLoader
+
+    @FXML // fx:id="newOpConfirmButton"
+    private Button newOpConfirmButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="newOpCancelButton"
+    private Button newOpCancelButton; // Value injected by FXMLLoader
 
     private boolean stackShowsNumbers;
 
@@ -275,6 +299,41 @@ public class FXMLController {
         updateStackView();
     }
 
+    @FXML
+    private void menuCloseApplication(ActionEvent event) {
+        Platform.exit();
+    }
+
+    @FXML
+    private void menuCreateOperation(ActionEvent event) {
+        mainPane.setVisible(false);
+        newOperationPane.setVisible(true);
+    }
+
+    @FXML
+    private void confirmNewOp(ActionEvent event) {
+        String name = newOpNameField.getText();
+        String seq = newOpSeqField.getText();
+        newOpNameField.clear();
+        newOpSeqField.clear();
+
+        if (textRecognizer.existsUserDefinedOperation(name)) {
+            showError("Invalid User Defined Operation", "User Defined Operation Already Exists");
+            return;
+        }
+        if (!textRecognizer.isUserDefinedOperation(seq)) {
+            showError("Invalid User Defined Operation", "Non è una stringa corretta: '" + seq + "'");
+            return;
+        }
+
+        UserOperation op = new UserOperation(name, seq, operationsMap);
+        operationsMap.addUserDefinedOperation(op);
+        operationsList.add(op);
+
+        newOperationPane.setVisible(false);
+        mainPane.setVisible(true);
+    }
+
     @FXML // This method is called by the FXMLLoader when initialization is complete
     private void initialize() {
         assert paneRoot != null : "fx:id=\"paneRoot\" was not injected: check your FXML file 'view.fxml'.";
@@ -288,6 +347,14 @@ public class FXMLController {
         assert variablesStackSelector != null
                 : "fx:id=\"variablesStackSelector\" was not injected: check your FXML file 'view.fxml'.";
         assert stackListView != null : "fx:id=\"stackListView\" was not injected: check your FXML file 'view.fxml'.";
+        assert newOperationPane != null
+                : "fx:id=\"newOperationPane\" was not injected: check your FXML file 'view.fxml'.";
+        assert newOpNameField != null : "fx:id=\"newOpNameField\" was not injected: check your FXML file 'view.fxml'.";
+        assert newOpSeqField != null : "fx:id=\"newOpSeqField\" was not injected: check your FXML file 'view.fxml'.";
+        assert newOpConfirmButton != null
+                : "fx:id=\"newOpConfirmButton\" was not injected: check your FXML file 'view.fxml'.";
+        assert newOpCancelButton != null
+                : "fx:id=\"newOpCancelButton\" was not injected: check your FXML file 'view.fxml'.";
 
         stackList = FXCollections.observableArrayList();
         operationsList = FXCollections.observableArrayList();
@@ -304,6 +371,11 @@ public class FXMLController {
         varStack = new VariablesStack();
 
         resultLabel.setText("Result here.");
+
+        // disable Confirm button for the creation of a new Operation if the
+        // name has less than 2 characters or the sequence is empty.
+        newOpConfirmButton.disableProperty().bind(Bindings.lessThan(newOpNameField.textProperty().length(), 2)
+                .or(newOpSeqField.textProperty().isEmpty()));
 
         selectedNumbersStack(null);
     }
