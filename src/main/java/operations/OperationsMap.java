@@ -75,9 +75,16 @@ public class OperationsMap implements Serializable {
     }
 
     /**
-     * @param name the user defined operation to set
+     * @param op the user defined operation to add
      */
     public void addUserDefinedOperation(UserOperation op) {
         userDefinedOperations.put(op.getName(), op);
+    }
+
+    /**
+     * @param op the user defined operation to remove
+     */
+    public void deleteUserDefinedOperation(UserOperation op) {
+        userDefinedOperations.remove(op);
     }
 }

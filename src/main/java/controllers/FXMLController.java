@@ -99,6 +99,12 @@ public class FXMLController {
     @FXML // fx:id="opSeqClmn"
     private TableColumn<UserOperation, String> opSeqClmn; // Value injected by FXMLLoader
 
+    @FXML // fx:id="tableContextMenuEdit"
+    private MenuItem tableContextMenuEdit; // Value injected by FXMLLoader
+
+    @FXML // fx:id="tableContextMenuDelete"
+    private MenuItem tableContextMenuDelete; // Value injected by FXMLLoader
+
     @FXML // fx:id="newOperationPane"
     private TitledPane newOperationPane; // Value injected by FXMLLoader
 
@@ -323,6 +329,24 @@ public class FXMLController {
     }
 
     @FXML
+    private void menuEditOperation(ActionEvent event) {
+        System.out.println("trying to edit user defined via menubar");
+        // TODO: edit sequence
+    }
+
+    @FXML
+    private void menuDeleteOperation(ActionEvent event) {
+        UserOperation op = operationsTable.getSelectionModel().getSelectedItem();
+        operationsList.remove(op);
+    }
+
+    @FXML
+    private void cancelNewOp(ActionEvent event) {
+        newOperationPane.setVisible(false);
+        mainPane.setVisible(true);
+    }
+
+    @FXML
     private void confirmNewOp(ActionEvent event) {
         String name = newOpNameField.getText();
         String seq = newOpSeqField.getText();
@@ -344,6 +368,51 @@ public class FXMLController {
 
         newOperationPane.setVisible(false);
         mainPane.setVisible(true);
+    }
+
+    @FXML
+    private void editUserOperationName(TableColumn.CellEditEvent<UserOperation, String> event) {
+        String newName = event.getNewValue().strip();
+        String oldName = event.getOldValue();
+        UserOperation op = operationsTable.getSelectionModel().getSelectedItem();
+
+        if (textRecognizer.existsUserDefinedOperation(newName)) {
+            op.setName(oldName);
+            showError("Invalid User Defined Operation", "User Defined Operation Already Exists");
+        } else
+            op.setName(newName);
+
+        operationsTable.setItems(null);
+        operationsTable.setItems(operationsList);
+    }
+
+    @FXML
+    private void editUserOperationSeq(TableColumn.CellEditEvent<UserOperation, String> event) {
+        String newSeq = event.getNewValue().strip();
+        String oldSeq = event.getOldValue();
+        UserOperation op = operationsTable.getSelectionModel().getSelectedItem();
+
+        if (newSeq.length() == 0 || !textRecognizer.isUserDefinedOperation(newSeq)) {
+            op.setSequence(oldSeq);
+            showError("Invalid User Defined Operation", "Non è una stringa corretta: '" + newSeq + "'");
+        } else
+            op.setSequence(newSeq);
+
+        operationsTable.setItems(null);
+        operationsTable.setItems(operationsList);
+    }
+
+    @FXML
+    private void editUserOperation2(ActionEvent event) {
+        System.out.println("trying to edit via context menu");
+        // TODO: edit sequence
+    }
+
+    @FXML
+    private void deleteUserOperation(ActionEvent event) {
+        UserOperation op = operationsTable.getSelectionModel().getSelectedItem();
+        operationsList.remove(op);
+        operationsMap.deleteUserDefinedOperation(op);
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -400,6 +469,15 @@ public class FXMLController {
         // name has less than 2 characters or the sequence is empty.
         newOpConfirmButton.disableProperty().bind(Bindings.lessThan(newOpNameField.textProperty().length(), 2)
                 .or(newOpSeqField.textProperty().isEmpty()));
+        // disable context menu in table if no items are stored in it.
+        tableContextMenuDelete.disableProperty().bind(Bindings.isEmpty(operationsList));
+        tableContextMenuEdit.disableProperty().bind(Bindings.isEmpty(operationsList));
+
+        menuDeleteOperationButton.disableProperty()
+                .bind(operationsTable.getSelectionModel().selectedItemProperty().isNull());
+        menuEditOperationButton.disableProperty()
+                .bind(operationsTable.getSelectionModel().selectedItemProperty().isNull());
+        menuSaveOperationsButton.disableProperty().bind(s.emptyProperty());
 
         selectedNumbersStack(null);
     }

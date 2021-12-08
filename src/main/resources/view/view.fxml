@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="paneRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.main.java.controllers.FXMLController">
+<AnchorPane fx:id="paneRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.main.java.controllers.FXMLController">
    <children>
       <Pane fx:id="mainPane" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -109,8 +109,8 @@
                </font></Label>
             <TableView fx:id="operationsTable" editable="true" layoutX="380.0" layoutY="194.0" prefHeight="354.0" prefWidth="350.0" style="-fx-font-family: Arial;">
               <columns>
-                <TableColumn fx:id="opNameClmn" editable="true" prefWidth="130.0" style="-fx-font-family: Arial;" text="Name" />
-                <TableColumn fx:id="opSeqClmn" editable="true" prefWidth="219.0" sortable="false" style="-fx-font-family: Arial;" text="Sequence" />
+                <TableColumn fx:id="opNameClmn" editable="true" onEditCommit="#editUserOperationName" prefWidth="130.0" style="-fx-font-family: Arial;" text="Name" />
+                <TableColumn fx:id="opSeqClmn" editable="true" onEditCommit="#editUserOperationSeq" prefWidth="219.0" sortable="false" style="-fx-font-family: Arial;" text="Sequence" />
               </columns>
                <contextMenu>
                   <ContextMenu>
