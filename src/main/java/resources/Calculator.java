@@ -1,6 +1,6 @@
 package src.main.java.resources;
 
-import java.io.Serializable;
+import java.util.List;
 import java.util.Stack;
 
 import src.main.java.exceptions.IndeterminateFormException;
@@ -10,6 +10,7 @@ import src.main.java.exceptions.VariableWithoutValueException;
 import src.main.java.operations.*;
 import src.main.java.variables.*;
 import src.main.java.operations.Operation;
+import src.main.java.userOperations.UserOperation;
 
 /**
  * @file Calculator.java
@@ -20,25 +21,52 @@ import src.main.java.operations.Operation;
 /**
  * @brief This class handles the operation and the operands in the stack.
  */
-public class Calculator implements Serializable {
-    private OperationsMap operationsMap;
+public class Calculator {
+    /**
+     * Main stack containing the numbers given in input by the user and the
+     * results of the operations.
+     */
     private Stack<ComplexNumber> numbersStack;
+    /**
+     * Map of 26 ComplexNumber variables, one for each letter of the alphabet.
+     */
     private Variables variables;
+    /**
+     * Map associating a stack to each variable to save multiple instances of
+     * their values.
+     */
     private VariablesStack varStack;
+
+    private TextRecognizer textRecognizer;
 
     /**
      * @brief Constructor.
-     * @param operationsMap All the supported operations.
-     * @param numbersStack  The stack of complex numbers.
-     * @param variables     The calculator variables.
-     * @param varStack      Map associating a stack to each variable.
      */
-    public Calculator(OperationsMap operationsMap, Stack<ComplexNumber> numbersStack,
-            Variables variables, VariablesStack varStack) {
-        this.operationsMap = operationsMap;
-        this.numbersStack = numbersStack;
-        this.variables = variables;
-        this.varStack = varStack;
+    public Calculator() {
+        this.numbersStack = new Stack<>();
+        this.variables = new Variables();
+        this.varStack = new VariablesStack();
+        this.textRecognizer = new TextRecognizer();
+    }
+
+    /**
+     * @brief Retrieve the top K elements from the stack.
+     * @param k Number of elements to retrieve.
+     * @return List containing the elements.
+     */
+    public List<ComplexNumber> getTopKNumbers(int k) {
+        int max = numbersStack.size();
+        int min = max > k ? max - k : 0;
+        return numbersStack.subList(min, max);
+    }
+
+    /**
+     * @brief Retrieve the value of the variable named `name`.
+     * @param name Name of the variable.
+     * @return ComplexNumber value associated to the variable.
+     */
+    public ComplexNumber getVariable(char name) {
+        return variables.get(name);
     }
 
     /**
@@ -50,7 +78,7 @@ public class Calculator implements Serializable {
      * @throws IndeterminateFormException
      * @throws VariableWithoutValueException
      */
-    public void run(String input, TextRecognizer textRecognizer)
+    public void run(String input)
             throws UnrecognizedInputException, NotEnoughOperandsException,
             IndeterminateFormException, VariableWithoutValueException {
         if (textRecognizer.isStackOperation(input)) {
@@ -59,6 +87,8 @@ public class Calculator implements Serializable {
             runVariablesOperation(input);
         } else if (textRecognizer.isVariableStorageOperation(input)) {
             runVariableStorageOperation(input);
+        } else if (textRecognizer.isUserDefinedOperation(input)) {
+            // TODO: execute user defined
         } else {
             ComplexNumber number = textRecognizer.extractNumber(input);
             if (number == null)
@@ -76,7 +106,7 @@ public class Calculator implements Serializable {
      */
     private void runStackOperation(String opString)
             throws NotEnoughOperandsException, IndeterminateFormException {
-        Operation op = operationsMap.getStackOperation(opString);
+        Operation op = OperationsMap.getInstance().getStackOperation(opString);
         op.execute(numbersStack);
     }
 
@@ -93,7 +123,7 @@ public class Calculator implements Serializable {
         char opChar = opString.charAt(0);
         char variable = opString.charAt(1);
 
-        VariableOperation op = operationsMap.getVariableOperation(opChar);
+        VariableOperation op = OperationsMap.getInstance().getVariableOperation(opChar);
         op.execute(variables, numbersStack, variable);
     }
 
@@ -102,7 +132,7 @@ public class Calculator implements Serializable {
      * @param opString String representing the operation to execute.
      */
     private void runVariableStorageOperation(String opString) {
-        VariableStorage op = operationsMap.getVariableStorageOperation(opString);
+        VariableStorage op = OperationsMap.getInstance().getVariableStorageOperation(opString);
         op.execute(variables, varStack);
     }
 }

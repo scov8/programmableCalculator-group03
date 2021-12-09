@@ -18,7 +18,7 @@ import src.main.java.resources.Variables;
 public class SaveIntoStack extends VariableOperation {
 
     public SaveIntoStack() {
-        super(1);
+        super(0);
     }
 
     /**

@@ -6,28 +6,25 @@
 
 package src.main.java.resources;
 
-import java.io.Serializable;
-
 import src.main.java.operations.OperationsMap;
 
 /**
  * @brief This class contains static methods to parse the user input.
  */
-public class TextRecognizer implements Serializable {
-
+public class TextRecognizer {
+    /** Maps containing all the operations supported by this application. */
     private OperationsMap operationsMap;
 
     /**
      * @brief Constructor.
-     * @param operationsMap All the supported operations.
      */
-    public TextRecognizer(OperationsMap operationsMap) {
-        this.operationsMap = operationsMap;
+    public TextRecognizer() {
+        this.operationsMap = OperationsMap.getInstance();
     }
 
     /**
-     * @brief Format given text by removing spaces and turning all letters to
-     *        lowercase.
+     * @brief Format given text by removing extra spaces and turning all letters
+     *        to lowercase.
      * @param text The text to format.
      * @return The formatted version of text.
      */
@@ -123,6 +120,10 @@ public class TextRecognizer implements Serializable {
         return operationsMap.getVariableStorageOperation(text) != null;
     }
 
+    public boolean isUserDefinedOperation(String text) {
+        return operationsMap.getUserDefinedOperation(text) != null;
+    }
+
     /**
      * @brief Check whether given text is a valid name for a user-defined
      *        operation.
@@ -139,16 +140,21 @@ public class TextRecognizer implements Serializable {
      * @param sequence Sequence of the operation.
      * @return boolean.
      */
-    public boolean isValidUserDefinedOperationSequence(String sequence) {
+    public boolean isValidUserDefinedOperationSequence(String name, String sequence) {
         String[] values = sequence.split(" ");
 
         for (String value : values) {
-            if (!isStackOperation(value))
-                if (!isVariableOperation(value))
-                    if (!isVariableStorageOperation(value))
-                        if (operationsMap.getUserDefinedOperation(value) == null)
-                            if (extractNumber(value) == null)
-                                return false;
+            if (isStackOperation(value))
+                continue;
+            if (isVariableOperation(value))
+                continue;
+            if (isVariableStorageOperation(value))
+                continue;
+            if (operationsMap.getUserDefinedOperation(value) != null &&
+                    operationsMap.getUserDefinedOperation(value).getName() != name)
+                continue;
+            if (extractNumber(value) == null)
+                return false;
         }
         return true;
     }

@@ -1,7 +1,5 @@
 package src.main.java.userOperations;
 
-import src.main.java.operations.*;
-
 import java.io.Serializable;
 
 /**
@@ -19,11 +17,18 @@ public class UserOperation implements Serializable {
      * @brief Constructor.
      * @param name Name of the operation.
      * @param sequence Sequence of operations contained in this.
-     * @param operationsMap All the supported operations.
      */
-    public UserOperation(String name, String sequence, OperationsMap operationsMap) {
+    public UserOperation(String name, String sequence) {
         this.name = name;
         setSequence(sequence);
+    }
+
+    /**
+     * @brief Get the name.
+     * @return The name.
+     */
+    public String getName() {
+        return name;
     }
 
     /**
@@ -35,11 +40,11 @@ public class UserOperation implements Serializable {
     }
 
     /**
-     * @brief Get the name.
-     * @return The name.
+     * @brief Get the array of operations to execute.
+     * @return The algorithm.
      */
-    public String getName() {
-        return name;
+    public String[] getAlgorithm() {
+        return algorithm;
     }
 
     /**
@@ -60,7 +65,7 @@ public class UserOperation implements Serializable {
     }
 
     /**
-     * @brief Create an array of operations from the sequence.
+     * @brief Create an array of operations from the sequence string.
      */
     private void makeArray() {
         algorithm = sequence.split(" ");

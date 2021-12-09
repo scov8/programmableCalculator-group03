@@ -17,7 +17,7 @@ import java.util.Map;
  *        The calculator has a total of 26 Variables, one for each letter of the
  *        alphabet.
  */
-public class Variables {
+public class Variables implements Cloneable {
     /**
      * The variables are stored in a map. Their name is the key and the number
      * is the value.
@@ -54,4 +54,8 @@ public class Variables {
         map.put(Character.valueOf(name), value);
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

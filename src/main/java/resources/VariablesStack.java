@@ -15,7 +15,7 @@ import java.util.Stack;
  * @brief This class implements a Stack containing multiple values for each
  *        variable.
  */
-public class VariablesStack {
+public class VariablesStack implements Cloneable {
     /** This map associates a stack to every letter (variable). */
     Map<Character, Stack<ComplexNumber>> map;
 
@@ -72,4 +72,8 @@ public class VariablesStack {
         return map.get(variable).empty();
     }
 
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

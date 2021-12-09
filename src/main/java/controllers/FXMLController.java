@@ -10,8 +10,8 @@ import src.main.java.userOperations.UserOperation;
 
 import java.net.URL;
 import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Stack;
 
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -49,6 +49,9 @@ public class FXMLController {
 
     @FXML // fx:id="mainPane"
     private Pane mainPane; // Value injected by FXMLLoader
+
+    @FXML
+    private TitledPane guidePane;
 
     @FXML // fx:id="menuEditOperationButton"
     private MenuItem menuEditOperationButton; // Value injected by FXMLLoader
@@ -114,7 +117,7 @@ public class FXMLController {
     private Button newOpCancelButton; // Value injected by FXMLLoader
 
     /**
-     * `true` if the stackListView is currently showing the numbersStack;
+     * `true` if the stackListView is currently showing the stack of numbers;
      * `false` if it is showing the variables.
      */
     private boolean stackShowsNumbers;
@@ -135,25 +138,15 @@ public class FXMLController {
     private TextRecognizer textRecognizer;
 
     /**
-     * Main stack containing the numbers given in input by the user and the
-     * results of the operations.
-     */
-    private Stack<ComplexNumber> numbersStack;
-
-    /**
-     * Main instance of Calculator class that handles operations on the
-     * numbersStack.
+     * Main instance of Calculator class that handles all the operations.
      */
     private Calculator calculator;
 
-    private Variables variables;
-
-    private VariablesStack varStack;
-
+    /** Maps containing all the operations supported by this application. */
     private OperationsMap operationsMap;
 
     /**
-     * Number of items from the numbersStack to show in the GUI at any time.
+     * Number of items from the stack of numbers to show in the GUI at any time.
      */
     private final int K = 15;
 
@@ -161,12 +154,10 @@ public class FXMLController {
      * @brief Update the ListView containing the stack of complex numbers.
      */
     private void updateNumbersStackView() {
-        // Only show the top K elements of the stack.
-        int max = numbersStack.size();
-        int min = max > K ? max - K : 0;
+        List<ComplexNumber> topKnumbers = calculator.getTopKNumbers(K);
 
         stackList.clear();
-        for (ComplexNumber n : numbersStack.subList(min, max))
+        for (ComplexNumber n : topKnumbers)
             stackList.add(n.toString());
         Collections.reverse(stackList);
 
@@ -185,7 +176,7 @@ public class FXMLController {
         // for every letter of the alphabet, get its name and its value. Only
         // variables having a non-null value will be displayed.
         for (char letter = 'a'; letter <= 'z'; letter++) {
-            ComplexNumber value = variables.get(letter);
+            ComplexNumber value = calculator.getVariable(letter);
             if (value != null) {
                 String s = letter + ":\t" + value.toString();
                 stackList.add(s);
@@ -231,7 +222,7 @@ public class FXMLController {
      */
     private void runUserInput(String input) {
         try {
-            calculator.run(input, textRecognizer);
+            calculator.run(input);
         } catch (UnrecognizedInputException e) {
             showError("Invalid Input",
                     "Please provide a valid OPERATION or a NUMBER.\n" +
@@ -335,6 +326,20 @@ public class FXMLController {
         // TODO: restore operations.
     }
 
+    @FXML
+    void showGuide(ActionEvent event) {
+        mainPane.setDisable(true);
+        newOperationPane.setVisible(false);
+        guidePane.setVisible(true);
+    }
+
+    @FXML
+    void closeGuide(ActionEvent event) {
+        mainPane.setDisable(false);
+        newOperationPane.setVisible(false);
+        guidePane.setVisible(false);
+    }
+
     /**
      * @brief Abort the creation of a new User-defined operation.
      * @param event Click on the "Cancel" button.
@@ -344,7 +349,8 @@ public class FXMLController {
         newOpNameField.clear();
         newOpSeqField.clear();
         newOperationPane.setVisible(false);
-        mainPane.setVisible(true);
+        guidePane.setVisible(false);
+        mainPane.setDisable(false);
     }
 
     /**
@@ -370,20 +376,20 @@ public class FXMLController {
                     "'" + name + "' is not a valid name.\nYou can only use letters.");
             return;
         }
-        if (!textRecognizer.isValidUserDefinedOperationSequence(seq)) {
+        if (!textRecognizer.isValidUserDefinedOperationSequence(name, seq)) {
             showError("Invalid Sequence",
                     "'" + seq + "' is not recognized as a valid sequence of operations.");
             return;
         }
 
         // create new operation and add it to the collections.
-        UserOperation op = new UserOperation(name, seq, operationsMap);
+        UserOperation op = new UserOperation(name, seq);
         operationsMap.addUserDefinedOperation(op);
         operationsList.add(op);
 
         // switch back to the main pane.
         newOperationPane.setVisible(false);
-        mainPane.setVisible(true);
+        mainPane.setDisable(false);
     }
 
     /**
@@ -392,7 +398,8 @@ public class FXMLController {
      */
     @FXML
     private void newUserOperation(ActionEvent event) {
-        mainPane.setVisible(false);
+        mainPane.setDisable(true);
+        guidePane.setVisible(false);
         newOperationPane.setVisible(true);
     }
 
@@ -406,6 +413,9 @@ public class FXMLController {
         String oldName = event.getOldValue();
         UserOperation op = operationsTable.getSelectionModel().getSelectedItem();
 
+        if (newName.equals(oldName))
+            return;
+
         if (operationsMap.getUserDefinedOperation(newName) != null) {
             op.setName(oldName);
             showError("Invalid Name",
@@ -417,8 +427,10 @@ public class FXMLController {
         } else
             op.setName(newName);
 
-        operationsTable.setItems(null);
-        operationsTable.setItems(operationsList);
+        operationsList.remove(op);
+        operationsList.add(op);
+        // operationsTable.setItems(null);
+        // operationsTable.setItems(operationsList);
     }
 
     /**
@@ -431,24 +443,27 @@ public class FXMLController {
         String oldSeq = event.getOldValue();
         UserOperation op = operationsTable.getSelectionModel().getSelectedItem();
 
-        if (!textRecognizer.isValidUserDefinedOperationSequence(newSeq)) {
+        if (!textRecognizer.isValidUserDefinedOperationSequence(op.getName(), newSeq)) {
             op.setSequence(oldSeq);
             showError("Invalid Sequence",
                     "'" + newSeq + "' is not recognized as a valid sequence of operations.");
         } else
             op.setSequence(newSeq);
 
-        operationsTable.setItems(null);
-        operationsTable.setItems(operationsList);
+        operationsList.remove(op);
+        operationsList.add(op);
+        // operationsTable.setItems(null);
+        // operationsTable.setItems(operationsList);
     }
 
     /**
-     * @brief Modify the selected User-Defined Operation.
+     * @brief Start modifying the selected User-Defined Operation's sequence.
      * @param event The pressing of the "Edit" button in the table's context menu.
      */
     @FXML
-    private void editUserOperation2(ActionEvent event) {
-        // TODO: edit sequence via context menu.
+    private void editUserOperation(ActionEvent event) {
+        int index = operationsTable.getSelectionModel().getSelectedIndex();
+        operationsTable.edit(index, opSeqClmn);
     }
 
     /**
@@ -469,8 +484,11 @@ public class FXMLController {
     private void initialize() {
         stackList = FXCollections.observableArrayList();
         operationsList = FXCollections.observableArrayList();
-        // can't perform some menu actions if the list of operations is empty.
-        SimpleListProperty<UserOperation> s = new SimpleListProperty<>(operationsList);
+
+        // Instantiate all the needed core objects.
+        operationsMap = OperationsMap.getInstance();
+        textRecognizer = new TextRecognizer();
+        calculator = new Calculator();
 
         stackListView.setItems(stackList);
 
@@ -481,26 +499,23 @@ public class FXMLController {
         opNameClmn.setCellFactory(TextFieldTableCell.forTableColumn());
         opSeqClmn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        // Instantiate all the needed core objects.
-        operationsMap = new OperationsMap();
-        numbersStack = new Stack<>();
-        textRecognizer = new TextRecognizer(operationsMap);
-        variables = new Variables();
-        varStack = new VariablesStack();
-        calculator = new Calculator(operationsMap, numbersStack, variables, varStack);
-
-        resultLabel.setText("Result here.");
-
         // Disable Confirm button for the creation of a new Operation if the
         // name has less than 2 characters or the sequence is empty.
         newOpConfirmButton.disableProperty().bind(Bindings.lessThan(newOpNameField.textProperty().length(), 2)
                 .or(newOpSeqField.textProperty().isEmpty()));
-        // Disable context menu in table if no items are stored in it.
-        tableContextMenuDelete.disableProperty().bind(Bindings.isEmpty(operationsList));
-        tableContextMenuEdit.disableProperty().bind(Bindings.isEmpty(operationsList));
+        // Disable context menu in table if no items are stored in it or if none
+        // is selected.
+        tableContextMenuDelete.disableProperty().bind(Bindings.isEmpty(operationsList)
+                .or(operationsTable.getSelectionModel().selectedItemProperty().isNull()));
+        tableContextMenuEdit.disableProperty().bind(Bindings.isEmpty(operationsList)
+                .or(operationsTable.getSelectionModel().selectedItemProperty().isNull()));
 
+        // can't save list of user operations if it is empty.
+        SimpleListProperty<UserOperation> s = new SimpleListProperty<>(operationsList);
         menuSaveOperationsButton.disableProperty().bind(s.emptyProperty());
 
         selectedNumbersStack(null);
+
+        resultLabel.setText("Result here.");
     }
 }
