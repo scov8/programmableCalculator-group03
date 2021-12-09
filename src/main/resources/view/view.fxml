@@ -36,9 +36,6 @@
                 </Menu>
                 <Menu mnemonicParsing="false" style="-fx-font-family: Arial;" text="Help">
                   <items>
-                    <MenuItem mnemonicParsing="false" style="-fx-font-family: Arial;" text="Github" />
-                        <MenuItem mnemonicParsing="false" style="-fx-font-family: Arial;" text="Trello" />
-                        <MenuItem mnemonicParsing="false" style="-fx-font-family: Arial;" text="Artefacts" />
                         <MenuItem mnemonicParsing="false" onAction="#showGuide" style="-fx-font-family: Arial;" text="Guide" />
                   </items>
                 </Menu>
@@ -187,7 +184,7 @@
                <children>
                   <ImageView fitHeight="500.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../Screenshot_2021-12-09_15-00-54.png" />
+                        <Image url="@../images/guide.png" />
                      </image>
                   </ImageView>
                   <Button alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="381.0" layoutY="520.0" mnemonicParsing="false" onAction="#closeGuide" text="OK" />

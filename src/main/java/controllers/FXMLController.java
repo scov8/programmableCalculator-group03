@@ -433,8 +433,6 @@ public class FXMLController {
 
         operationsList.remove(op);
         operationsList.add(op);
-        // operationsTable.setItems(null);
-        // operationsTable.setItems(operationsList);
     }
 
     /**
@@ -456,8 +454,6 @@ public class FXMLController {
 
         operationsList.remove(op);
         operationsList.add(op);
-        // operationsTable.setItems(null);
-        // operationsTable.setItems(operationsList);
     }
 
     /**
