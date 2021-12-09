@@ -6,6 +6,7 @@ import java.util.Stack;
 import src.main.java.exceptions.IndeterminateFormException;
 import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.exceptions.UnrecognizedInputException;
+import src.main.java.exceptions.UserOperationExecutionException;
 import src.main.java.exceptions.VariableWithoutValueException;
 import src.main.java.operations.*;
 import src.main.java.variables.*;
@@ -27,15 +28,19 @@ public class Calculator {
      * results of the operations.
      */
     private Stack<ComplexNumber> numbersStack;
+    private Stack<ComplexNumber> numbersStackCopy;
+
     /**
      * Map of 26 ComplexNumber variables, one for each letter of the alphabet.
      */
     private Variables variables;
+    private Variables variablesCopy;
     /**
      * Map associating a stack to each variable to save multiple instances of
      * their values.
      */
     private VariablesStack varStack;
+    private VariablesStack varStackCopy;
 
     private TextRecognizer textRecognizer;
 
@@ -80,7 +85,7 @@ public class Calculator {
      */
     public void run(String input)
             throws UnrecognizedInputException, NotEnoughOperandsException,
-            IndeterminateFormException, VariableWithoutValueException {
+            IndeterminateFormException, VariableWithoutValueException, UserOperationExecutionException {
         if (textRecognizer.isStackOperation(input)) {
             runStackOperation(input);
         } else if (textRecognizer.isVariableOperation(input)) {
@@ -88,7 +93,7 @@ public class Calculator {
         } else if (textRecognizer.isVariableStorageOperation(input)) {
             runVariableStorageOperation(input);
         } else if (textRecognizer.isUserDefinedOperation(input)) {
-            // TODO: execute user defined
+            runUserDefinedOperation(input);
         } else {
             ComplexNumber number = textRecognizer.extractNumber(input);
             if (number == null)
@@ -134,5 +139,50 @@ public class Calculator {
     private void runVariableStorageOperation(String opString) {
         VariableStorage op = OperationsMap.getInstance().getVariableStorageOperation(opString);
         op.execute(variables, varStack);
+    }
+
+    /**
+     * @brief Run the given user-defined operation.
+     * @param name Name of the operation.
+     */
+    private void runUserDefinedOperation(String name) throws UserOperationExecutionException {
+        UserOperation op = OperationsMap.getInstance().getUserDefinedOperation(name);
+
+        try {
+            saveBackup();
+        } catch (CloneNotSupportedException e) {
+        }
+
+        for (String next : op.getAlgorithm()) {
+            try {
+                run(next);
+            } catch (Exception e) {
+                try {
+                    restoreBackup();
+                } catch (CloneNotSupportedException e1) {
+                }
+                throw new UserOperationExecutionException();
+            }
+        }
+    }
+
+    /**
+     * @brief Save a backup copy of the core calculator's objects.
+     * @throws CloneNotSupportedException
+     */
+    private void saveBackup() throws CloneNotSupportedException {
+        numbersStackCopy = (Stack<ComplexNumber>) numbersStack.clone();
+        variablesCopy = (Variables) variables.clone();
+        varStackCopy = (VariablesStack) varStack.clone();
+    }
+
+    /**
+     * @brief Restore the backup copy of the core calculator's objects.
+     * @throws CloneNotSupportedException
+     */
+    private void restoreBackup() throws CloneNotSupportedException {
+        numbersStack = (Stack<ComplexNumber>) numbersStackCopy.clone();
+        variables = (Variables) variablesCopy.clone();
+        varStack = (VariablesStack) varStackCopy.clone();
     }
 }

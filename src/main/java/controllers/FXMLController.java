@@ -3,6 +3,7 @@ package src.main.java.controllers;
 import src.main.java.exceptions.IndeterminateFormException;
 import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.exceptions.UnrecognizedInputException;
+import src.main.java.exceptions.UserOperationExecutionException;
 import src.main.java.exceptions.VariableWithoutValueException;
 import src.main.java.operations.OperationsMap;
 import src.main.java.resources.*;
@@ -236,6 +237,9 @@ public class FXMLController {
                     "resulted in an indeterminate form.");
         } catch (VariableWithoutValueException e) {
             showError("Variable without value.", "The variable has no value yet.");
+        } catch (UserOperationExecutionException e) {
+            showError("Execution error.", "An error occurred during the execution " +
+                      "of the '" + input + "' operation.");
         } finally {
             updateStackView();
         }
