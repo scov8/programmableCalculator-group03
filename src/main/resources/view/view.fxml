@@ -14,6 +14,8 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -21,7 +23,7 @@
 
 <AnchorPane fx:id="paneRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="src.main.java.controllers.FXMLController">
    <children>
-      <Pane fx:id="mainPane" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane fx:id="mainPane" prefHeight="600.0" prefWidth="800.0" visible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <MenuBar prefHeight="29.0" prefWidth="800.0">
               <menus>
@@ -37,6 +39,7 @@
                     <MenuItem mnemonicParsing="false" style="-fx-font-family: Arial;" text="Github" />
                         <MenuItem mnemonicParsing="false" style="-fx-font-family: Arial;" text="Trello" />
                         <MenuItem mnemonicParsing="false" style="-fx-font-family: Arial;" text="Artefacts" />
+                        <MenuItem mnemonicParsing="false" onAction="#showGuide" style="-fx-font-family: Arial;" text="Guide" />
                   </items>
                 </Menu>
               </menus>
@@ -109,7 +112,7 @@
                   <ContextMenu>
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#newUserOperation" text="New" />
-                        <MenuItem fx:id="tableContextMenuEdit" mnemonicParsing="false" onAction="#editUserOperation2" text="Edit" />
+                        <MenuItem fx:id="tableContextMenuEdit" mnemonicParsing="false" onAction="#editUserOperation" text="Edit" />
                         <MenuItem fx:id="tableContextMenuDelete" mnemonicParsing="false" onAction="#deleteUserOperation" text="Delete" />
                     </items>
                   </ContextMenu>
@@ -177,6 +180,20 @@
          <font>
             <Font name="Arial" size="13.0" />
          </font>
+      </TitledPane>
+      <TitledPane fx:id="guidePane" animated="false" prefHeight="600.0" prefWidth="800.0" text="User Guide" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ImageView fitHeight="500.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../Screenshot_2021-12-09_15-00-54.png" />
+                     </image>
+                  </ImageView>
+                  <Button alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="381.0" layoutY="520.0" mnemonicParsing="false" onAction="#closeGuide" text="OK" />
+               </children>
+            </AnchorPane>
+        </content>
       </TitledPane>
    </children>
 </AnchorPane>

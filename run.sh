@@ -21,8 +21,7 @@ for dir in $(find ./src/ -maxdepth 6 -type d); do
 done
 
 # Compile every Java file in the project.
-for file in $(find $(pwd) -maxdepth 6 -type f -name '*.java'); do
-    [[ "$file" == *Test* ]] && continue
+for file in $(find ./src/ -maxdepth 6 -type f -name '*.java'); do
     echo "Compiling $(basename $file)..."
     javac --module-path $fx_libs --add-modules javafx.controls \
     --add-modules javafx.fxml --add-modules javafx.swing \

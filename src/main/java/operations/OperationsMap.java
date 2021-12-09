@@ -3,7 +3,6 @@ package src.main.java.operations;
 import src.main.java.userOperations.UserOperation;
 import src.main.java.variables.*;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,12 +12,14 @@ import java.util.Map;
  * @date 7 Dic 2021
  */
 
- /**
-  * This class contains different maps in which the keys are names of various
-  * operations and the values are actual instances of the operations.
-  * Each map contains a different type of operation.
-  */
-public class OperationsMap implements Serializable {
+/**
+ * This class contains different maps in which the keys are names of various
+ * operations and the values are actual instances of the operations.
+ * Each map contains a different type of operation.
+ */
+public class OperationsMap {
+    /** This class is implemented using the SINGLETON pattern. */
+    private static OperationsMap INSTANCE;
     /** Operations to execute on the stack of numbers. */
     private Map<String, Operation> stackOperations;
     /** Operations to execute on the variables. */
@@ -29,9 +30,9 @@ public class OperationsMap implements Serializable {
     private Map<String, UserOperation> userDefinedOperations;
 
     /**
-     * @brief Constructor.
+     * @brief Private Constructor.
      */
-    public OperationsMap() {
+    private OperationsMap() {
         stackOperations = new HashMap<>();
         stackOperations.put("+", new SumOperation());
         stackOperations.put("-", new DifferenceOperation());
@@ -56,6 +57,17 @@ public class OperationsMap implements Serializable {
         variableStorageOperations.put("restore", new RestoreOperation());
 
         userDefinedOperations = new HashMap<>();
+    }
+
+    /**
+     * @brief Public method to return the only instance of OperationsMap that
+     *        can exist inside this application.
+     * @return Instance of `OperationsMap`.
+     */
+    public static OperationsMap getInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new OperationsMap();
+        return INSTANCE;
     }
 
     /**

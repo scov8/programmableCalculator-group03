@@ -1,6 +1,5 @@
 package src.main.java.resources;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Stack;
 
@@ -11,6 +10,7 @@ import src.main.java.exceptions.VariableWithoutValueException;
 import src.main.java.operations.*;
 import src.main.java.variables.*;
 import src.main.java.operations.Operation;
+import src.main.java.userOperations.UserOperation;
 
 /**
  * @file Calculator.java
@@ -21,9 +21,7 @@ import src.main.java.operations.Operation;
 /**
  * @brief This class handles the operation and the operands in the stack.
  */
-public class Calculator implements Serializable {
-    /** Maps containing all the operations supported by this application. */
-    private OperationsMap operationsMap;
+public class Calculator {
     /**
      * Main stack containing the numbers given in input by the user and the
      * results of the operations.
@@ -39,15 +37,16 @@ public class Calculator implements Serializable {
      */
     private VariablesStack varStack;
 
+    private TextRecognizer textRecognizer;
+
     /**
      * @brief Constructor.
-     * @param operationsMap All the supported operations.
      */
-    public Calculator(OperationsMap operationsMap) {
-        this.operationsMap = operationsMap;
+    public Calculator() {
         this.numbersStack = new Stack<>();
         this.variables = new Variables();
         this.varStack = new VariablesStack();
+        this.textRecognizer = new TextRecognizer();
     }
 
     /**
@@ -79,7 +78,7 @@ public class Calculator implements Serializable {
      * @throws IndeterminateFormException
      * @throws VariableWithoutValueException
      */
-    public void run(String input, TextRecognizer textRecognizer)
+    public void run(String input)
             throws UnrecognizedInputException, NotEnoughOperandsException,
             IndeterminateFormException, VariableWithoutValueException {
         if (textRecognizer.isStackOperation(input)) {
@@ -88,6 +87,8 @@ public class Calculator implements Serializable {
             runVariablesOperation(input);
         } else if (textRecognizer.isVariableStorageOperation(input)) {
             runVariableStorageOperation(input);
+        } else if (textRecognizer.isUserDefinedOperation(input)) {
+            // TODO: execute user defined
         } else {
             ComplexNumber number = textRecognizer.extractNumber(input);
             if (number == null)
@@ -105,7 +106,7 @@ public class Calculator implements Serializable {
      */
     private void runStackOperation(String opString)
             throws NotEnoughOperandsException, IndeterminateFormException {
-        Operation op = operationsMap.getStackOperation(opString);
+        Operation op = OperationsMap.getInstance().getStackOperation(opString);
         op.execute(numbersStack);
     }
 
@@ -122,7 +123,7 @@ public class Calculator implements Serializable {
         char opChar = opString.charAt(0);
         char variable = opString.charAt(1);
 
-        VariableOperation op = operationsMap.getVariableOperation(opChar);
+        VariableOperation op = OperationsMap.getInstance().getVariableOperation(opChar);
         op.execute(variables, numbersStack, variable);
     }
 
@@ -131,7 +132,7 @@ public class Calculator implements Serializable {
      * @param opString String representing the operation to execute.
      */
     private void runVariableStorageOperation(String opString) {
-        VariableStorage op = operationsMap.getVariableStorageOperation(opString);
+        VariableStorage op = OperationsMap.getInstance().getVariableStorageOperation(opString);
         op.execute(variables, varStack);
     }
 }
