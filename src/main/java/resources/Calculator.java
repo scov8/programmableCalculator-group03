@@ -144,6 +144,7 @@ public class Calculator {
     /**
      * @brief Run the given user-defined operation.
      * @param name Name of the operation.
+     * @throws UserOperationExecutionException
      */
     private void runUserDefinedOperation(String name) throws UserOperationExecutionException {
         UserOperation op = OperationsMap.getInstance().getUserDefinedOperation(name);

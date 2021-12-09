@@ -120,6 +120,13 @@ public class TextRecognizer {
         return operationsMap.getVariableStorageOperation(text) != null;
     }
 
+    /**
+     * @brief Check whether the given string is an existing user-defined
+     *        operation.
+     * @param text The string to validate.
+     * @return `true` if the string matches one of the operations; `false`
+     *         otherwise.
+     */
     public boolean isUserDefinedOperation(String text) {
         return operationsMap.getUserDefinedOperation(text) != null;
     }
@@ -131,12 +138,17 @@ public class TextRecognizer {
      * @return boolean.
      */
     public boolean isValidUserDefinedOperationName(String name) {
-        return name.matches("^[a-zA-z]+$");
+        if (!name.matches("^[a-zA-Z]+$"))
+            return false;
+        if (isStackOperation(name))
+            return false;
+        return true;
     }
 
     /**
      * @brief Check whether given text is a valid sequence for a user-defined
      *        operation.
+     * @param name     Name of the operation.
      * @param sequence Sequence of the operation.
      * @return boolean.
      */
@@ -144,6 +156,9 @@ public class TextRecognizer {
         String[] values = sequence.split(" ");
 
         for (String value : values) {
+            if (value.length() == 0)
+                return false;
+
             if (isStackOperation(value))
                 continue;
             if (isVariableOperation(value))
@@ -156,6 +171,7 @@ public class TextRecognizer {
             if (extractNumber(value) == null)
                 return false;
         }
+
         return true;
     }
 }
