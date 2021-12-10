@@ -121,4 +121,15 @@ public class OperationsMap {
     public void deleteUserDefinedOperation(UserOperation op) {
         userDefinedOperations.remove(op.getName());
     }
+
+    public UserOperation[] getAllUserDefinedOperations() {
+        return userDefinedOperations.values().toArray(new UserOperation[0]);
+    }
+
+    public void setAllUserDefinedOperations(UserOperation[] operations) {
+        userDefinedOperations.clear();
+        for (UserOperation op : operations) {
+            userDefinedOperations.put(op.getName(), op);
+        }
+    }
 }
