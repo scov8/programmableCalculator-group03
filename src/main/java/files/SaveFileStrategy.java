@@ -1,15 +1,23 @@
 package src.main.java.files;
 
-import java.io.File;
-
+import javafx.stage.Window;
 import src.main.java.userOperations.UserOperation;
 
 /**
- * @file IOFileStrategy.java
+ * @file SaveFileStrategy.java
  * @author Marco Plaitano
  * @date 10 Dec 2021
  */
 
+/**
+ * This interface declares a method to save a collection of user-defined
+ * operations on a generic file.
+ */
 public interface SaveFileStrategy {
-    public void execute(File file, UserOperation[] operations);
+    /**
+     * @brief Save the collection of user-defined operations in a file.
+     * @param window     Main application window.
+     * @param operations Collection of operations.
+     */
+    public void execute(Window window, UserOperation[] operations);
 }

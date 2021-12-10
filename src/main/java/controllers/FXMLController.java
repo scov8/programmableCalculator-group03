@@ -159,6 +159,11 @@ public class FXMLController {
     /** Maps containing all the operations supported by this application. */
     private OperationsMap operationsMap;
 
+    private SaveTextFile saveTextFile;
+    private SaveObjFile saveObjFile;
+    private RestoreTextFile restoreTextFile;
+    private RestoreObjFile restoreObjFile;
+
     /**
      * Number of items from the stack of numbers to show in the GUI at any time.
      */
@@ -327,44 +332,17 @@ public class FXMLController {
 
     @FXML
     private void saveTextFile(ActionEvent event) {
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Save to...");
-        fc.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Text files (*.txt)", "*.txt")
-        );
-        File file = fc.showSaveDialog(paneRoot.getScene().getWindow());
-        if (file == null)
-            return;
-        SaveTextFile saveTextFile = new SaveTextFile();
-        saveTextFile.execute(file, operationsMap.getAllUserDefinedOperations());
+        saveTextFile.execute(paneRoot.getScene().getWindow(), operationsMap.getAllUserDefinedOperations());
     }
 
     @FXML
     private void saveObjFile(ActionEvent event) {
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Save to...");
-        fc.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Object files (*.dat)", "*.dat")
-        );
-        File file = fc.showSaveDialog(paneRoot.getScene().getWindow());
-        if (file == null)
-            return;
-        SaveObjFile saveObjFile = new SaveObjFile();
-        saveObjFile.execute(file, operationsMap.getAllUserDefinedOperations());
+        saveObjFile.execute(paneRoot.getScene().getWindow(), operationsMap.getAllUserDefinedOperations());
     }
 
     @FXML
     private void restoreTextFile(ActionEvent event) {
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Restore from...");
-        fc.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Text files (*.txt)", "*.txt")
-        );
-        File file = fc.showOpenDialog(paneRoot.getScene().getWindow());
-        if (file == null)
-            return;
-        RestoreTextFile restoreTextFile = new RestoreTextFile();
-        UserOperation[] operations = restoreTextFile.execute(file);
+        UserOperation[] operations = restoreTextFile.execute(paneRoot.getScene().getWindow());
         if (operations == null)
             return;
         operationsMap.setAllUserDefinedOperations(operations);
@@ -374,16 +352,7 @@ public class FXMLController {
 
     @FXML
     private void restoreObjFile(ActionEvent event) {
-        FileChooser fc = new FileChooser();
-        fc.setTitle("Restore from...");
-        fc.getExtensionFilters().addAll(
-            new FileChooser.ExtensionFilter("Object files (*.dat)", "*.dat")
-        );
-        File file = fc.showOpenDialog(paneRoot.getScene().getWindow());
-        if (file == null)
-            return;
-        RestoreObjFile restoreObjFile = new RestoreObjFile();
-        UserOperation[] operations = restoreObjFile.execute(file);
+        UserOperation[] operations = restoreObjFile.execute(paneRoot.getScene().getWindow());
         if (operations == null)
             return;
         operationsMap.setAllUserDefinedOperations(operations);
@@ -550,6 +519,11 @@ public class FXMLController {
         operationsMap = OperationsMap.getInstance();
         textRecognizer = new TextRecognizer();
         calculator = new Calculator();
+
+        saveTextFile = new SaveTextFile();
+        saveObjFile = new SaveObjFile();
+        restoreTextFile = new RestoreTextFile();
+        restoreObjFile = new RestoreObjFile();
 
         stackListView.setItems(stackList);
 
