@@ -77,6 +77,6 @@ public class UserOperation implements Serializable {
      */
     @Override
     public String toString() {
-        return "USER DEFINED '" + name + "': " + sequence;
+        return name + "\n" + sequence;
     }
 }
