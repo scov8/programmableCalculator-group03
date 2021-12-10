@@ -5,10 +5,15 @@ import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.exceptions.UnrecognizedInputException;
 import src.main.java.exceptions.UserOperationExecutionException;
 import src.main.java.exceptions.VariableWithoutValueException;
+import src.main.java.files.RestoreObjFile;
+import src.main.java.files.RestoreTextFile;
+import src.main.java.files.SaveObjFile;
+import src.main.java.files.SaveTextFile;
 import src.main.java.operations.OperationsMap;
 import src.main.java.resources.*;
 import src.main.java.userOperations.UserOperation;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -36,6 +42,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 
 public class FXMLController {
 
@@ -54,14 +61,20 @@ public class FXMLController {
     @FXML
     private TitledPane guidePane;
 
-    @FXML // fx:id="menuEditOperationButton"
-    private MenuItem menuEditOperationButton; // Value injected by FXMLLoader
+    @FXML
+    private Menu saveOperationsButton;
 
-    @FXML // fx:id="menuDeleteOperationButton"
-    private MenuItem menuDeleteOperationButton; // Value injected by FXMLLoader
+    @FXML // fx:id="SaveTextOperationsButton"
+    private MenuItem saveTextOperationsButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="menuSaveOperationsButton"
-    private MenuItem menuSaveOperationsButton; // Value injected by FXMLLoader
+    @FXML // fx:id="SaveObjOperationsButton"
+    private MenuItem saveObjOperationsButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="RestoreTextOperationsButton"
+    private MenuItem restoreTextOperationsButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="RestoreObjOperationsButton"
+    private MenuItem restoreObjOperationsButton; // Value injected by FXMLLoader
 
     @FXML // fx:id="textInput"
     private TextField textInput; // Value injected by FXMLLoader
@@ -312,22 +325,70 @@ public class FXMLController {
         Platform.exit();
     }
 
-    /**
-     * @brief Save all the user-defined operations on a file.
-     * @param event The pressing of the "File.Save Operations" button.
-     */
     @FXML
-    private void menuSaveOperations(ActionEvent event) {
-        // TODO: save operations.
+    private void saveTextFile(ActionEvent event) {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Save to...");
+        fc.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Text files (*.txt)", "*.txt")
+        );
+        File file = fc.showSaveDialog(paneRoot.getScene().getWindow());
+        if (file == null)
+            return;
+        SaveTextFile saveTextFile = new SaveTextFile();
+        saveTextFile.execute(file, operationsMap.getAllUserDefinedOperations());
     }
 
-    /**
-     * @brief Restore all the user-defined operations from a file.
-     * @param event The pressing of the "File.Restore Operations" button.
-     */
     @FXML
-    private void menuRestoreOperations(ActionEvent event) {
-        // TODO: restore operations.
+    private void saveObjFile(ActionEvent event) {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Save to...");
+        fc.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Object files (*.dat)", "*.dat")
+        );
+        File file = fc.showSaveDialog(paneRoot.getScene().getWindow());
+        if (file == null)
+            return;
+        SaveObjFile saveObjFile = new SaveObjFile();
+        saveObjFile.execute(file, operationsMap.getAllUserDefinedOperations());
+    }
+
+    @FXML
+    private void restoreTextFile(ActionEvent event) {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Restore from...");
+        fc.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Text files (*.txt)", "*.txt")
+        );
+        File file = fc.showOpenDialog(paneRoot.getScene().getWindow());
+        if (file == null)
+            return;
+        RestoreTextFile restoreTextFile = new RestoreTextFile();
+        UserOperation[] operations = restoreTextFile.execute(file);
+        if (operations == null)
+            return;
+        operationsMap.setAllUserDefinedOperations(operations);
+        operationsList.clear();
+        operationsList.addAll(operations);
+    }
+
+    @FXML
+    private void restoreObjFile(ActionEvent event) {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("Restore from...");
+        fc.getExtensionFilters().addAll(
+            new FileChooser.ExtensionFilter("Object files (*.dat)", "*.dat")
+        );
+        File file = fc.showOpenDialog(paneRoot.getScene().getWindow());
+        if (file == null)
+            return;
+        RestoreObjFile restoreObjFile = new RestoreObjFile();
+        UserOperation[] operations = restoreObjFile.execute(file);
+        if (operations == null)
+            return;
+        operationsMap.setAllUserDefinedOperations(operations);
+        operationsList.clear();
+        operationsList.addAll(operations);
     }
 
     @FXML
@@ -512,7 +573,9 @@ public class FXMLController {
 
         // can't save list of user operations if it is empty.
         SimpleListProperty<UserOperation> s = new SimpleListProperty<>(operationsList);
-        menuSaveOperationsButton.disableProperty().bind(s.emptyProperty());
+        saveOperationsButton.disableProperty().bind(s.emptyProperty());
+        saveTextOperationsButton.disableProperty().bind(s.emptyProperty());
+        saveObjOperationsButton.disableProperty().bind(s.emptyProperty());
 
         selectedNumbersStack(null);
 

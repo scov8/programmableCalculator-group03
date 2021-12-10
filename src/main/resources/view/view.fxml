@@ -29,8 +29,18 @@
               <menus>
                 <Menu mnemonicParsing="false" style="-fx-font-family: Arial;" text="File">
                   <items>
-                        <MenuItem fx:id="menuSaveOperationsButton" mnemonicParsing="false" onAction="#menuSaveOperations" style="-fx-font-family: Arial;" text="Save Operations" />
-                        <MenuItem mnemonicParsing="false" onAction="#menuRestoreOperations" style="-fx-font-family: Arial;" text="Restore Operations" />
+                        <Menu fx:id="saveOperationsButton" mnemonicParsing="false" style="-fx-font-family: Arial;" text="Save Operations">
+                          <items>
+                            <MenuItem fx:id="saveTextOperationsButton" mnemonicParsing="false" onAction="#saveTextFile" style="-fx-font-family: Arial;" text="Text File" />
+                              <MenuItem fx:id="saveObjOperationsButton" mnemonicParsing="false" onAction="#saveObjFile" style="-fx-font-family: Arial;" text="Obj File" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Restore Operations">
+                          <items>
+                            <MenuItem fx:id="restoreTextOperationsButton" mnemonicParsing="false" onAction="#restoreTextFile" style="-fx-font-family: Arial;" text="Text File" />
+                              <MenuItem fx:id="restoreObjOperationsButton" mnemonicParsing="false" onAction="#restoreObjFile" style="-fx-font-family: Arial;" text="Obj File" />
+                          </items>
+                        </Menu>
                         <MenuItem mnemonicParsing="false" onAction="#menuCloseApplication" text="Close" />
                   </items>
                 </Menu>
