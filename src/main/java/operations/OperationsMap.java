@@ -45,6 +45,7 @@ public class OperationsMap {
         stackOperations.put("dup", new DupOperation());
         stackOperations.put("over", new OverOperation());
         stackOperations.put("swap", new SwapOperation());
+        stackOperations.put("abs", new AbsOperation());
 
         variableOperations = new HashMap<>();
         variableOperations.put('>', new SaveIntoVariable());
