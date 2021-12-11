@@ -6,17 +6,17 @@ import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.resources.ComplexNumber;
 
 /**
- * @file AbsOperation.java
+ * @file ModOperation.java
  * @author Francesco Tortora
  * @date 10 Dec 2021
  */
 
 /**
- * @brief This class presents a method to execute the Abs operation of a complex
- *        number contained in a stack.
+ * @brief This class presents a method to execute the Mod operation of a complex
+ *        number contained in the stack.
  */
-public class AbsOperation extends Operation {
-    public AbsOperation() {
+public class ModOperation extends Operation {
+    public ModOperation() {
         super(1);
     }
 

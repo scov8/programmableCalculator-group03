@@ -6,17 +6,17 @@ import static org.junit.Assert.*;
 import java.util.Stack;
 
 import src.main.java.exceptions.NotEnoughOperandsException;
-import src.main.java.operations.AbsOperation;
+import src.main.java.operations.ModOperation;
 import src.main.java.resources.ComplexNumber;
 
 /**
- * @file AbsOperationTest.java
+ * @file ModOperationTest.java
  * @author Francesco Tortora
  * @date 10 Dec 2021
  */
 
-public class AbsOperationTest {
-    private static AbsOperation abs;
+public class ModOperationTest {
+    private static ModOperation mod;
     private static Stack<ComplexNumber> stack;
 
     // numbers for which we will perform the operations
@@ -28,18 +28,18 @@ public class AbsOperationTest {
     private static ComplexNumber number5; // number with only real part
     private static ComplexNumber number6; // number with only imaginary part
 
-    // results of the abs operation
-    private static ComplexNumber result0; // abs of number 0
-    private static ComplexNumber result1; // abs of number 1
-    private static ComplexNumber result2; // abs of number 2
-    private static ComplexNumber result3; // abs of number 3
-    private static ComplexNumber result4; // abs of number 4
-    private static ComplexNumber result5; // abs of number 5
-    private static ComplexNumber result6; // abs of number 6
+    // results of the mod operation
+    private static ComplexNumber result0; // mod of number 0
+    private static ComplexNumber result1; // mod of number 1
+    private static ComplexNumber result2; // mod of number 2
+    private static ComplexNumber result3; // mod of number 3
+    private static ComplexNumber result4; // mod of number 4
+    private static ComplexNumber result5; // mod of number 5
+    private static ComplexNumber result6; // mod of number 6
 
     @BeforeClass
     public static void setUp() {
-        abs = new AbsOperation();
+        mod = new ModOperation();
         stack = new Stack<>();
 
         number0 = new ComplexNumber(0, 0);
@@ -62,44 +62,44 @@ public class AbsOperationTest {
     @Test(expected = NotEnoughOperandsException.class)
     public void testNotEnoughOperandsExceptionOnExecute() {
         stack.clear();
-        abs.execute(stack);
+        mod.execute(stack);
     }
 
     @Test
     public void testExecute() {
         stack.clear();
         stack.push(number0);
-        abs.execute(stack);
+        mod.execute(stack);
         assertEquals(result0, stack.peek());
 
         stack.clear();
         stack.push(number1);
-        abs.execute(stack);
+        mod.execute(stack);
         assertEquals(result1, stack.peek());
 
         stack.clear();
         stack.push(number2);
-        abs.execute(stack);
+        mod.execute(stack);
         assertEquals(result2, stack.peek());
 
         stack.clear();
         stack.push(number3);
-        abs.execute(stack);
+        mod.execute(stack);
         assertEquals(result3, stack.peek());
 
         stack.clear();
         stack.push(number4);
-        abs.execute(stack);
+        mod.execute(stack);
         assertEquals(result4, stack.peek());
 
         stack.clear();
         stack.push(number5);
-        abs.execute(stack);
+        mod.execute(stack);
         assertEquals(result5, stack.peek());
 
         stack.clear();
         stack.push(number6);
-        abs.execute(stack);
+        mod.execute(stack);
         assertEquals(result6, stack.peek());
     }
 }
