@@ -67,11 +67,8 @@ public class PlusVariableTest {
         variable.set('c', number5);
         variable.set('d', number6);
         plusVariable.execute(variable, stack, 'a');
-        stack.pop();
         plusVariable.execute(variable, stack, 'b');
-        stack.pop();
         plusVariable.execute(variable, stack, 'c');
-        stack.pop();
         plusVariable.execute(variable, stack, 'd');
         assertEquals(result30, variable.get('a'));
         assertEquals(result41, variable.get('b'));

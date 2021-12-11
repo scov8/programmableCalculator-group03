@@ -150,44 +150,44 @@ public class ComplexNumberTest {
     @Test
     public void testToString() {
         n1.setValues(12.4, 32);
-        assertEquals("12.4 + 32i", n1.toString());
+        assertEquals("12.4 + 32j", n1.toString());
 
         n1.setValues(12, -32.092);
-        assertEquals("12 - 32.092i", n1.toString());
+        assertEquals("12 - 32.092j", n1.toString());
 
         n1.setValues(-0.12, -3.088);
-        assertEquals("-0.12 - 3.088i", n1.toString());
+        assertEquals("-0.12 - 3.088j", n1.toString());
 
         n1.setValues(-12, 32);
-        assertEquals("-12 + 32i", n1.toString());
+        assertEquals("-12 + 32j", n1.toString());
 
         n1.setValues(12.3, 32.25);
-        assertEquals("12.3 + 32.25i", n1.toString());
+        assertEquals("12.3 + 32.25j", n1.toString());
 
         n1.setValues(0.01, -1);
-        assertEquals("0.01 - 1i", n1.toString());
+        assertEquals("0.01 - 1j", n1.toString());
 
         n1.setValues(0, 0);
         assertEquals("0", n1.toString());
 
+        n1.setValues(1.000035, 0);
+        assertEquals("1.00004", n1.toString());
+
         // a small number is written in exponential form.
         n1.setValues(0.000001, 32.1);
-        assertEquals("1.0E-6 + 32.1i", n1.toString());
-
-        // when one of the parts (either real or imaginary) is ~0 it is not
-        // written out.
+        assertEquals("1.0E-6 + 32.1j", n1.toString());
 
         // a way to small number is approximated to 0.
         n1.setValues(0.00000000001, 32.1);
-        assertEquals("32.1i", n1.toString());
+        assertEquals("32.1j", n1.toString());
 
+        // when one of the parts (either real or imaginary) is ~0 it is not
+        // written out.
         n1.setValues(3, 0);
         assertEquals("3", n1.toString());
-
         n1.setValues(3.0005, 0);
-        assertEquals("3.001", n1.toString());
-
+        assertEquals("3.0005", n1.toString());
         n1.setValues(0, -23);
-        assertEquals("-23i", n1.toString());
+        assertEquals("-23j", n1.toString());
     }
 }

@@ -21,23 +21,6 @@ public class SquareRootOperation extends Operation {
     }
 
     /**
-     * @brief Perform the given operation on the two numbers: a, b.
-     * @param a  First operand.
-     * @param b  Second operand.
-     * @param op Operation to perform.
-     * @return result of operation.
-     */
-    private ComplexNumber operate(ComplexNumber a, ComplexNumber b, Operation op) {
-        Stack<ComplexNumber> stack = new Stack<>();
-        if (a != null)
-            stack.push(a);
-        if (b != null)
-            stack.push(b);
-        op.execute(stack);
-        return stack.peek();
-    }
-
-    /**
      * @brief Execute the square root operation on the given stack.
      * @param stack The stack on which to execute the operation.
      * @throws NotEnoughOperandsException if the stack does not contain enough
@@ -49,17 +32,13 @@ public class SquareRootOperation extends Operation {
             throw new NotEnoughOperandsException();
 
         ComplexNumber num = stack.peek();
-        ComplexNumber modNum = operate(num, null, new ModOperation());
-        ComplexNumber result;
-        if (modNum.getReal() == 0)
-            result = new ComplexNumber(0, 0);
-        else {
-            ComplexNumber squareRootMod = new ComplexNumber(Math.sqrt(modNum.getReal()), 0);
-            ComplexNumber sumModOperand = operate(num, modNum, new SumOperation());
-            ComplexNumber modSumModOperand = operate(sumModOperand, null, new ModOperation());
-            result = operate(squareRootMod, operate(sumModOperand, modSumModOperand, new DivisionOperation()),
-                    new MultiplicationOperation());
-        }
+        ModOperation modOp = new ModOperation();
+        modOp.execute(stack);
+        ComplexNumber mod = stack.pop();
+
+        double r = Math.sqrt(mod.getReal());
+        double theta = Math.atan2(num.getImaginary(), num.getReal()) / 2;
+        ComplexNumber result = new ComplexNumber(r * Math.cos(theta), r * Math.sin(theta));
         stack.push(result);
     }
 }

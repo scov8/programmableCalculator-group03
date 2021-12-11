@@ -32,6 +32,6 @@ public class SaveIntoVariable extends VariableOperation {
             throws NotEnoughOperandsException {
         if (!super.enoughOperandsInStack(stack.size()))
             throw new NotEnoughOperandsException();
-        variables.set(varName, stack.peek());
+        variables.set(varName, stack.pop());
     }
 }

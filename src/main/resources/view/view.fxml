@@ -56,7 +56,7 @@
                   <Font name="Arial" size="15.0" />
                </font>
             </Label>
-            <TextField fx:id="textInput" layoutX="245.0" layoutY="65.0" onAction="#onEnterKeyClick" prefHeight="26.0" prefWidth="310.0">
+            <TextField fx:id="textInput" layoutX="245.0" layoutY="65.0" onAction="#onEnterKeyClick" prefHeight="26.0" prefWidth="350.0">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
@@ -64,7 +64,7 @@
                   <Cursor fx:constant="TEXT" />
                </cursor>
             </TextField>
-            <Button fx:id="enter" contentDisplay="CENTER" layoutX="582.0" layoutY="65.0" mnemonicParsing="false" onAction="#onEnterButtonClick" text="Enter">
+            <Button fx:id="enter" contentDisplay="CENTER" layoutX="609.0" layoutY="65.0" mnemonicParsing="false" onAction="#onEnterButtonClick" text="Enter">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
@@ -73,7 +73,7 @@
                </cursor>
             </Button>
             <Label layoutX="182.0" layoutY="115.0" style="-fx-font-family: Arial;" text="ANS" />
-            <Label fx:id="resultLabel" alignment="CENTER" layoutX="320.0" layoutY="110.0" prefHeight="26.0" prefWidth="160.0" text="Result here" textAlignment="CENTER">
+            <Label fx:id="resultLabel" alignment="CENTER" layoutX="245.0" layoutY="110.0" prefHeight="26.0" prefWidth="350.0" text="Result here" textAlignment="CENTER">
                <font>
                   <Font name="Arial" size="13.0" />
                </font>
@@ -112,8 +112,8 @@
                </font></Label>
             <TableView fx:id="operationsTable" editable="true" layoutX="380.0" layoutY="194.0" prefHeight="354.0" prefWidth="350.0" style="-fx-font-family: Arial;">
               <columns>
-                <TableColumn fx:id="opNameClmn" editable="true" onEditCommit="#editUserOperationName" prefWidth="130.0" style="-fx-font-family: Arial;" text="Name" />
-                <TableColumn fx:id="opSeqClmn" editable="true" onEditCommit="#editUserOperationSeq" prefWidth="219.0" sortable="false" style="-fx-font-family: Arial;" text="Sequence" />
+                <TableColumn fx:id="opNameClmn" editable="true" onEditCommit="#editUserOperationName" prefWidth="130.0" resizable="false" style="-fx-font-family: Arial;" text="Name" />
+                <TableColumn fx:id="opSeqClmn" editable="true" onEditCommit="#editUserOperationSeq" prefWidth="219.0" resizable="false" sortable="false" style="-fx-font-family: Arial;" text="Sequence" />
               </columns>
                <contextMenu>
                   <ContextMenu>
@@ -145,7 +145,7 @@
                               <Font size="16.0" />
                            </font>
                            <tooltip>
-                              <Tooltip text="At least 2 characters long, only letters and numbers." wrapText="true" />
+                              <Tooltip text="At least 2 characters long, only letters, numbers and _" wrapText="true" />
                            </tooltip>
                            <cursor>
                               <Cursor fx:constant="HAND" />
@@ -192,7 +192,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ImageView fitHeight="500.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="520.0" fitWidth="750.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/guide.png" />
                      </image>

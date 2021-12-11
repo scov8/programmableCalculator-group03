@@ -48,7 +48,7 @@ public class SaveObjFile implements SaveFileStrategy {
         try (ObjectOutputStream oos = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
             oos.writeObject(operations);
         } catch (Exception ex) {
-            System.err.println("Save obj exception: " + ex);
+            System.out.println("Save to object file exception: " + ex);
         }
     }
 

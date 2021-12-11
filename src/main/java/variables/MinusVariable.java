@@ -5,7 +5,6 @@ import java.util.Stack;
 import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.exceptions.VariableWithoutValueException;
 import src.main.java.operations.DifferenceOperation;
-import src.main.java.operations.DupOperation;
 import src.main.java.operations.SwapOperation;
 import src.main.java.resources.ComplexNumber;
 import src.main.java.resources.Variables;
@@ -40,10 +39,8 @@ public class MinusVariable extends VariableOperation {
         ComplexNumber value = variables.get(varName);
         if (value == null)
             throw new VariableWithoutValueException();
-        DupOperation dup = new DupOperation();
         DifferenceOperation difference = new DifferenceOperation();
         SwapOperation swap = new SwapOperation();
-        dup.execute(stack);
         stack.push(value);
         swap.execute(stack);
         difference.execute(stack);

@@ -4,7 +4,6 @@ import java.util.Stack;
 
 import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.exceptions.VariableWithoutValueException;
-import src.main.java.operations.DupOperation;
 import src.main.java.operations.SumOperation;
 import src.main.java.resources.ComplexNumber;
 import src.main.java.resources.Variables;
@@ -39,9 +38,7 @@ public class PlusVariable extends VariableOperation {
         ComplexNumber value = variables.get(varName);
         if (value == null)
             throw new VariableWithoutValueException();
-        DupOperation dup = new DupOperation();
         SumOperation sum = new SumOperation();
-        dup.execute(stack);
         stack.push(value);
         sum.execute(stack);
         variables.set(varName, stack.pop());

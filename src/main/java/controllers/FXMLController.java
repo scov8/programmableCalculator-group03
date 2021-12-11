@@ -3,7 +3,6 @@ package src.main.java.controllers;
 import src.main.java.exceptions.IndeterminateFormException;
 import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.exceptions.UnrecognizedInputException;
-import src.main.java.exceptions.UserOperationExecutionException;
 import src.main.java.exceptions.VariableWithoutValueException;
 import src.main.java.files.RestoreObjFile;
 import src.main.java.files.RestoreTextFile;
@@ -13,7 +12,6 @@ import src.main.java.operations.OperationsMap;
 import src.main.java.resources.*;
 import src.main.java.userOperations.UserOperation;
 
-import java.io.File;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
@@ -42,7 +40,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
 
 public class FXMLController {
 
@@ -255,9 +252,6 @@ public class FXMLController {
                     "resulted in an indeterminate form.");
         } catch (VariableWithoutValueException e) {
             showError("Variable without value.", "The variable has no value yet.");
-        } catch (UserOperationExecutionException e) {
-            showError("Execution error.", "An error occurred during the execution " +
-                      "of the '" + input + "' operation.");
         } finally {
             updateStackView();
         }

@@ -138,7 +138,7 @@ public class TextRecognizer {
      * @return boolean.
      */
     public boolean isValidUserDefinedOperationName(String name) {
-        if (!name.matches("^[a-zA-Z]+$"))
+        if (!name.matches("^[a-z_A-Z]+[0-9]*[a-z_A-Z]*$"))
             return false;
         if (isStackOperation(name))
             return false;

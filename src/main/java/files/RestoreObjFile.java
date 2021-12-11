@@ -49,7 +49,7 @@ public class RestoreObjFile implements RestoreFileStrategy {
             UserOperation[] operations = (UserOperation[]) ois.readObject();
             return operations;
         } catch (Exception ex) {
-            System.err.println("Restore exception: " + ex);
+            System.out.println("Restore from object file exception: " + ex);
             return null;
         }
     }

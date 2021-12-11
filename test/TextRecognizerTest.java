@@ -220,6 +220,8 @@ public class TextRecognizerTest {
         assertTrue(textRecognizer.isValidUserDefinedOperationName("hypotenuse"));
         assertTrue(textRecognizer.isValidUserDefinedOperationName("myFunc"));
         assertTrue(textRecognizer.isValidUserDefinedOperationName("NEWFUNCTION"));
+        assertTrue(textRecognizer.isValidUserDefinedOperationName("new_function"));
+        assertTrue(textRecognizer.isValidUserDefinedOperationName("HELLO123"));
 
         // these names are not allowed since they already exist.
         assertFalse(textRecognizer.isValidUserDefinedOperationName("sqrt"));
@@ -230,9 +232,7 @@ public class TextRecognizerTest {
         assertFalse(textRecognizer.isValidUserDefinedOperationName("drop"));
 
         // unrecognized operations.
-        assertFalse(textRecognizer.isValidUserDefinedOperationName("HELLO123"));
         assertFalse(textRecognizer.isValidUserDefinedOperationName("23"));
-        assertFalse(textRecognizer.isValidUserDefinedOperationName("new_function"));
         assertFalse(textRecognizer.isValidUserDefinedOperationName("another function new"));
         assertFalse(textRecognizer.isValidUserDefinedOperationName("+a"));
         assertFalse(textRecognizer.isValidUserDefinedOperationName("*a"));

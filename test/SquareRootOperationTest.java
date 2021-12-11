@@ -27,6 +27,7 @@ public class SquareRootOperationTest {
     private static ComplexNumber number4; // number with real part negative and imaginary part positive
     private static ComplexNumber number5; // number with only real part
     private static ComplexNumber number6; // number with only imaginary part
+    private static ComplexNumber number7; // number with only negative real part
 
     // results of the square root operation
     private static ComplexNumber result0; // square root of number 0
@@ -36,6 +37,7 @@ public class SquareRootOperationTest {
     private static ComplexNumber result4; // square root of number 4
     private static ComplexNumber result5; // square root of number 5
     private static ComplexNumber result6; // square root of number 6
+    private static ComplexNumber result7; // square root of number 7
 
     @BeforeClass
     public static void setUp() {
@@ -49,6 +51,7 @@ public class SquareRootOperationTest {
         number4 = new ComplexNumber(-10, 11);
         number5 = new ComplexNumber(8, 0);
         number6 = new ComplexNumber(0, -4);
+        number7 = new ComplexNumber(-12, 0);
 
         result0 = new ComplexNumber(0, 0);
         result1 = new ComplexNumber(2, 1);
@@ -57,6 +60,7 @@ public class SquareRootOperationTest {
         result4 = new ComplexNumber(1.559818698970894, 3.526050818360288);
         result5 = new ComplexNumber(2.828427124746190, 0);
         result6 = new ComplexNumber(1.414213562373095, -1.414213562373095);
+        result7 = new ComplexNumber(0, 3.464101615137754);
     }
 
     @Test (expected = NotEnoughOperandsException.class)
@@ -101,5 +105,10 @@ public class SquareRootOperationTest {
         stack.push(number6);
         squareRoot.execute(stack);
         assertEquals(result6, stack.peek());
+
+        stack.clear();
+        stack.push(number7);
+        squareRoot.execute(stack);
+        assertEquals(result7, stack.peek());
     }
 }

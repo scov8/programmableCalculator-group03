@@ -1,10 +1,5 @@
 package src.main.java.resources;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.util.Locale;
-
 /**
  * @file Number.java
  * @author Marco Plaitano
@@ -126,35 +121,50 @@ public class ComplexNumber {
     }
 
     /**
+     * @brief Format the double number into a string. Big numbers are written
+     *        in scientific notation.
+     * @param d Double number to format.
+     * @return String representation of d.
+     */
+    private String formatDouble(double d) {
+        String s;
+
+        if (Math.abs(d) < 0.001)
+            return String.valueOf(d);
+
+        if (d > 10000)
+            s = String.format("%.5e", d);
+        else
+            s = String.format("%.5f", d);
+
+        while (s.endsWith("0"))
+            s = s.substring(0, s.length() - 1);
+        if (s.endsWith("."))
+            s = s.substring(0, s.length() - 1);
+
+        return s;
+    }
+
+    /**
      * @brief Return a string representation of the object.
      * @return String representing the complex number.
      */
     @Override
     public String toString() {
-        NumberFormat nf = new DecimalFormat("##.###", new DecimalFormatSymbols(Locale.US));
-
         if (isZero(a) && isZero(b))
             return "0";
         else if (isZero(a))
-            return nf.format(b) + "i";
+            return this.formatDouble(b) + "j";
         else if (isZero(b))
-            return nf.format(a);
+            return this.formatDouble(a);
 
         String as, bs;
-        // If the number is too small it can not be rounded up to its first 3
-        // decimal digits or it would be dis
-        if (approximate(Math.abs(a)) >= 0.001)
-            as = nf.format(a);
-        else
-            as = String.valueOf(a);
-        if (approximate(Math.abs(b)) >= 0.001)
-            bs = nf.format(Math.abs(b));
-        else
-            bs = String.valueOf(Math.abs(b));
+        as = this.formatDouble(a);
+        bs = this.formatDouble(Math.abs(b));
 
         if (this.b < 0)
-            return as + " - " + bs + "i";
+            return as + " - " + bs + "j";
         else
-            return as + " + " + bs + "i";
+            return as + " + " + bs + "j";
     }
 }

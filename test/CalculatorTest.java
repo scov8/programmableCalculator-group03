@@ -17,7 +17,6 @@ import src.main.java.exceptions.IndeterminateFormException;
 import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.exceptions.UnrecognizedInputException;
 import src.main.java.exceptions.VariableWithoutValueException;
-import src.main.java.exceptions.UserOperationExecutionException;
 import src.main.java.operations.OperationsMap;
 import src.main.java.resources.Calculator;
 import src.main.java.resources.ComplexNumber;
@@ -63,7 +62,6 @@ public class CalculatorTest {
     public void testRunOperationOnVariables() throws Exception {
         c.run(">a");
         assertEquals(b, c.getVariable('a'));
-        c.run("drop");
         c.run(">b");
         assertEquals(a, c.getVariable('b'));
         c.run("clear");
@@ -132,16 +130,5 @@ public class CalculatorTest {
         assertThrows(VariableWithoutValueException.class, () -> c.run("<d"));
         assertThrows(VariableWithoutValueException.class, () -> c.run("+e"));
         assertThrows(VariableWithoutValueException.class, () -> c.run("-f"));
-    }
-
-    @Test
-    public void testUserOperationExecutionException() throws Exception {
-        c.run("clear");
-        c.run("1+3i");
-        c.run("4-2i");
-        UserOperation op = new UserOperation("hello", "+ - * /");
-        OperationsMap map = OperationsMap.getInstance();
-        map.addUserDefinedOperation(op);
-        assertThrows(UserOperationExecutionException.class, () -> c.run("hello"));
     }
 }

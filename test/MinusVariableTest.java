@@ -66,11 +66,8 @@ public class MinusVariableTest {
         variable.set('c', number5);
         variable.set('d', number6);
         minusVariable.execute(variable, stack, 'a');
-        stack.pop();
         minusVariable.execute(variable, stack, 'b');
-        stack.pop();
         minusVariable.execute(variable, stack, 'c');
-        stack.pop();
         minusVariable.execute(variable, stack, 'd');
         assertEquals(result30, variable.get('a'));
         assertEquals(result41, variable.get('b'));

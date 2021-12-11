@@ -6,7 +6,6 @@ import java.util.Stack;
 import src.main.java.exceptions.IndeterminateFormException;
 import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.exceptions.UnrecognizedInputException;
-import src.main.java.exceptions.UserOperationExecutionException;
 import src.main.java.exceptions.VariableWithoutValueException;
 import src.main.java.operations.*;
 import src.main.java.variables.*;
@@ -85,7 +84,7 @@ public class Calculator {
      */
     public void run(String input)
             throws UnrecognizedInputException, NotEnoughOperandsException,
-            IndeterminateFormException, VariableWithoutValueException, UserOperationExecutionException {
+            IndeterminateFormException, VariableWithoutValueException {
         if (textRecognizer.isStackOperation(input)) {
             runStackOperation(input);
         } else if (textRecognizer.isVariableOperation(input)) {
@@ -146,23 +145,19 @@ public class Calculator {
      * @param name Name of the operation.
      * @throws UserOperationExecutionException
      */
-    private void runUserDefinedOperation(String name) throws UserOperationExecutionException {
+    private void runUserDefinedOperation(String name)
+            throws UnrecognizedInputException, NotEnoughOperandsException,
+            IndeterminateFormException, VariableWithoutValueException {
         UserOperation op = OperationsMap.getInstance().getUserDefinedOperation(name);
 
-        try {
-            saveBackup();
-        } catch (CloneNotSupportedException e) {
-        }
+        saveBackup();
 
         for (String next : op.getAlgorithm()) {
             try {
                 run(next);
             } catch (Exception e) {
-                try {
-                    restoreBackup();
-                } catch (CloneNotSupportedException e1) {
-                }
-                throw new UserOperationExecutionException();
+                restoreBackup();
+                throw e;
             }
         }
     }
@@ -171,19 +166,27 @@ public class Calculator {
      * @brief Save a backup copy of the core calculator's objects.
      * @throws CloneNotSupportedException
      */
-    private void saveBackup() throws CloneNotSupportedException {
-        numbersStackCopy = (Stack<ComplexNumber>) numbersStack.clone();
-        variablesCopy = (Variables) variables.clone();
-        varStackCopy = (VariablesStack) varStack.clone();
+    private void saveBackup() {
+        try {
+            numbersStackCopy = (Stack<ComplexNumber>) numbersStack.clone();
+            variablesCopy = (Variables) variables.clone();
+            varStackCopy = (VariablesStack) varStack.clone();
+        } catch (CloneNotSupportedException e) {
+
+        }
     }
 
     /**
      * @brief Restore the backup copy of the core calculator's objects.
      * @throws CloneNotSupportedException
      */
-    private void restoreBackup() throws CloneNotSupportedException {
-        numbersStack = (Stack<ComplexNumber>) numbersStackCopy.clone();
-        variables = (Variables) variablesCopy.clone();
-        varStack = (VariablesStack) varStackCopy.clone();
+    private void restoreBackup() {
+        try {
+            numbersStack = (Stack<ComplexNumber>) numbersStackCopy.clone();
+            variables = (Variables) variablesCopy.clone();
+            varStack = (VariablesStack) varStackCopy.clone();
+        } catch (CloneNotSupportedException e) {
+
+        }
     }
 }
