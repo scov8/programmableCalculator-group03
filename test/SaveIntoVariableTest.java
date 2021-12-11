@@ -155,6 +155,7 @@ public class SaveIntoVariableTest {
 
     @Test(expected = NotEnoughOperandsException.class)
     public void testNotEnoughOperandsExceptionOnExecute() {
+        stack.clear();
         saveIntoVariable.execute(variable, stack, 'a');
     }
 }

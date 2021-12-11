@@ -209,8 +209,77 @@ public class VariablesStackTest {
         assertEquals(number0, variables.pop('z'));
     }
 
+    @Test
+    public void testClearAll() {
+        variables.push('a', number0);
+        variables.push('b', number1);
+        variables.push('c', number2);
+        variables.push('d', number0);
+        variables.push('e', number1);
+        variables.push('f', number2);
+        variables.push('g', number0);
+        variables.push('h', number1);
+        variables.push('i', number2);
+        variables.push('j', number0);
+        variables.push('k', number1);
+        variables.push('l', number2);
+        variables.push('m', number0);
+        variables.push('n', number1);
+        variables.push('o', number2);
+        variables.push('p', number0);
+        variables.push('q', number1);
+        variables.push('r', number2);
+        variables.push('s', number0);
+        variables.push('t', number1);
+        variables.push('u', number2);
+        variables.push('v', number0);
+        variables.push('w', number1);
+        variables.push('x', number2);
+        variables.push('y', number0);
+        variables.push('z', number1);
+
+        variables.clearAll();
+
+        assertThrows(EmptyStackException.class, () -> variables.peek('a'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('b'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('c'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('d'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('e'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('f'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('g'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('h'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('i'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('j'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('k'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('l'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('m'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('n'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('o'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('p'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('q'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('r'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('s'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('t'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('u'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('v'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('w'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('x'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('y'));
+        assertThrows(EmptyStackException.class, () -> variables.peek('z'));
+    }
+
+    @Test(expected = EmptyStackException.class)
+    public void testClear() {
+        variables.push('a', number0);
+
+        variables.clear('a');
+
+        variables.peek('a');
+    }
+
     @Test(expected = EmptyStackException.class)
     public void testEmptyStackException() {
+        variables.clearAll();
         variables.pop('a');
     }
 }

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import java.util.Stack;
 
+import src.main.java.exceptions.IndeterminateFormException;
 import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.operations.DivisionOperation;
 import src.main.java.resources.ComplexNumber;
@@ -141,9 +142,17 @@ public class DivisionOperationTest {
         result65 = new ComplexNumber(0, -0.5);
     }
 
-    @Test (expected = NotEnoughOperandsException.class)
+    @Test(expected = NotEnoughOperandsException.class)
     public void testNotEnoughOperandsExceptionOnExecute() {
         stack.clear();
+        stack.push(number0);
+        division.execute(stack);
+    }
+
+    @Test(expected = IndeterminateFormException.class)
+    public void testIndeterminateFormExceptionOnExecute() {
+        stack.clear();
+        stack.push(number0);
         stack.push(number0);
         division.execute(stack);
     }

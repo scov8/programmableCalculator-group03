@@ -3,6 +3,8 @@ package test;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import src.main.java.exceptions.NotEnoughOperandsException;
+import src.main.java.exceptions.VariableWithoutValueException;
 import src.main.java.resources.ComplexNumber;
 import src.main.java.resources.Variables;
 import src.main.java.variables.PlusVariable;
@@ -55,7 +57,7 @@ public class PlusVariableTest {
     }
 
     @Test
-    public void testMinusVariableTest() {
+    public void testPlusVariableTest() {
         stack.push(number3);
         stack.push(number2);
         stack.push(number1);
@@ -75,5 +77,19 @@ public class PlusVariableTest {
         assertEquals(result41, variable.get('b'));
         assertEquals(result52, variable.get('c'));
         assertEquals(result63, variable.get('d'));
+    }
+
+    @Test(expected = NotEnoughOperandsException.class)
+    public void testNotEnoughOperandsExceptionOnExecute() {
+        stack.clear();
+        variable.set('a', number0);
+        plusVariable.execute(variable, stack, 'a');
+    }
+
+    @Test(expected = VariableWithoutValueException.class)
+    public void testVariableWithoutValueExceptionOnExecute() {
+        stack.push(number0);
+        variable.set('a', null);
+        plusVariable.execute(variable, stack, 'a');
     }
 }

@@ -3,6 +3,7 @@ package test;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import src.main.java.exceptions.VariableWithoutValueException;
 import src.main.java.resources.ComplexNumber;
 import src.main.java.resources.Variables;
 import src.main.java.variables.SaveIntoStack;
@@ -124,5 +125,11 @@ public class SaveIntoStackTest {
         assertEquals(number2, stack.pop());
         assertEquals(number1, stack.pop());
         assertEquals(number0, stack.pop());
+    }
+
+    @Test(expected = VariableWithoutValueException.class)
+    public void testVariableWithoutValueExceptionOnExecute() {
+        variable.set('a', null);
+        saveIntoStack.execute(variable, stack, 'a');
     }
 }

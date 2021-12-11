@@ -72,6 +72,23 @@ public class VariablesStack implements Cloneable {
         return map.get(variable).empty();
     }
 
+    /**
+     * @brief Clear all variables in the map.
+     */
+    public void clearAll() {
+        for (char letter = 'a'; letter <= 'z'; letter++) {
+            map.get(letter).clear();
+        }
+    }
+
+    /**
+     * @brief Clear a variable in the map.
+     * @param variable Name of the variable.
+     */
+    public void clear(char variable) {
+        map.get(variable).clear();
+    }
+
     @Override
     protected Object clone() throws CloneNotSupportedException {
         return super.clone();

@@ -33,8 +33,8 @@ public class CalculatorTest {
     public static void setUp() {
         c = new Calculator();
         list = new LinkedList<>();
-        a = new ComplexNumber(1,3.5);
-        b = new ComplexNumber(2.4,-8.024);
+        a = new ComplexNumber(1, 3.5);
+        b = new ComplexNumber(2.4, -8.024);
     }
 
     @Before
@@ -42,8 +42,9 @@ public class CalculatorTest {
         c.run("1+3.5i");
         c.run("2.4-8.024i");
     }
+
     @Test
-    public void testGetTopKNumbers(){
+    public void testGetTopKNumbers() {
         list = c.getTopKNumbers(2);
         assertEquals(a, list.get(0));
         assertEquals(b, list.get(1));
@@ -51,7 +52,7 @@ public class CalculatorTest {
 
     @Test
     public void testRunOperationOnStackOperation() throws Exception {
-        ComplexNumber number = new ComplexNumber(-2.4,+8.024);
+        ComplexNumber number = new ComplexNumber(-2.4, +8.024);
         // sign invertion. Top inverts its sign, size does not change.
         c.run("+-");
         list = c.getTopKNumbers(1);
@@ -79,7 +80,7 @@ public class CalculatorTest {
         map.addUserDefinedOperation(op);
         c.run("hello");
         list = c.getTopKNumbers(1);
-        ComplexNumber x = new ComplexNumber(-2.4,10.524);
+        ComplexNumber x = new ComplexNumber(-2.4, 10.524);
         assertEquals(x, list.get(0));
     }
 
@@ -92,9 +93,11 @@ public class CalculatorTest {
         assertThrows(UnrecognizedInputException.class, () -> c.run("pluto"));
         assertThrows(UnrecognizedInputException.class, () -> c.run("franco126"));
     }
+
     @Test
     public void testNotEnoughOperandsException() throws Exception {
-        c.run("+");
+        c.run("clear");
+        c.run("1+3i");
         // only 1 item in the stack.
         assertThrows(NotEnoughOperandsException.class, () -> c.run("+"));
         assertThrows(NotEnoughOperandsException.class, () -> c.run("-"));
@@ -116,6 +119,7 @@ public class CalculatorTest {
         assertThrows(NotEnoughOperandsException.class, () -> c.run("over"));
         assertThrows(NotEnoughOperandsException.class, () -> c.run(">a"));
     }
+
     @Test
     public void testIndeterminateFormException() throws Exception {
         c.run("0");
@@ -125,13 +129,16 @@ public class CalculatorTest {
 
     @Test
     public void testVariableWithoutValueException() throws Exception {
-        assertThrows(VariableWithoutValueException.class, () -> c.run("<a"));
-        assertThrows(VariableWithoutValueException.class, () -> c.run("+a"));
-        assertThrows(VariableWithoutValueException.class, () -> c.run("-a"));
+        assertThrows(VariableWithoutValueException.class, () -> c.run("<d"));
+        assertThrows(VariableWithoutValueException.class, () -> c.run("+e"));
+        assertThrows(VariableWithoutValueException.class, () -> c.run("-f"));
     }
 
     @Test
     public void testUserOperationExecutionException() throws Exception {
+        c.run("clear");
+        c.run("1+3i");
+        c.run("4-2i");
         UserOperation op = new UserOperation("hello", "+ - * /");
         OperationsMap map = OperationsMap.getInstance();
         map.addUserDefinedOperation(op);
