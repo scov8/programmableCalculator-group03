@@ -1,8 +1,26 @@
 #!/bin/bash
 # Use this script to compile and run the application.
 
+
+# Get command line arguments
+while [[ -n $1 ]]; do
+    case "$1" in
+        --lib)
+            if [[ -z "$2" ]]; then
+                echo "No path to JavaFX libraries specified"
+                exit 1
+            fi
+            fx_libs="$2"
+            shift ; shift ;;
+        *)
+            shift ;;
+    esac
+done
+
+
 # Path to JavaFX libraries.
-fx_libs="libs/javafx_lib/"
+fx_libs=${fx_libs:="libs/javafx_lib/"}
+echo "Using JavaFX libraries in: '"$fx_libs"'"
 
 # Path to main source file.
 main="src/main/java/Main"
