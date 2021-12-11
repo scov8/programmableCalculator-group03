@@ -1,10 +1,28 @@
 # Programmable Calculator - Group 03
 
+## Usage
+
+Use the shell script to compile and run the application. Use the --lib flag to
+specify the path to the JavaFX libraries installed on the machine.
+
+## Dependencies
+
+Java 11+  
+JavaFX 11+  
+Junit 4.13
+
+## Group members
+
+Plaitano Marco    0622701828 m.plaitano8@studenti.unisa.it  
+Rosa Gerardo      0622701829 g.rosa10@studenti.unisa.it  
+Scovotto Luigi    0622701702 l.scovotto1@studenti.unisa.it  
+Tortora Franceso  0622701700 f.tortora21@studenti.unisa.it
+
 ## Links:
 
 + [Github repository](https://github.com/scov8/programmableCalculator-group03)
 + [Trello Board](https://trello.com/b/f7cQ1FJC/programmablecalculator-group03)
-+ [Drive](https://drive.google.com/drive/folders/0AEyBDDBEprxOUk9PVA)
++ [Drive](https://drive.google.com/drive/folders/0AEyBDDBEprxOUk9PVA) with all artefacts
 
 ### Pre-gaming Artifacts
 
@@ -25,10 +43,10 @@
 + [Sprint 2 Report](https://docs.google.com/document/d/1ccTRlZsQJsHME2FzAWMFJVPBbmrtP6OI)
 + [Sprint 2 Presentation](https://unisalerno-my.sharepoint.com/:p:/g/personal/f_tortora21_studenti_unisa_it/ES1eLMC7Vv1Iri2YIL5upv4BOGsPJOxpjhti7nSWUFsz5A?e=FsZD3J)
 
-<!-- ### Third sprint Artifacts
+### Third sprint Artifacts
 
-+ Sprint 3 Planning
-+ Sprint 3 Report
-+ Sprint 3 Presentation -->
-
-<!-- ### Project Artifacts
++ [Groomed Product Backlog](https://docs.google.com/spreadsheets/d/1CgNm93rCYhje33eAq2oPzbC2Dg6AZX5oCwtE-j6ViAQ)
++ [Overall Burndown Chart](https://drive.google.com/file/d/1OTtzx8lgtL6PpoANRZH_VdTaX_hLPyjC/view)
++ [Sprint 3 Planning](https://docs.google.com/spreadsheets/d/1C9XnzYWZlZT_OsTMde2xgawcK3mrqzf8d7zIL_CjVLA)
++ [Sprint 3 Report](https://docs.google.com/document/d/1WTm8m58L1ABUUMRCT3yvReJCyFtSFacR/edit?usp=sharing&ouid=117174835629074448548&rtpof=true&sd=true)
++ [Sprint 3 Presentation](https://unisalerno-my.sharepoint.com/:p:/g/personal/f_tortora21_studenti_unisa_it/EdqC3_-U6yZLnGJjWxoZnVsBvJZkeSkKRw6g4HHyZAtsXQ?e=FuLlP5)
