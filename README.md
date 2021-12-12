@@ -18,8 +18,8 @@ Junit 4.13<br>
 
 ## Group members
 
-| | | |
-| :-------------: | :-------------: | :----- |
+|        Name         |   Number   |             Mail              |
+| :-----------------: | :--------: | :---------------------------- |
 | [Plaitano Marco]    | 0622701828 | m.plaitano8@studenti.unisa.it |
 | [Rosa Gerardo]      | 0622701829 | g.rosa10@studenti.unisa.it    |
 | [Scovotto Luigi]    | 0622701702 | l.scovotto1@studenti.unisa.it |
