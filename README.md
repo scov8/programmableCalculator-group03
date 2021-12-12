@@ -1,10 +1,27 @@
 # Programmable Calculator - Group 03
 
+The purpose of this software is to implement a scientific, programmable
+calculator.  
+The calculator can work with real and complex, floating numbers. It also supports
+the definition and usage of 26 variables, one for each letter of the alphabet.  
+
+The most advanced feature of this calculator is the possibility for the user to 
+define and use new operations which are a combination of those already 
+implemented by the calculator itself.  
+These operations can be saved to and loaded from a file so that the user can
+reuse them across multiple sessions.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 ## Usage
 
-Use the shell script to compile and run the application.<br>
-Use the **--lib** flag to specify the path to the JavaFX libraries installed on
-the machine.
+Launch the shell script to compile and run the application.<br>
+Use the **--libs** flag to specify the global path to the JavaFX libraries
+installed on the machine.
+
+```shell
+./run.sh --libs /path/to/javafx/libs
+```
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
