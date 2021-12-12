@@ -1,6 +1,6 @@
-# Programmable Calculator - Group 03
+# Programmable Calculator - Group 03 IZ
 
-The purpose of this software is to implement a scientific, programmable
+The purpose of this project is to implement a scientific, programmable
 calculator.  
 The calculator can work with real and complex, floating numbers. It also supports
 the definition and usage of 26 variables, one for each letter of the alphabet.  
