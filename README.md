@@ -62,7 +62,7 @@ Junit 4.13<br>
 ### Final Artefacts
 
 - [Burndown Chart](https://drive.google.com/file/d/1OTtzx8lgtL6PpoANRZH_VdTaX_hLPyjC/view)
-- [API Documentation & Software Architecture](https://drive.google.com/file/d/1QyTGhnAK97PMKHsUaDrELkFjxkOtxwHh/view?usp=sharing)
+- [API Documentation & Software Architecture](https://drive.google.com/file/d/1QbB_WaFyTz2ipAWWz3wJ4ScTCuA40cQC/view?usp=sharing)
 
 
 <!-- Github profiles links -->
