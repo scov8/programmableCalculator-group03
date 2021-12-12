@@ -10,7 +10,7 @@ import javafx.stage.Window;
 import src.main.java.userOperations.UserOperation;
 
 /**
- * @file SaveFileStrategy.java
+ * @file SaveTextFile.java
  * @author Marco Plaitano
  * @date 10 Dec 2021
  */

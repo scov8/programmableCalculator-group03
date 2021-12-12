@@ -1,9 +1,3 @@
-/**
- * @file NumberTest.java
- * @author Marco Plaitano
- * @date 22 Nov 2021
- */
-
 package test;
 
 import org.junit.*;
@@ -12,7 +6,11 @@ import static org.junit.Assert.*;
 
 import src.main.java.resources.ComplexNumber;
 
-
+/**
+ * @file NumberTest.java
+ * @author Marco Plaitano
+ * @date 22 Nov 2021
+ */
 public class ComplexNumberTest {
     private static ComplexNumber n1;
     private static ComplexNumber n2;
@@ -143,7 +141,7 @@ public class ComplexNumberTest {
         n2.setValues(-16.000002, 7);
         assertNotEquals(n1, n2);
         n1.setValues(-99, -0.2);
-        n2.setValues(99,  -0.2);
+        n2.setValues(99, -0.2);
         assertNotEquals(n1, n2);
     }
 

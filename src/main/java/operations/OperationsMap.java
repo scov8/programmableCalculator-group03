@@ -123,10 +123,17 @@ public class OperationsMap {
         userDefinedOperations.remove(op.getName());
     }
 
+    /**
+     * @brief Get all user-defined operations.
+     * @return All the user-defined operations.
+     */
     public UserOperation[] getAllUserDefinedOperations() {
         return userDefinedOperations.values().toArray(new UserOperation[0]);
     }
 
+    /**
+     * @brief Set all the user-defined operations.
+     */
     public void setAllUserDefinedOperations(UserOperation[] operations) {
         userDefinedOperations.clear();
         for (UserOperation op : operations) {

@@ -101,7 +101,7 @@ public class SumOperationTest {
         result66 = new ComplexNumber(0, -8);
     }
 
-    @Test (expected = NotEnoughOperandsException.class)
+    @Test(expected = NotEnoughOperandsException.class)
     public void testNotEnoughOperandsExceptionOnExecute() {
         stack.clear();
         stack.push(number0);

@@ -143,7 +143,7 @@ public class DifferenceOperationTest {
         result65 = new ComplexNumber(-8, -4);
     }
 
-    @Test (expected = NotEnoughOperandsException.class)
+    @Test(expected = NotEnoughOperandsException.class)
     public void testNotEnoughOperandsExceptionOnExecute() {
         stack.clear();
         stack.push(number0);

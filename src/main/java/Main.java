@@ -1,9 +1,3 @@
-/**
- * @file Main.java
- * @author Luigi Scovotto
- * @date 22 Nov 2021
- */
-
 package src.main.java;
 
 import javafx.application.Application;
@@ -12,6 +6,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * @file Main.java
+ * @author Luigi Scovotto
+ * @date 22 Nov 2021
+ */
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {

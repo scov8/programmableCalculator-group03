@@ -10,6 +10,11 @@ import java.util.EmptyStackException;
 
 import static org.junit.Assert.*;
 
+/**
+ * @file VariablesStackTest.java
+ * @author Francesco Tortora
+ * @date 30 Nov 2021
+ */
 public class VariablesStackTest {
     private static ComplexNumber number0;
     private static ComplexNumber number1;

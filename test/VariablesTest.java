@@ -8,6 +8,11 @@ import src.main.java.resources.Variables;
 
 import static org.junit.Assert.*;
 
+/**
+ * @file VariablesTest.java
+ * @author Francesco Tortora
+ * @date 01 Dic 2021
+ */
 public class VariablesTest {
     private static ComplexNumber number0;
     private static ComplexNumber number1;

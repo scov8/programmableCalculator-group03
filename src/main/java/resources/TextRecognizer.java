@@ -1,5 +1,5 @@
 /**
- * @file InputParser.java
+ * @file TextRecognizer.java
  * @author Marco Plaitano
  * @date 24 Nov 2021
  */

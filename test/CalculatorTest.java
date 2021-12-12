@@ -1,9 +1,3 @@
-/**
- * @file CalculatorTest.java
- * @author Gerardo Rosa
- * @date 27 Nov 2021
- */
-
 package test;
 
 import org.junit.*;
@@ -21,6 +15,12 @@ import src.main.java.operations.OperationsMap;
 import src.main.java.resources.Calculator;
 import src.main.java.resources.ComplexNumber;
 import src.main.java.userOperations.UserOperation;
+
+/**
+ * @file CalculatorTest.java
+ * @author Gerardo Rosa
+ * @date 27 Nov 2021
+ */
 
 public class CalculatorTest {
     private static Calculator c;

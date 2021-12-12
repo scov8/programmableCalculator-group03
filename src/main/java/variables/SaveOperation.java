@@ -6,7 +6,7 @@ import src.main.java.resources.VariablesStack;
 
 /**
  * @file SaveOperation.java
- * @author Gerarrdo Rosa
+ * @author Gerardo Rosa
  * @date 01 Dic 2021
  */
 

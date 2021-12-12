@@ -41,6 +41,11 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
+/**
+ * @file FXMLController.java
+ * @author Luigi Scovotto
+ * @date 22 Nov 2021
+ */
 public class FXMLController {
 
     @FXML // ResourceBundle that was given to the FXMLLoader

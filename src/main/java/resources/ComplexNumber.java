@@ -1,7 +1,7 @@
 package src.main.java.resources;
 
 /**
- * @file Number.java
+ * @file ComplexNumber.java
  * @author Marco Plaitano
  * @date 22 Nov 2021
  */

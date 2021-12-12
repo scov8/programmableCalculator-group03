@@ -10,6 +10,11 @@ import src.main.java.variables.SaveOperation;
 
 import static org.junit.Assert.*;
 
+/**
+ * @file SaveOperationTest.java
+ * @author Gerardo Rosa
+ * @date 01 Dic 2021
+ */
 public class SaveOperationTest {
     private static ComplexNumber number0;
     private static ComplexNumber number1;
