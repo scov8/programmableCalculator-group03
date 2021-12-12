@@ -79,10 +79,13 @@ public class Calculator {
      * @brief Run the operation associated to the user input.
      * @param input          User input.
      * @param textRecognizer object containing methods to recognize and parse text.
-     * @throws UnrecognizedInputException
-     * @throws NotEnoughOperandsException
-     * @throws IndeterminateFormException
-     * @throws VariableWithoutValueException
+     * @throws UnrecognizedInputException    if the input is not recognized.
+     * @throws NotEnoughOperandsException    if the stack does not contain enough
+     *                                       elements to execute the operation.
+     * @throws IndeterminateFormException    if the execution of the operation.
+     *                                       resulted in an indeterminate form.
+     * @throws VariableWithoutValueException if the needed variable has no value
+     *                                       yet.
      */
     public void run(String input)
             throws UnrecognizedInputException, NotEnoughOperandsException,
@@ -104,8 +107,10 @@ public class Calculator {
     /**
      * @brief Run the given operation on the elements of the stack.
      * @param opString String representing the operation to execute.
-     * @throws NotEnoughOperandsException
-     * @throws IndeterminateFormException
+     * @throws NotEnoughOperandsException if the stack does not contain enough
+     *                                    elements to execute the operation.
+     * @throws IndeterminateFormException if the execution of the operation.
+     *                                    resulted in an indeterminate form.
      */
     private void runStackOperation(String opString)
             throws NotEnoughOperandsException, IndeterminateFormException {
@@ -116,8 +121,10 @@ public class Calculator {
     /**
      * @brief Run the given operation on one of the variables.
      * @param opString String representing the operation to execute.
-     * @throws NotEnoughOperandsException
-     * @throws VariableWithoutValueException
+     * @throws NotEnoughOperandsException    if the stack does not contain enough
+     *                                       elements to execute the operation.
+     * @throws VariableWithoutValueException if the needed variable has no value
+     *                                       yet.
      */
     private void runVariablesOperation(String opString)
             throws NotEnoughOperandsException, VariableWithoutValueException {
@@ -142,13 +149,22 @@ public class Calculator {
     /**
      * @brief Run the given user-defined operation.
      * @param name Name of the operation.
-     * @throws UserOperationExecutionException
+     * @throws UnrecognizedInputException    if the input is not recognized.
+     * @throws NotEnoughOperandsException    if the stack does not contain enough
+     *                                       elements to execute the operation.
+     * @throws IndeterminateFormException    if the execution of the operation.
+     *                                       resulted in an indeterminate form.
+     * @throws VariableWithoutValueException if the needed variable has no value
+     *                                       yet.
      */
     private void runUserDefinedOperation(String name)
             throws UnrecognizedInputException, NotEnoughOperandsException,
             IndeterminateFormException, VariableWithoutValueException {
+        // determine the operation to execute.
         UserOperation op = OperationsMap.getInstance().getUserDefinedOperation(name);
 
+        // save a backup of the numbers stack and the variables to restore in case
+        // the execution produces an error.
         saveBackup();
 
         for (String next : op.getAlgorithm()) {
@@ -163,7 +179,6 @@ public class Calculator {
 
     /**
      * @brief Save a backup copy of the core calculator's objects.
-     * @throws CloneNotSupportedException
      */
     private void saveBackup() {
         try {
@@ -177,7 +192,6 @@ public class Calculator {
 
     /**
      * @brief Restore the backup copy of the core calculator's objects.
-     * @throws CloneNotSupportedException
      */
     private void restoreBackup() {
         try {
