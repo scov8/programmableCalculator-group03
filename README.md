@@ -2,23 +2,32 @@
 
 ## Usage
 
-Use the shell script to compile and run the application. Use the --lib flag to
-specify the path to the JavaFX libraries installed on the machine.
+Use the shell script to compile and run the application.<br>
+Use the **--lib** flag to specify the path to the JavaFX libraries installed on
+the machine.
+
+- - - - - - - - - - - - - - - - - - - - - - - - -
 
 ## Dependencies
 
-Java 11+
-JavaFX 11+
-Junit 4.13
+Java 11+<br>
+JavaFX 11+<br>
+Junit 4.13<br>
+
+- - - - - - - - - - - - - - - - - - - - - - - - -
 
 ## Group members
 
-Plaitano Marco 0622701828 m.plaitano8@studenti.unisa.it
-Rosa Gerardo 0622701829 g.rosa10@studenti.unisa.it
-Scovotto Luigi 0622701702 l.scovotto1@studenti.unisa.it
-Tortora Franceso 0622701700 f.tortora21@studenti.unisa.it
+| | | |
+| :-------------: | :-------------: | :----- |
+| [Plaitano Marco]    | 0622701828 | m.plaitano8@studenti.unisa.it |
+| [Rosa Gerardo]      | 0622701829 | g.rosa10@studenti.unisa.it    |
+| [Scovotto Luigi]    | 0622701702 | l.scovotto1@studenti.unisa.it |
+| [Tortora Francesco] | 0622701700 | f.tortora21@studenti.unisa.it |
 
-## Links:
+- - - - - - - - - - - - - - - - - - - - - - - - -
+
+## Links
 
 - [Github repository](https://github.com/scov8/programmableCalculator-group03)
 - [Trello Board](https://trello.com/b/f7cQ1FJC/programmablecalculator-group03)
@@ -50,3 +59,22 @@ Tortora Franceso 0622701700 f.tortora21@studenti.unisa.it
 - [Sprint 3 Planning](https://docs.google.com/spreadsheets/d/1C9XnzYWZlZT_OsTMde2xgawcK3mrqzf8d7zIL_CjVLA)
 - [Sprint 3 Report](https://docs.google.com/document/d/1WTm8m58L1ABUUMRCT3yvReJCyFtSFacR/edit?usp=sharing&ouid=117174835629074448548&rtpof=true&sd=true)
 - [Sprint 3 Presentation](https://unisalerno-my.sharepoint.com/:p:/g/personal/f_tortora21_studenti_unisa_it/EdqC3_-U6yZLnGJjWxoZnVsBvJZkeSkKRw6g4HHyZAtsXQ?e=FuLlP5)
+
+
+
+
+[Plaitano Marco]:
+https://github.com/marcoplaitano
+"Github Profile"
+
+[Rosa Gerardo]:
+https://github.com/gerardorosa
+"Github Profile"
+
+[Scovotto Luigi]:
+https://github.com/scov8
+"Github Profile"
+
+[Tortora Francesco]:
+https://github.com/torx2a
+"Github Profile"
