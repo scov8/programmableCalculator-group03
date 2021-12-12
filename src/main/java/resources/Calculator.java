@@ -135,7 +135,7 @@ public class Calculator {
      * @param opString String representing the operation to execute.
      */
     private void runVariableStorageOperation(String opString) {
-        VariableStorage op = OperationsMap.getInstance().getVariableStorageOperation(opString);
+        VariableStorageOperation op = OperationsMap.getInstance().getVariableStorageOperation(opString);
         op.execute(variables, varStack);
     }
 

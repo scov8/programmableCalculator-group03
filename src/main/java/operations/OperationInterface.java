@@ -12,11 +12,13 @@ import src.main.java.resources.ComplexNumber;
 
 /**
  * @brief This interface declares a single method to execute a generic
- *        operation.
+ *        operation on a stack.
+ *
+ *        This follows the command design pattern.
  */
 public interface OperationInterface {
     /**
-     * @brief Execute an operation on the given stack.
+     * @brief Execute an operation on the elements of the given stack.
      * @param stack The stack on which to execute the operation.
      */
     public void execute(Stack<ComplexNumber> stack);

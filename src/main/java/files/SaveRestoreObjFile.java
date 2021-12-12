@@ -18,15 +18,23 @@ import src.main.java.userOperations.UserOperation;
  */
 
 /**
- * Concrete implementation of the `SaveFileStrategy` interface, according to the
- * Strategy Design Pattern, to save data on an object file.
+ * @brief Concrete implementation of `SaveRestoreFile` to operate with Object
+ *        files.
  */
 public class SaveRestoreObjFile extends SaveRestoreFile {
 
+    /**
+     * @brief Constructor.
+     */
     public SaveRestoreObjFile() {
         super(".dat");
     }
 
+    /**
+     * @brief Save the collection of user-defined operations on a file.
+     * @param window     Main application window.
+     * @param operations Collection of operations.
+     */
     @Override
     public void executeSave(Window window, UserOperation[] operations) {
         File file = chooseFile(window, true);
@@ -40,6 +48,11 @@ public class SaveRestoreObjFile extends SaveRestoreFile {
         }
     }
 
+    /**
+     * @brief Load the collection of user-defined operations from a file.
+     * @param window     Main application window.
+     * @return Array of `UserOperation`.
+     */
     @Override
     public UserOperation[] executeRestore(Window window) {
         File file = chooseFile(window, false);

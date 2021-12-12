@@ -4,7 +4,7 @@ import src.main.java.resources.Variables;
 import src.main.java.resources.VariablesStack;
 
 /**
- * @file VariableStorage.java
+ * @file VariableStorageOperation.java
  * @author Francesco Tortora
  * @date 01 Dic 2021
  */
@@ -13,7 +13,7 @@ import src.main.java.resources.VariablesStack;
  * @brief This abstract class represents an operation to execute on the stack
  *        of variables' values.
  */
-public abstract class VariableStorage implements VariableStorageInterface {
+public abstract class VariableStorageOperation implements VariableStorageOperationInterface {
     /**
      * @brief Execute an operation on the stack of variables' values.
      * @param variables All the variables.

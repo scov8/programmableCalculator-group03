@@ -13,19 +13,25 @@ import java.util.Map;
  */
 
 /**
- * This class contains different maps in which the keys are names of various
- * operations and the values are actual instances of the operations.
- * Each map contains a different type of operation.
+ * @brief This class contains different maps in which the keys are names of
+ *        various operations and the values are actual instances of the
+ *        operations.
+ *
+ *        Each map contains a different type of operation.
  */
 public class OperationsMap {
-    /** This class is implemented using the SINGLETON pattern. */
+    /** This class is instantiated using the singleton design pattern. */
     private static OperationsMap INSTANCE;
+
     /** Operations to execute on the stack of numbers. */
     private Map<String, Operation> stackOperations;
+
     /** Operations to execute on the variables. */
     private Map<Character, VariableOperation> variableOperations;
+
     /** Operations to run on the variables stack. */
-    private Map<String, VariableStorage> variableStorageOperations;
+    private Map<String, VariableStorageOperation> variableStorageOperations;
+
     /** User-defined operations. */
     private Map<String, UserOperation> userDefinedOperations;
 
@@ -94,7 +100,7 @@ public class OperationsMap {
      * @param name Operation's name.
      * @return The operation.
      */
-    public VariableStorage getVariableStorageOperation(String name) {
+    public VariableStorageOperation getVariableStorageOperation(String name) {
         return variableStorageOperations.get(name);
     }
 
@@ -125,7 +131,7 @@ public class OperationsMap {
 
     /**
      * @brief Get all user-defined operations.
-     * @return All the user-defined operations.
+     * @return Array containing all the user-defined operations.
      */
     public UserOperation[] getAllUserDefinedOperations() {
         return userDefinedOperations.values().toArray(new UserOperation[0]);
@@ -133,6 +139,7 @@ public class OperationsMap {
 
     /**
      * @brief Set all the user-defined operations.
+     * @param operations Array of user-operations.
      */
     public void setAllUserDefinedOperations(UserOperation[] operations) {
         userDefinedOperations.clear();

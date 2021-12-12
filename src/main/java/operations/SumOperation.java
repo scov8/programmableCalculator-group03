@@ -21,7 +21,7 @@ public class SumOperation extends Operation {
     }
 
     /**
-     * @brief Execute the sum operation on the given stack.
+     * @brief Execute the sum operation on the top 2 elements of the given stack.
      * @param stack The stack on which to execute the operation.
      * @throws NotEnoughOperandsException if the stack does not contain enough
      *                                    elements.

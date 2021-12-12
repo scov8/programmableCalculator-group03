@@ -13,7 +13,7 @@ import src.main.java.resources.VariablesStack;
 /**
  * @brief This class lets the user execute the 'save' operation.
  */
-public class SaveOperation extends VariableStorage {
+public class SaveOperation extends VariableStorageOperation {
 
     public SaveOperation() {
     }

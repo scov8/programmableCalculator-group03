@@ -13,10 +13,20 @@ import src.main.java.userOperations.UserOperation;
  * @date 12 Dec 2021
  */
 
+/**
+ * @brief This abstract class implements the Strategy `SaveRestoreFileStrategy`
+ *        while still not providing an implementation of the execute methods.
+ */
 public abstract class SaveRestoreFile implements SaveRestoreFileStrategy {
+    /** Accepted extension of files to open in the form ".txt". */
     private String extension;
+    /** Extensions filter to add to the FileChooser. */
     private ExtensionFilter filter;
 
+    /**
+     * @brief Constructor
+     * @param extension Accepted extension of files to open.
+     */
     public SaveRestoreFile(String extension) {
         this.extension = extension;
         this.filter = new ExtensionFilter("(*" + extension + ")", "*" + extension);
@@ -24,7 +34,7 @@ public abstract class SaveRestoreFile implements SaveRestoreFileStrategy {
 
     /**
      * @brief Choose a file to open.
-     * @param window Main application window.
+     * @param window   Main application window.
      * @param saveMode `true` if the file has to be opened to save data in it.
      * @return File chosen; it can be `null` if none has been chosen.
      */

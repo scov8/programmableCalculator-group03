@@ -16,10 +16,11 @@ import src.main.java.resources.ComplexNumber;
 public class ClearOperation extends Operation {
 
     public ClearOperation() {
+        super(0);
     }
 
     /**
-     * @brief Removes all the elements from the stack.
+     * @brief Remove all the elements from the stack.
      * @param stack The stack on which to execute the operation.
      */
     @Override

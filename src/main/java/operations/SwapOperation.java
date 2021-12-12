@@ -12,8 +12,7 @@ import src.main.java.resources.ComplexNumber;
  */
 
 /**
- * @brief This class presents a method to swap the top two elements of the
- *        stack.
+ * @brief This class presents a method to swap the top two elements of a stack.
  */
 public class SwapOperation extends Operation {
 
@@ -22,7 +21,7 @@ public class SwapOperation extends Operation {
     }
 
     /**
-     * @brief Swaps the last two elements.
+     * @brief Swap the top two elements of the given stack.
      * @param stack The stack on which to execute the operation.
      * @throws NotEnoughOperandsException if stack is empty.
      */

@@ -12,8 +12,8 @@ import src.main.java.resources.ComplexNumber;
  */
 
 /**
- * @brief This class presents a method to execute the Difference between two
- *        complex numbers contained in a stack.
+ * @brief This class presents a method to execute the difference between two
+ *        complex numbers contained in the stack.
  */
 public class DifferenceOperation extends Operation {
     public DifferenceOperation() {

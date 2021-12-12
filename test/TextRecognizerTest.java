@@ -6,7 +6,6 @@ import static org.junit.Assert.*;
 import src.main.java.resources.TextRecognizer;
 import src.main.java.userOperations.UserOperation;
 import src.main.java.operations.OperationsMap;
-import src.main.java.resources.ComplexNumber;
 
 /**
  * @file TextRecognizerTest.java

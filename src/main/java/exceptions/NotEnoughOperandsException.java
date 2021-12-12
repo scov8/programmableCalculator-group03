@@ -8,7 +8,7 @@ package src.main.java.exceptions;
 
 /**
  * @brief This exception is launched when not enough operands can be taken from
- *        the stack for an operation.
+ *        the stack to execute an operation.
  */
 public class NotEnoughOperandsException extends RuntimeException {
     public NotEnoughOperandsException() {

@@ -12,10 +12,10 @@ import src.main.java.resources.ComplexNumber;
 
 /**
  * @brief This class represents an operation to execute on the elements
- *        contained in a stack data structure.
+ *        contained in a stack.
  */
 public abstract class Operation implements OperationInterface {
-    /** Number of operands needed for the operation. */
+    /** Number of operands in the stack needed to execute the operation. */
     private int numOperands;
 
     /**

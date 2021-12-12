@@ -11,8 +11,11 @@ import src.main.java.resources.VariablesStack;
 
 /**
  * @brief This class lets the user execute the 'restore' operation.
+ *
+ *        All the variables will be updated to the last value saved for each of
+ *        them in the VariablesStack.
  */
-public class RestoreOperation extends VariableStorage {
+public class RestoreOperation extends VariableStorageOperation {
     /**
      * @brief Update all the variables with the top value saved in the stack for
      *        each of them.

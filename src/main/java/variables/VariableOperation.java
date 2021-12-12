@@ -12,19 +12,22 @@ import src.main.java.resources.Variables;
  */
 
 /**
- * @brief This class represents a variable operation
+ * @brief This class represents a generic operation to execute on a variable.
  */
 public abstract class VariableOperation implements VariableOperationInterface {
-    /** Number of operands needed for the operation. */
+    /**
+     * Number of operands needed in the stack of numbers to execute the
+     * operation.
+     */
     private int numOperands;
 
     /**
      * @brief Constructor.
      *
-     *        Default number of operands is 2.
+     *        Default number of operands is 0.
      */
     public VariableOperation() {
-        this.numOperands = 2;
+        this.numOperands = 0;
     }
 
     /**

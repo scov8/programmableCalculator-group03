@@ -30,6 +30,9 @@ public class MinusVariable extends VariableOperation {
      * @param variables All the variables.
      * @param stack     Stack of complex numbers.
      * @param varName   Name of the variable to execute the operation on.
+     * @throws NotEnoughOperandsException if the stack does not contain enough
+     *                                    elements.
+     * @throws VariableWithoutValueException if the variable has no value yet.
      */
     @Override
     public void execute(Variables variables, Stack<ComplexNumber> stack, char varName)

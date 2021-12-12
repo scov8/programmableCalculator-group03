@@ -21,7 +21,7 @@ public class ModOperation extends Operation {
     }
 
     /**
-     * @brief Performs the modoulus of a complex numbers.
+     * @brief Perform the modoulus of a complex numbers.
      * @param stack The stack on which to execute the operation.
      * @throws NotEnoughOperandsException if the stack does not contain enough
      *                                    elements.

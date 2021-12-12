@@ -22,7 +22,7 @@ public class DropOperation extends Operation {
     }
 
     /**
-     * @brief Removes the last element.
+     * @brief Remove the last element from the stack.
      * @param stack The stack on which to execute the operation.
      * @throws NotEnoughOperandsException if stack is empty.
      */

@@ -12,7 +12,7 @@ import src.main.java.resources.ComplexNumber;
  */
 
 /**
- * @brief This class lets the user execute the Dup operation.
+ * @brief This class presents a method to duplicate the top element of the stack.
  */
 public class DupOperation extends Operation {
 
@@ -21,7 +21,9 @@ public class DupOperation extends Operation {
     }
 
     /**
-     * @brief Push a copy of the last element on top of the stack.
+     * @brief Push a copy of the top element of the stack.
+     * @param stack The stack on which to execute the operation.
+     * @throws NotEnoughOperandsException if stack is empty.
      */
     @Override
     public void execute(Stack<ComplexNumber> stack) throws NotEnoughOperandsException {

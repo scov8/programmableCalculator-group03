@@ -26,10 +26,18 @@ import src.main.java.userOperations.UserOperation;
  */
 public class SaveRestoreTextFile extends SaveRestoreFile {
 
+    /**
+     * @brief Constructor.
+     */
     public SaveRestoreTextFile() {
         super(".txt");
     }
 
+    /**
+     * @brief Save the collection of user-defined operations on a file.
+     * @param window     Main application window.
+     * @param operations Collection of operations.
+     */
     @Override
     public void executeSave(Window window, UserOperation[] operations) {
         File file = chooseFile(window, true);
@@ -44,6 +52,11 @@ public class SaveRestoreTextFile extends SaveRestoreFile {
         }
     }
 
+    /**
+     * @brief Load the collection of user-defined operations from a file.
+     * @param window     Main application window.
+     * @return Array of `UserOperation`.
+     */
     @Override
     public UserOperation[] executeRestore(Window window) {
         File file = chooseFile(window, false);
@@ -54,14 +67,14 @@ public class SaveRestoreTextFile extends SaveRestoreFile {
             List<UserOperation> operations = new ArrayList<>();
             sc.useLocale(Locale.US);
             sc.useDelimiter("\n");
-            String name;
-            String sequence;
+
             while (sc.hasNext()) {
-                name = sc.next();
-                sequence = sc.next();
+                String name = sc.next();
+                String sequence = sc.next();
                 operations.add(new UserOperation(name, sequence));
             }
             return operations.toArray(new UserOperation[0]);
+
         } catch (Exception e) {
             System.out.println("Read Text Exception: " + e);
             return null;

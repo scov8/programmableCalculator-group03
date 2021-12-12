@@ -22,7 +22,7 @@ public class OverOperation extends Operation {
     }
 
     /**
-     * @brief Pushes a copy of the second last element.
+     * @brief Pushes a copy of the second to last element over the top.
      * @param stack The stack on which to execute the operation.
      * @throws NotEnoughOperandsException if stack is empty.
      */

@@ -11,6 +11,10 @@ package src.main.java.exceptions;
  */
 public class IndeterminateFormException extends RuntimeException {
     public IndeterminateFormException() {
-        super("You have generated an indeterminate form");
+        super();
+    }
+
+    public IndeterminateFormException(String msg) {
+        super(msg);
     }
 }

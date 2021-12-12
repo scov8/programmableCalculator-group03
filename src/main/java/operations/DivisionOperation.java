@@ -13,8 +13,8 @@ import src.main.java.resources.ComplexNumber;
  */
 
 /**
- * @brief This class presents a method to execute the Division of two complex
- *        numbers contained in a stack.
+ * @brief This class presents a method to execute the division of two complex
+ *        numbers contained in the stack.
  */
 public class DivisionOperation extends Operation {
     public DivisionOperation() {
@@ -27,11 +27,11 @@ public class DivisionOperation extends Operation {
      * @throws NotEnoughOperandsException if the stack does not contain enough
      *                                    elements.
      * @throws IndeterminateFormException if the division results in an
-     *                                    indeterminate
-     *                                    form.
+     *                                    indeterminate form.
      */
     @Override
-    public void execute(Stack<ComplexNumber> stack) throws NotEnoughOperandsException, IndeterminateFormException {
+    public void execute(Stack<ComplexNumber> stack)
+            throws NotEnoughOperandsException, IndeterminateFormException {
         if (!super.enoughOperandsInStack(stack.size()))
             throw new NotEnoughOperandsException();
 

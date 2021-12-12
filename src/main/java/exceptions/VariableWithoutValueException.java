@@ -7,7 +7,7 @@ package src.main.java.exceptions;
  */
 
 /**
- * @brief This exception is launched when an operation tries to take the value
+ * @brief This exception is launched when an operation tries to read the value
  *        of a variable but the value does not have any.
  */
 public class VariableWithoutValueException extends RuntimeException {

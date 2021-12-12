@@ -9,15 +9,14 @@ import java.io.Serializable;
  */
 
 /**
- * @brief This class represents an user defined operation.
+ * @brief This class represents a user-defined operation.
  *
- *        An user defined operation has a name and a sequence of operation.
- *        The attribute algorithm represents a sequence divided operation by
- *        operation.
+ *        A user-defined operation has a name and a sequence of operations.
  */
 public class UserOperation implements Serializable {
     private String name;
     private String sequence;
+    /** Array containing each operation of the sequence. */
     private String[] algorithm;
 
     /**

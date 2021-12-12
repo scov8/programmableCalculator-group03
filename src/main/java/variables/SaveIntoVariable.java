@@ -26,6 +26,8 @@ public class SaveIntoVariable extends VariableOperation {
      * @param variables All the variables.
      * @param stack     Stack of complex numbers.
      * @param varName   Name of the variable to execute the operation on.
+     * @throws NotEnoughOperandsException if the stack does not contain enough
+     *                                    elements.
      */
     @Override
     public void execute(Variables variables, Stack<ComplexNumber> stack, char varName)

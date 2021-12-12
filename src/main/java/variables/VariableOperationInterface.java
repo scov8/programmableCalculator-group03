@@ -14,6 +14,8 @@ import src.main.java.resources.Variables;
 /**
  * @brief This interface declares a single method to execute an operation on one
  *        of the variables.
+ *
+ *        This implementation follows the command design pattern.
  */
 public interface VariableOperationInterface {
     /**
