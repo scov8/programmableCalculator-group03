@@ -5,7 +5,7 @@
 # Get command line arguments
 while [[ -n $1 ]]; do
     case "$1" in
-        --lib)
+        --libs)
             if [[ -z "$2" ]]; then
                 echo "No path to JavaFX libraries specified"
                 exit 1
@@ -13,7 +13,8 @@ while [[ -n $1 ]]; do
             fx_libs="$2"
             shift ; shift ;;
         *)
-            shift ;;
+            echo "Argument '"$1"' not recognized."
+            exit 1 ;;
     esac
 done
 
