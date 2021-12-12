@@ -239,7 +239,7 @@ public class FXMLController {
 
     /**
      * @brief Execute calculator function associated to the given input.
-     * @param input The input string.
+     * @param input The user input string.
      */
     private void runUserInput(String input) {
         try {

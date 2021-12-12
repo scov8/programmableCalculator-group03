@@ -77,8 +77,7 @@ public class Calculator {
 
     /**
      * @brief Run the operation associated to the user input.
-     * @param input          User input.
-     * @param textRecognizer object containing methods to recognize and parse text.
+     * @param input User input.
      * @throws UnrecognizedInputException    if the input is not recognized.
      * @throws NotEnoughOperandsException    if the stack does not contain enough
      *                                       elements to execute the operation.

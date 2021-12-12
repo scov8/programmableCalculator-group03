@@ -35,8 +35,8 @@ public class MultiplicationOperation extends Operation {
         ComplexNumber right = stack.pop();
         ComplexNumber left = stack.pop();
         ComplexNumber result = new ComplexNumber(
-                left.getReal() * right.getReal() - left.getImaginary() * right.getImaginary(),
-                left.getImaginary() * right.getReal() + left.getReal() * right.getImaginary());
+                left.getReal()      * right.getReal() - left.getImaginary() * right.getImaginary(),
+                left.getImaginary() * right.getReal() + left.getReal()      * right.getImaginary());
         stack.push(result);
     }
 

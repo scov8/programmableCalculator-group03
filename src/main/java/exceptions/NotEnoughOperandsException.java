@@ -12,7 +12,7 @@ package src.main.java.exceptions;
  */
 public class NotEnoughOperandsException extends RuntimeException {
     public NotEnoughOperandsException() {
-
+        super();
     }
 
     public NotEnoughOperandsException(String msg) {

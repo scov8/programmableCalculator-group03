@@ -24,12 +24,14 @@ public class OverOperation extends Operation {
     /**
      * @brief Pushes a copy of the second to last element over the top.
      * @param stack The stack on which to execute the operation.
-     * @throws NotEnoughOperandsException if stack is empty.
+     * @throws NotEnoughOperandsException if the stack does not contain enough
+     *                                    elements.
      */
     @Override
     public void execute(Stack<ComplexNumber> stack) throws NotEnoughOperandsException {
         if (!super.enoughOperandsInStack(stack.size()))
             throw new NotEnoughOperandsException();
+
         ComplexNumber element1 = stack.pop();
         ComplexNumber element2 = stack.peek();
         stack.push(element1);

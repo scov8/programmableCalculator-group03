@@ -12,7 +12,7 @@ package src.main.java.exceptions;
  */
 public class VariableWithoutValueException extends RuntimeException {
     public VariableWithoutValueException() {
-
+        super();
     }
 
     public VariableWithoutValueException(String msg) {

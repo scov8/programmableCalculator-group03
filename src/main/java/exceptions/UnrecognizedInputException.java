@@ -12,7 +12,7 @@ package src.main.java.exceptions;
  */
 public class UnrecognizedInputException extends RuntimeException {
     public UnrecognizedInputException() {
-
+        super();
     }
 
     public UnrecognizedInputException(String msg) {

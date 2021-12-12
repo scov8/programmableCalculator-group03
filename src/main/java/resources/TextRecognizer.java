@@ -42,13 +42,15 @@ public class TextRecognizer {
      */
     public boolean isComplexNumber(String text) {
         // Real: 'a'
-        if (!text.matches("^[+-]?[0-9]+[.]?[0-9]*$"))
-            // Complex: 'a+bi', 'a+i', 'a+bj', 'a+j'
-            if (!text.matches("^[+-]?[0-9]+[.]?[0-9]*[+-]([0-9]+[.]?[0-9]*)?[ij]$"))
-                // Imaginary: 'bi', 'i', 'bj', 'j'
-                if (!text.matches("^[+-]?([0-9]+[.]?[0-9]*)?[ij]$"))
-                    return false;
-        return true;
+        if (text.matches("^[+-]?[0-9]+[.]?[0-9]*$"))
+            return true;
+        // Complex: 'a+bi', 'a+i', 'a+bj', 'a+j'
+        if (text.matches("^[+-]?[0-9]+[.]?[0-9]*[+-]([0-9]+[.]?[0-9]*)?[ij]$"))
+            return true;
+        // Imaginary: 'bi', 'i', 'bj', 'j'
+        if (text.matches("^[+-]?([0-9]+[.]?[0-9]*)?[ij]$"))
+            return true;
+        return false;
     }
 
     /**
@@ -98,7 +100,7 @@ public class TextRecognizer {
      * @brief Check whether given text is a valid name for a user-defined
      *        operation.
      * @param name Name of the operation.
-     * @return boolean.
+     * @return `true` if the name is valid and not already used; `false` otherwise.
      */
     public boolean isValidUserDefinedOperationName(String name) {
         if (!name.matches("^[a-z_A-Z]+[0-9]*[a-z_A-Z]*$"))
@@ -113,7 +115,7 @@ public class TextRecognizer {
      *        operation.
      * @param name     Name of the operation.
      * @param sequence Sequence of the operation.
-     * @return boolean.
+     * @return `true` if the sequence is valid; `false` otherwise.
      */
     public boolean isValidUserDefinedOperationSequence(String name, String sequence) {
         String[] values = sequence.split(" ");
@@ -121,7 +123,6 @@ public class TextRecognizer {
         for (String value : values) {
             if (value.length() == 0)
                 return false;
-
             if (isStackOperation(value))
                 continue;
             if (isVariableOperation(value))

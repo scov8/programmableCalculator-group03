@@ -30,10 +30,11 @@ public class ModOperation extends Operation {
     public void execute(Stack<ComplexNumber> stack) throws NotEnoughOperandsException {
         if (!super.enoughOperandsInStack(stack.size()))
             throw new NotEnoughOperandsException();
+
         ComplexNumber top = stack.pop();
-        ComplexNumber num = new ComplexNumber(
+        ComplexNumber mod = new ComplexNumber(
                 Math.sqrt(Math.pow(top.getReal(), 2) + Math.pow(top.getImaginary(), 2)),
                 0);
-        stack.push(num);
+        stack.push(mod);
     }
 }

@@ -21,7 +21,8 @@ public class DifferenceOperation extends Operation {
     }
 
     /**
-     * @brief Execute the difference operation on the given stack.
+     * @brief Execute the difference operation on the top two elements of the given
+     *        stack.
      * @param stack The stack on which to execute the operation.
      * @throws NotEnoughOperandsException if the stack does not contain enough
      *                                    elements.

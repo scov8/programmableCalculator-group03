@@ -25,15 +25,14 @@ public class VariablesStack implements Cloneable {
     public VariablesStack() {
         map = new HashMap<Character, Stack<ComplexNumber>>();
 
-        for (char letter = 'a'; letter <= 'z'; letter++) {
+        for (char letter = 'a'; letter <= 'z'; letter++)
             map.put(letter, new Stack<ComplexNumber>());
-        }
     }
 
     /**
-     * @brief Push a complex number into the stack of the given variable.
+     * @brief Push a complex number onto the stack of the given variable.
      * @param variable Name of the variable.
-     * @param number   Complex number to insert into the stack stack.
+     * @param number   Complex number to insert into the stack.
      */
     public void push(char variable, ComplexNumber number) {
         map.get(variable).push(number);
@@ -68,21 +67,20 @@ public class VariablesStack implements Cloneable {
      * @param variable Name of the variable.
      * @return `true` if the stack is empty; `false` otherwise.
      */
-    public Boolean isEmpty(char variable) {
+    public boolean isEmpty(char variable) {
         return map.get(variable).empty();
     }
 
     /**
-     * @brief Clear all variables in the map.
+     * @brief Clear values of all variables in the map.
      */
     public void clearAll() {
-        for (char letter = 'a'; letter <= 'z'; letter++) {
+        for (char letter = 'a'; letter <= 'z'; letter++)
             map.get(letter).clear();
-        }
     }
 
     /**
-     * @brief Clear a variable in the map.
+     * @brief Clear value of a variable in the map.
      * @param variable Name of the variable.
      */
     public void clear(char variable) {

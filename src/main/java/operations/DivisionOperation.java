@@ -22,7 +22,8 @@ public class DivisionOperation extends Operation {
     }
 
     /**
-     * @brief Execute the division operation on the given stack.
+     * @brief Execute the division operation on the top two elements of the given
+     *        stack.
      * @param stack The stack on which to execute the operation.
      * @throws NotEnoughOperandsException if the stack does not contain enough
      *                                    elements.
@@ -40,10 +41,8 @@ public class DivisionOperation extends Operation {
         ComplexNumber result;
 
         double denominator = Math.pow(right.getReal(), 2) + Math.pow(right.getImaginary(), 2);
-        double numeratorA = left.getReal() * right.getReal() +
-                left.getImaginary() * right.getImaginary();
-        double numeratorB = left.getImaginary() * right.getReal() -
-                left.getReal() * right.getImaginary();
+        double numeratorA = left.getReal()      * right.getReal() + left.getImaginary() * right.getImaginary();
+        double numeratorB = left.getImaginary() * right.getReal() - left.getReal()      * right.getImaginary();
 
         if (denominator == 0) {
             if (left.getReal() == 0 && left.getImaginary() == 0)
@@ -54,9 +53,8 @@ public class DivisionOperation extends Operation {
                 result = new ComplexNumber(0, Double.POSITIVE_INFINITY);
             else
                 result = new ComplexNumber(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
-        } else {
+        } else
             result = new ComplexNumber(numeratorA / denominator, numeratorB / denominator);
-        }
 
         stack.push(result);
     }

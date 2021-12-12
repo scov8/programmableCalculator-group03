@@ -23,7 +23,8 @@ public class SwapOperation extends Operation {
     /**
      * @brief Swap the top two elements of the given stack.
      * @param stack The stack on which to execute the operation.
-     * @throws NotEnoughOperandsException if stack is empty.
+     * @throws NotEnoughOperandsException if the stack does not contain enough
+     *                                    elements.
      */
     @Override
     public void execute(Stack<ComplexNumber> stack) throws NotEnoughOperandsException {

@@ -35,7 +35,7 @@ public abstract class SaveRestoreFile implements SaveRestoreFileStrategy {
     /**
      * @brief Choose a file to open.
      * @param window   Main application window.
-     * @param saveMode `true` if the file has to be opened to save data in it.
+     * @param saveMode `true` if the file has to be opened to save data on it.
      * @return File chosen; it can be `null` if none has been chosen.
      */
     protected File chooseFile(Window window, boolean saveMode) {

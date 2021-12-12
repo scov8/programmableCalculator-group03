@@ -18,20 +18,20 @@ public class ComplexNumber {
 
     /**
      * @brief Complex number constructor.
-     * @param a Real part of the number.
-     * @param b Imaginary part of the number.
+     * @param real      Real part of the number.
+     * @param imaginary Imaginary part of the number.
      */
-    public ComplexNumber(double a, double b) {
-        this.a = a;
-        this.b = b;
+    public ComplexNumber(double real, double imaginary) {
+        this.a = real;
+        this.b = imaginary;
     }
 
     /**
      * @brief Real number constructor.
-     * @param a Real part of the number.
+     * @param real Real part of the number.
      */
-    public ComplexNumber(double a) {
-        this.a = a;
+    public ComplexNumber(double real) {
+        this.a = real;
         this.b = 0;
     }
 
@@ -115,12 +115,12 @@ public class ComplexNumber {
 
     /**
      * @brief Update both real and imaginary parts of the number.
-     * @param a Real part.
-     * @param b Imaginary part.
+     * @param real      Real part.
+     * @param imaginary Imaginary part.
      */
-    public void setValues(double a, double b) {
-        this.a = a;
-        this.b = b;
+    public void setValues(double real, double imaginary) {
+        this.a = real;
+        this.b = imaginary;
     }
 
     /**
@@ -166,21 +166,21 @@ public class ComplexNumber {
 
     /**
      * @brief Format the double number into a string.
-     * @param d Double number to format.
+     * @param n Double number to format.
      * @return String representation of d.
      */
-    private String formatDouble(double d) {
+    private String formatDouble(double n) {
         String s;
 
         // small numbers are presented in scientific notation.
-        if (Math.abs(d) < 0.001)
-            return String.valueOf(d);
+        if (Math.abs(n) < 0.001)
+            return String.valueOf(n);
         // use scientific notation only if number is too big (e.g. >= 100'000).
-        else if (d >= 100000)
-            s = String.format("%.5e", d);
+        else if (n >= 100000)
+            s = String.format("%.5e", n);
         // only show first 5 decimal digits.
         else
-            s = String.format("%.5f", d);
+            s = String.format("%.5f", n);
 
         // remove any trailing decimal digit if it is 0.
         while (s.endsWith("0"))
