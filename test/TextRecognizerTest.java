@@ -50,73 +50,57 @@ public class TextRecognizerTest {
     }
 
     @Test
-    public void testExtractNumber() {
+    public void testIsComplexNumber() {
         // default cases with both positive and negative values for real and
         // imaginary part of the number.
-        ComplexNumber n = new ComplexNumber(2, 5);
-        assertEquals(n, textRecognizer.extractNumber("2+5i"));
-        n.setValues(-10, 5);
-        assertEquals(n, textRecognizer.extractNumber("-10+5j"));
-        n.setValues(-10, -25);
-        assertEquals(n, textRecognizer.extractNumber("-10-25i"));
-        n.setValues(123, -7);
-        assertEquals(n, textRecognizer.extractNumber("+123-7i"));
-        n.setValues(12.3, -7.3);
-        assertEquals(n, textRecognizer.extractNumber("12.3-7.3j"));
-        n.setValues(-12.3, -7.3);
-        assertEquals(n, textRecognizer.extractNumber("-12.3-7.3i"));
-        n.setValues(2, 1);
-        assertEquals(n, textRecognizer.extractNumber("2+i"));
-        n.setValues(2, -1);
-        assertEquals(n, textRecognizer.extractNumber("2-i"));
+        assertTrue(textRecognizer.isComplexNumber("2+5i"));
+        assertTrue(textRecognizer.isComplexNumber("-10+5j"));
+        assertTrue(textRecognizer.isComplexNumber("-10-25i"));
+
+        assertTrue(textRecognizer.isComplexNumber("+123-7i"));
+        assertTrue(textRecognizer.isComplexNumber("12.3-7.3j"));
+        assertTrue(textRecognizer.isComplexNumber("-12.3-7.3i"));
+        assertTrue(textRecognizer.isComplexNumber("2+i"));
+        assertTrue(textRecognizer.isComplexNumber("2-i"));
 
         // at least one of the two parts is null.
-        n.setValues(0, 0);
-        assertEquals(n, textRecognizer.extractNumber("0+0i"));
-        n.setValues(0, 0);
-        assertEquals(n, textRecognizer.extractNumber("0"));
-        n.setValues(0, 0);
-        assertEquals(n, textRecognizer.extractNumber("0j"));
-        n.setValues(0, 0);
-        assertEquals(n, textRecognizer.extractNumber("0i"));
-        n.setValues(3, 0);
-        assertEquals(n, textRecognizer.extractNumber("3"));
-        assertEquals(n, textRecognizer.extractNumber("+3"));
-        n.setValues(-3, 0);
-        assertEquals(n, textRecognizer.extractNumber("-3"));
-        n.setValues(0, 12.05);
-        assertEquals(n, textRecognizer.extractNumber("12.05i"));
-        assertEquals(n, textRecognizer.extractNumber("+12.05i"));
-        n.setValues(0, -12.05);
-        assertEquals(n, textRecognizer.extractNumber("-12.05i"));
+        assertTrue(textRecognizer.isComplexNumber("0+0i"));
+        assertTrue(textRecognizer.isComplexNumber("0"));
+        assertTrue(textRecognizer.isComplexNumber("0j"));
+        assertTrue(textRecognizer.isComplexNumber("0i"));
+        assertTrue(textRecognizer.isComplexNumber("3"));
+        assertTrue(textRecognizer.isComplexNumber("+3"));
+        assertTrue(textRecognizer.isComplexNumber("-3"));
+        assertTrue(textRecognizer.isComplexNumber("12.05i"));
+        assertTrue(textRecognizer.isComplexNumber("+12.05i"));
+        assertTrue(textRecognizer.isComplexNumber("-12.05i"));
 
         // string only contains imaginary letter.
-        n.setValues(0, 1);
-        assertEquals(n, textRecognizer.extractNumber("i"));
-        assertEquals(n, textRecognizer.extractNumber("j"));
+        assertTrue(textRecognizer.isComplexNumber("i"));
+        assertTrue(textRecognizer.isComplexNumber("j"));
 
-        // number written with spaces is not recognized
-        assertEquals(null, textRecognizer.extractNumber("2 + 3i"));
-        assertEquals(null, textRecognizer.extractNumber("2+3 i"));
-        assertEquals(null, textRecognizer.extractNumber("- 2 + 3 i"));
+        // number written with spaces is not recognized.
+        assertFalse(textRecognizer.isComplexNumber("2 + 3i"));
+        assertFalse(textRecognizer.isComplexNumber("2+3 i"));
+        assertFalse(textRecognizer.isComplexNumber("- 2 + 3 i"));
 
-        // double number written with ','
-        assertEquals(null, textRecognizer.extractNumber("1+2,5i"));
+        // double number written with ','.
+        assertFalse(textRecognizer.isComplexNumber("1+2,5i"));
 
         // unrecognized input.
-        assertEquals(null, textRecognizer.extractNumber("12a"));
-        assertEquals(null, textRecognizer.extractNumber("3I"));
-        assertEquals(null, textRecognizer.extractNumber("4-50J"));
-        assertEquals(null, textRecognizer.extractNumber("hello world"));
-        assertEquals(null, textRecognizer.extractNumber("3 + 2"));
-        assertEquals(null, textRecognizer.extractNumber("3 +- 2"));
-        assertEquals(null, textRecognizer.extractNumber("3 +- 2i"));
-        assertEquals(null, textRecognizer.extractNumber("-3 -+ 212i"));
-        assertEquals(null, textRecognizer.extractNumber("3a + 212i"));
-        assertEquals(null, textRecognizer.extractNumber("a2 + 212i"));
-        assertEquals(null, textRecognizer.extractNumber("ai"));
-        assertEquals(null, textRecognizer.extractNumber("I"));
-        assertEquals(null, textRecognizer.extractNumber("J"));
+        assertFalse(textRecognizer.isComplexNumber("12a"));
+        assertFalse(textRecognizer.isComplexNumber("3I"));
+        assertFalse(textRecognizer.isComplexNumber("4-50J"));
+        assertFalse(textRecognizer.isComplexNumber("hello world"));
+        assertFalse(textRecognizer.isComplexNumber("3 + 2"));
+        assertFalse(textRecognizer.isComplexNumber("3 +- 2"));
+        assertFalse(textRecognizer.isComplexNumber("3 +- 2i"));
+        assertFalse(textRecognizer.isComplexNumber("-3 -+ 212i"));
+        assertFalse(textRecognizer.isComplexNumber("3a + 212i"));
+        assertFalse(textRecognizer.isComplexNumber("a2 + 212i"));
+        assertFalse(textRecognizer.isComplexNumber("ai"));
+        assertFalse(textRecognizer.isComplexNumber("I"));
+        assertFalse(textRecognizer.isComplexNumber("J"));
     }
 
     @Test

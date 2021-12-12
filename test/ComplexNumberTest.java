@@ -22,6 +22,51 @@ public class ComplexNumberTest {
     }
 
     @Test
+    public void testStringConstructor() {
+        ComplexNumber n = new ComplexNumber(2, 5);
+        assertEquals(n, new ComplexNumber("2+5i"));
+        n.setValues(-10, 5);
+        assertEquals(n, new ComplexNumber("-10+5j"));
+        n.setValues(-10, -25);
+        assertEquals(n, new ComplexNumber("-10-25i"));
+        n.setValues(123, -7);
+        assertEquals(n, new ComplexNumber("+123-7i"));
+        n.setValues(12.3, -7.3);
+        assertEquals(n, new ComplexNumber("12.3-7.3j"));
+        n.setValues(-12.3, -7.3);
+        assertEquals(n, new ComplexNumber("-12.3-7.3i"));
+        n.setValues(2, 1);
+        assertEquals(n, new ComplexNumber("2+i"));
+        n.setValues(2, -1);
+        assertEquals(n, new ComplexNumber("2-i"));
+
+        // at least one of the two parts is null.
+        n.setValues(0, 0);
+        assertEquals(n, new ComplexNumber("0+0i"));
+        n.setValues(0, 0);
+        assertEquals(n, new ComplexNumber("0"));
+        n.setValues(0, 0);
+        assertEquals(n, new ComplexNumber("0j"));
+        n.setValues(0, 0);
+        assertEquals(n, new ComplexNumber("0i"));
+        n.setValues(3, 0);
+        assertEquals(n, new ComplexNumber("3"));
+        assertEquals(n, new ComplexNumber("+3"));
+        n.setValues(-3, 0);
+        assertEquals(n, new ComplexNumber("-3"));
+        n.setValues(0, 12.05);
+        assertEquals(n, new ComplexNumber("12.05i"));
+        assertEquals(n, new ComplexNumber("+12.05i"));
+        n.setValues(0, -12.05);
+        assertEquals(n, new ComplexNumber("-12.05i"));
+
+        // string only contains imaginary letter.
+        n.setValues(0, 1);
+        assertEquals(n, new ComplexNumber("i"));
+        assertEquals(n, new ComplexNumber("j"));
+    }
+
+    @Test
     public void testSetValues() {
         n1.setValues(23.50, 12);
         assertEquals(23.50, n1.getReal(), 0.0);
