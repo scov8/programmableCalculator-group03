@@ -19,7 +19,8 @@ import src.main.java.userOperations.UserOperation;
  */
 
 /**
- * @brief This class handles the operation and the operands in the stack.
+ * @brief This class handles all the operations supported by this calculator
+ *        application.
  */
 public class Calculator {
     /**
@@ -34,6 +35,7 @@ public class Calculator {
      */
     private Variables variables;
     private Variables variablesCopy;
+
     /**
      * Map associating a stack to each variable to save multiple instances of
      * their values.
@@ -85,21 +87,18 @@ public class Calculator {
     public void run(String input)
             throws UnrecognizedInputException, NotEnoughOperandsException,
             IndeterminateFormException, VariableWithoutValueException {
-        if (textRecognizer.isStackOperation(input)) {
+        if (textRecognizer.isStackOperation(input))
             runStackOperation(input);
-        } else if (textRecognizer.isVariableOperation(input)) {
+        else if (textRecognizer.isVariableOperation(input))
             runVariablesOperation(input);
-        } else if (textRecognizer.isVariableStorageOperation(input)) {
+        else if (textRecognizer.isVariableStorageOperation(input))
             runVariableStorageOperation(input);
-        } else if (textRecognizer.isUserDefinedOperation(input)) {
+        else if (textRecognizer.isUserDefinedOperation(input))
             runUserDefinedOperation(input);
-        } else {
-            ComplexNumber number = textRecognizer.extractNumber(input);
-            if (number == null)
-                throw new UnrecognizedInputException();
-            else
-                numbersStack.push(number);
-        }
+        else if (textRecognizer.isComplexNumber(input))
+            numbersStack.push(new ComplexNumber(input));
+        else
+            throw new UnrecognizedInputException();
     }
 
     /**

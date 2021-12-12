@@ -36,8 +36,54 @@ public class ComplexNumber {
     }
 
     /**
+     * @brief Construct Complex Number from a string.
+     * @param text String representation of the number.
+     */
+    public ComplexNumber(String text) {
+        // Uniform every string with 'j' instead of 'i'.
+        text = text.replaceAll("i", "j");
+
+        String a, b;
+
+        // Look for the imaginary part sign's position in the string.
+        int signPos = text.indexOf("+", 1);
+        if (signPos < 0)
+            signPos = text.indexOf("-", 1);
+        // If no sign to divide real and imaginary part is found it means only
+        // one of them is present in the string.
+        if (signPos < 0) {
+            // If the entire string is simply "j".
+            if (text.compareTo("j") == 0) {
+                a = "0";
+                b = "1";
+            }
+            // If 'j' is in the string the number is imaginary.
+            else if (text.indexOf("j") > 0) {
+                a = "0";
+                b = text.substring(0, text.length() - 1);
+            }
+            // Real number.
+            else {
+                a = text;
+                b = "0";
+            }
+        } else {
+            // Get substring representing real part of the number, sign included.
+            a = text.substring(0, signPos);
+            // Get substring representing imaginary part of the number, sign
+            // included, i/j excluded.
+            b = text.substring(signPos, text.length() - 1);
+            if (b.length() == 1)
+                b += "1";
+        }
+
+        this.a = Double.parseDouble(a);
+        this.b = Double.parseDouble(b);
+    }
+
+    /**
      * @brief Get real part of the number.
-     * @return the Real Part of the number.
+     * @return The Real Part of the number.
      */
     public double getReal() {
         return a;
@@ -45,7 +91,7 @@ public class ComplexNumber {
 
     /**
      * @brief Set real part of the number.
-     * @param real the real part to set.
+     * @param real The real part to set.
      */
     public void setReal(double real) {
         this.a = real;
@@ -53,7 +99,7 @@ public class ComplexNumber {
 
     /**
      * @brief Get imaginary part of the number.
-     * @return the imaginary part of the number.
+     * @return The imaginary part of the number.
      */
     public double getImaginary() {
         return b;
@@ -61,14 +107,14 @@ public class ComplexNumber {
 
     /**
      * @brief Set imaginary part of the number.
-     * @param imaginary the imaginary part to set.
+     * @param imaginary The imaginary part to set.
      */
     public void setImaginary(double imaginary) {
         this.b = imaginary;
     }
 
     /**
-     * @brief Update both real and imaginary part of the number.
+     * @brief Update both real and imaginary parts of the number.
      * @param a Real part.
      * @param b Imaginary part.
      */
@@ -80,7 +126,7 @@ public class ComplexNumber {
     /**
      * @brief Return an approximation of the double value.
      * @param number The value to approximate.
-     * @return An approximated value of `number`.
+     * @return An approximated value of number.
      */
     private double approximate(double number) {
         return Double.valueOf(Math.round(number * 10000000000.0) / 10000000000.0);
@@ -89,28 +135,26 @@ public class ComplexNumber {
     /**
      * @brief Check whether given double is either 0.0 or -0.0.
      * @param n The double to check.
-     * @return `true` if n is zero; `false` otherwise.
+     * @return `true` if n can be considered equal to zero; `false` otherwise.
      */
     private boolean isZero(double n) {
         return approximate(n) == 0.0 || approximate(n) == -0.0;
     }
 
     /**
-     * @brief Check whether `self` and `obj` are equals.
+     * @brief Check whether self and obj are equals.
      *
      *        Comparison is based on the values of the real and imaginary part of
-     *        the number.
+     *        the numbers.
      * @param obj Other instance of this class.
-     * @return `true` if `self` and `obj` are equal; `false` otherwise.
+     * @return `true` if self and obj are equal; `false` otherwise.
      */
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (!(obj instanceof ComplexNumber)) {
+        if (!(obj instanceof ComplexNumber))
             return false;
-        }
 
         ComplexNumber other = (ComplexNumber) obj;
 
@@ -121,22 +165,24 @@ public class ComplexNumber {
     }
 
     /**
-     * @brief Format the double number into a string. Big numbers are written
-     *        in scientific notation.
+     * @brief Format the double number into a string.
      * @param d Double number to format.
      * @return String representation of d.
      */
     private String formatDouble(double d) {
         String s;
 
+        // small numbers are presented in scientific notation.
         if (Math.abs(d) < 0.001)
             return String.valueOf(d);
-
-        if (d > 10000)
+        // use scientific notation only if number is too big (e.g. >= 100'000).
+        else if (d >= 100000)
             s = String.format("%.5e", d);
+        // only show first 5 decimal digits.
         else
             s = String.format("%.5f", d);
 
+        // remove any trailing decimal digit if it is 0.
         while (s.endsWith("0"))
             s = s.substring(0, s.length() - 1);
         if (s.endsWith("."))
