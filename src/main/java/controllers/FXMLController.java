@@ -4,10 +4,8 @@ import src.main.java.exceptions.IndeterminateFormException;
 import src.main.java.exceptions.NotEnoughOperandsException;
 import src.main.java.exceptions.UnrecognizedInputException;
 import src.main.java.exceptions.VariableWithoutValueException;
-import src.main.java.files.RestoreObjFile;
-import src.main.java.files.RestoreTextFile;
-import src.main.java.files.SaveObjFile;
-import src.main.java.files.SaveTextFile;
+import src.main.java.files.SaveRestoreObjFile;
+import src.main.java.files.SaveRestoreTextFile;
 import src.main.java.operations.OperationsMap;
 import src.main.java.resources.*;
 import src.main.java.userOperations.UserOperation;
@@ -54,82 +52,82 @@ public class FXMLController {
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
-    @FXML // fx:id="paneRoot"
+    @FXML
     private AnchorPane paneRoot; // Value injected by FXMLLoader
 
-    @FXML // fx:id="mainPane"
+    @FXML
     private Pane mainPane; // Value injected by FXMLLoader
 
     @FXML
-    private TitledPane guidePane;
+    private TitledPane guidePane; // Value injected by FXMLLoader
 
     @FXML
-    private Menu saveOperationsButton;
+    private Menu saveOperationsButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="SaveTextOperationsButton"
+    @FXML
     private MenuItem saveTextOperationsButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="SaveObjOperationsButton"
+    @FXML
     private MenuItem saveObjOperationsButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="RestoreTextOperationsButton"
+    @FXML
     private MenuItem restoreTextOperationsButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="RestoreObjOperationsButton"
+    @FXML
     private MenuItem restoreObjOperationsButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="textInput"
+    @FXML
     private TextField textInput; // Value injected by FXMLLoader
 
-    @FXML // fx:id="enter"
+    @FXML
     private Button enter; // Value injected by FXMLLoader
 
-    @FXML // fx:id="resultLabel"
+    @FXML
     private Label resultLabel; // Value injected by FXMLLoader
 
-    @FXML // fx:id="stackListLabel"
+    @FXML
     private Label stackListLabel; // Value injected by FXMLLoader
 
-    @FXML // fx:id="numbersStackSelector"
+    @FXML
     private Button numbersStackSelector; // Value injected by FXMLLoader
 
-    @FXML // fx:id="variablesStackSelector"
+    @FXML
     private Button variablesStackSelector; // Value injected by FXMLLoader
 
-    @FXML // fx:id="stackListView"
+    @FXML
     private ListView<String> stackListView; // Value injected by FXMLLoader
 
-    @FXML // fx:id="tableLabel"
+    @FXML
     private Label tableLabel; // Value injected by FXMLLoader
 
-    @FXML // fx:id="operationsTable"
+    @FXML
     private TableView<UserOperation> operationsTable; // Value injected by FXMLLoader
 
-    @FXML // fx:id="opNameClmn"
+    @FXML
     private TableColumn<UserOperation, String> opNameClmn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="opSeqClmn"
+    @FXML
     private TableColumn<UserOperation, String> opSeqClmn; // Value injected by FXMLLoader
 
-    @FXML // fx:id="tableContextMenuEdit"
+    @FXML
     private MenuItem tableContextMenuEdit; // Value injected by FXMLLoader
 
-    @FXML // fx:id="tableContextMenuDelete"
+    @FXML
     private MenuItem tableContextMenuDelete; // Value injected by FXMLLoader
 
-    @FXML // fx:id="newOperationPane"
+    @FXML
     private TitledPane newOperationPane; // Value injected by FXMLLoader
 
-    @FXML // fx:id="newOpNameField"
+    @FXML
     private TextField newOpNameField; // Value injected by FXMLLoader
 
-    @FXML // fx:id="newOpSeqField"
+    @FXML
     private TextField newOpSeqField; // Value injected by FXMLLoader
 
-    @FXML // fx:id="newOpConfirmButton"
+    @FXML
     private Button newOpConfirmButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="newOpCancelButton"
+    @FXML
     private Button newOpCancelButton; // Value injected by FXMLLoader
 
     /**
@@ -161,10 +159,11 @@ public class FXMLController {
     /** Maps containing all the operations supported by this application. */
     private OperationsMap operationsMap;
 
-    private SaveTextFile saveTextFile;
-    private SaveObjFile saveObjFile;
-    private RestoreTextFile restoreTextFile;
-    private RestoreObjFile restoreObjFile;
+    /** Object used to handle reading/writing operations on text files. */
+    private SaveRestoreTextFile handleTextFiles;
+
+    /** Object used to handle reading/writing operations on object files. */
+    private SaveRestoreObjFile handleObjFiles;
 
     /**
      * Number of items from the stack of numbers to show in the GUI at any time.
@@ -180,6 +179,8 @@ public class FXMLController {
         stackList.clear();
         for (ComplexNumber n : topKnumbers)
             stackList.add(n.toString());
+
+        // reverse the list to show the top element in the upmost position.
         Collections.reverse(stackList);
 
         if (stackList.size() > 0)
@@ -198,10 +199,8 @@ public class FXMLController {
         // variables having a non-null value will be displayed.
         for (char letter = 'a'; letter <= 'z'; letter++) {
             ComplexNumber value = calculator.getVariable(letter);
-            if (value != null) {
-                String s = letter + ":\t" + value.toString();
-                stackList.add(s);
-            }
+            if (value != null)
+                stackList.add(letter + ":\t" + value.toString());
         }
     }
 
@@ -230,6 +229,7 @@ public class FXMLController {
 
     /**
      * @brief Read user input and format it.
+     * @return The formatted version of the input.
      */
     private String getUserInput() {
         String input = textRecognizer.formatText(textInput.getText());
@@ -245,18 +245,18 @@ public class FXMLController {
         try {
             calculator.run(input);
         } catch (UnrecognizedInputException e) {
-            showError("Invalid Input",
-                    "Please provide a valid OPERATION or a NUMBER.\n" +
-                            "Numbers must be in the form 'a+bi', 'a' or 'bi'");
+            showError("INVALID INPUT.",
+                    "Please provide a valid operation or a number.\nOpen the " +
+                    "GUIDE to know more.");
         } catch (NotEnoughOperandsException e) {
-            showError("Not enough elements.",
+            showError("NOT ENOUGH ELEMENTS.",
                     "The stack does not contain enough values to execute the '" +
                             input + "' operation.");
         } catch (IndeterminateFormException e) {
-            showError("Invalid operation.", "The '" + input + "' operation " +
+            showError("INVALID FORM.", "The '" + input + "' operation " +
                     "resulted in an indeterminate form.");
         } catch (VariableWithoutValueException e) {
-            showError("Variable without value.", "The variable has no value yet.");
+            showError("VARIABLE WITHOUT VALUE.", "The variable has no value yet.");
         } finally {
             updateStackView();
         }
@@ -329,19 +329,31 @@ public class FXMLController {
         Platform.exit();
     }
 
+    /**
+     * @brief Save the collection of user-defined operations to a text file.
+     * @param event Pressing of the "Save Operations -> Text File" button in menu.
+     */
     @FXML
     private void saveTextFile(ActionEvent event) {
-        saveTextFile.execute(paneRoot.getScene().getWindow(), operationsMap.getAllUserDefinedOperations());
+        handleTextFiles.executeSave(paneRoot.getScene().getWindow(), operationsMap.getAllUserDefinedOperations());
     }
 
+    /**
+     * @brief Save the collection of user-defined operations to an object file.
+     * @param event Pressing of the "Save Operations -> Obj File" button in menu.
+     */
     @FXML
     private void saveObjFile(ActionEvent event) {
-        saveObjFile.execute(paneRoot.getScene().getWindow(), operationsMap.getAllUserDefinedOperations());
+        handleObjFiles.executeSave(paneRoot.getScene().getWindow(), operationsMap.getAllUserDefinedOperations());
     }
 
+    /**
+     * @brief Load the collection of user-defined operations from a text file.
+     * @param event Pressing of the "Load Operations -> Text File" button in menu.
+     */
     @FXML
     private void restoreTextFile(ActionEvent event) {
-        UserOperation[] operations = restoreTextFile.execute(paneRoot.getScene().getWindow());
+        UserOperation[] operations = handleTextFiles.executeRestore(paneRoot.getScene().getWindow());
         if (operations == null)
             return;
         operationsMap.setAllUserDefinedOperations(operations);
@@ -349,9 +361,13 @@ public class FXMLController {
         operationsList.addAll(operations);
     }
 
+    /**
+     * @brief Load the collection of user-defined operations from an object file.
+     * @param event Pressing of the "Load Operations -> Obj File" button in menu.
+     */
     @FXML
     private void restoreObjFile(ActionEvent event) {
-        UserOperation[] operations = restoreObjFile.execute(paneRoot.getScene().getWindow());
+        UserOperation[] operations = handleObjFiles.executeRestore(paneRoot.getScene().getWindow());
         if (operations == null)
             return;
         operationsMap.setAllUserDefinedOperations(operations);
@@ -359,6 +375,10 @@ public class FXMLController {
         operationsList.addAll(operations);
     }
 
+    /**
+     * @brief Show the Guide Pane.
+     * @param event Pressing of the "Help -> Guide" button in menu.
+     */
     @FXML
     void showGuide(ActionEvent event) {
         mainPane.setDisable(true);
@@ -366,6 +386,10 @@ public class FXMLController {
         guidePane.setVisible(true);
     }
 
+    /**
+     * @brief Hide the Guide Pane.
+     * @param event Pressing of the "Ok" button in the Guide Pane.
+     */
     @FXML
     void closeGuide(ActionEvent event) {
         mainPane.setDisable(false);
@@ -400,17 +424,17 @@ public class FXMLController {
 
         // check both values are valid.
         if (operationsMap.getUserDefinedOperation(name) != null) {
-            showError("Invalid User-Defined Operation",
+            showError("INVALID OPERATION NAME.",
                     "User-Defined operation with this name already exists");
             return;
         }
         if (!textRecognizer.isValidUserDefinedOperationName(name)) {
-            showError("Invalid Name",
-                    "'" + name + "' is not a valid name.\nYou can only use letters.");
+            showError("INVALID OPERATION NAME.",
+                    "'" + name + "' is not a valid name.\nYou can only use letters, numbers and '_'.");
             return;
         }
         if (!textRecognizer.isValidUserDefinedOperationSequence(name, seq)) {
-            showError("Invalid Sequence",
+            showError("INVALID OPERATION SEQUENCE.",
                     "'" + seq + "' is not recognized as a valid sequence of operations.");
             return;
         }
@@ -451,12 +475,12 @@ public class FXMLController {
 
         if (operationsMap.getUserDefinedOperation(newName) != null) {
             op.setName(oldName);
-            showError("Invalid Name",
-                    "A user-defined operation with this name already exists.");
+            showError("INVALID OPERATION NAME.",
+                    "User-Defined operation with this name already exists");
         } else if (!textRecognizer.isValidUserDefinedOperationName(newName)) {
             op.setName(oldName);
-            showError("Invalid Name",
-                    "'" + newName + "' is not a valid name.\nYou can only use letters.");
+            showError("INVALID OPERATION NAME.",
+                    "'" + newName + "' is not a valid name.\nYou can only use letters, numbers and '_'.");
         } else
             op.setName(newName);
 
@@ -519,10 +543,8 @@ public class FXMLController {
         textRecognizer = new TextRecognizer();
         calculator = new Calculator();
 
-        saveTextFile = new SaveTextFile();
-        saveObjFile = new SaveObjFile();
-        restoreTextFile = new RestoreTextFile();
-        restoreObjFile = new RestoreObjFile();
+        handleTextFiles = new SaveRestoreTextFile();
+        handleObjFiles = new SaveRestoreObjFile();
 
         stackListView.setItems(stackList);
 
@@ -551,7 +573,5 @@ public class FXMLController {
         saveObjOperationsButton.disableProperty().bind(s.emptyProperty());
 
         selectedNumbersStack(null);
-
-        resultLabel.setText("Result here.");
     }
 }
