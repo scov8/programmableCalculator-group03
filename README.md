@@ -27,9 +27,9 @@ installed on the machine.
 
 ## Dependencies
 
-Java 11+<br>
-JavaFX 11+<br>
-Junit 4.13<br>
++ Java 11+
++ JavaFX 11+
++ Junit 4.13
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -81,6 +81,11 @@ Junit 4.13<br>
 - [Burndown Chart](https://drive.google.com/file/d/1OTtzx8lgtL6PpoANRZH_VdTaX_hLPyjC/view)
 - [API Documentation & Software Architecture](https://drive.google.com/file/d/1-KsutTfCN-Q_EO4XUSJ4K4FtqRByvkbx/view?usp=sharing)
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+## License
+
+Distributed under the [GPLv3](LICENSE) License.
 
 <!-- Github profiles links -->
 
