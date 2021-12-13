@@ -20,8 +20,8 @@ done
 
 
 # Path to JavaFX libraries.
-fx_libs=${fx_libs:="libs/javafx_lib/"}
-echo "Using JavaFX libraries in: '"$fx_libs"'"
+fx_libs=${fx_libs:="$(pwd)/libs/javafx_lib/"}
+echo "Using JavaFX libraries in: '""$fx_libs""'"
 
 # Path to main source file.
 main="src/main/java/Main"
@@ -41,11 +41,12 @@ done
 
 # Compile every Java file in the project.
 for file in $(find ./src/ -maxdepth 6 -type f -name '*.java'); do
-    [[ -f ${file%.*}.class ]] && continue
+    file=${file%.*}
+    [[ -f "$file".class ]] && continue
     echo "Compiling $(basename $file)..."
-    javac --module-path $fx_libs --add-modules javafx.controls \
+    javac --module-path "$fx_libs" --add-modules javafx.controls \
     --add-modules javafx.fxml --add-modules javafx.swing \
-    "$file"
+    "$file".java
     # Exit the script if compilation failed.
     [[ $? != 0 ]] && exit 1
 done
@@ -55,6 +56,6 @@ echo "ALL COMPILED. Running..."
 main=${main//\//.}
 
 # Run main class.
-java --module-path $fx_libs --add-modules javafx.controls \
+java --module-path "$fx_libs" --add-modules javafx.controls \
 --add-modules javafx.fxml --add-modules javafx.swing \
 "$main"
