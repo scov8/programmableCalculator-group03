@@ -481,8 +481,11 @@ public class FXMLController {
             op.setName(oldName);
             showError("INVALID OPERATION NAME.",
                     "'" + newName + "' is not a valid name.\nYou can only use letters, numbers and '_'.");
-        } else
+        } else {
+            operationsMap.deleteUserDefinedOperation(op);
             op.setName(newName);
+            operationsMap.addUserDefinedOperation(op);
+        }
 
         operationsList.remove(op);
         operationsList.add(op);

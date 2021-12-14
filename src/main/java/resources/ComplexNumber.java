@@ -1,5 +1,7 @@
 package src.main.java.resources;
 
+import java.util.Locale;
+
 /**
  * @file ComplexNumber.java
  * @author Marco Plaitano
@@ -177,10 +179,10 @@ public class ComplexNumber {
             return String.valueOf(n);
         // use scientific notation only if number is too big (e.g. >= 100'000).
         else if (n >= 100000)
-            s = String.format("%.5e", n);
+            s = String.format(Locale.US, "%.5e", n);
         // only show first 5 decimal digits.
         else
-            s = String.format("%.5f", n);
+            s = String.format(Locale.US, "%.5f", n);
 
         // remove any trailing decimal digit if it is 0.
         while (s.endsWith("0"))
